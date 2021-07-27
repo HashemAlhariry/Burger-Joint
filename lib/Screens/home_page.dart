@@ -1,3 +1,4 @@
+import 'package:burgerjoint/Widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,14 +13,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child: Container(),
-      ),
-
+      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Colors.red ),
+      body:  Container()
     );
   }
 

@@ -6,10 +6,10 @@ import 'Screens/home_page.dart';
 import 'Utils/app_localizations.dart';
 
 
-
-
 void main() async {
+
   runApp(MainWidget());
+
 }
 
 class MainWidget extends StatelessWidget {
@@ -29,9 +29,6 @@ class MainWidget extends StatelessWidget {
 
             return MaterialApp(
 
-                theme: ThemeData(
-                  accentColor: Colors.black,
-                ),
                 debugShowCheckedModeBanner: false,
                 supportedLocales: [
                   Locale('ar', 'EG'),
@@ -46,7 +43,8 @@ class MainWidget extends StatelessWidget {
                 home: HomePage()
             );
 
-          }));
+          }
+          ));
   }
 }
 

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.burgerjoint">
    <application
-        android:label="burgerjoint"
+        android:label="Burger Joint"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
