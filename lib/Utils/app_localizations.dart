@@ -23,7 +23,7 @@ class AppLocalizations {
 
     String jsonString =
     await rootBundle.loadString('languages/${locale.languageCode}.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    Map<String, dynamic> jsonMap = json.decode(jsonString) as Map<String,dynamic>;
 
     _localizedStrings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());
@@ -60,6 +60,7 @@ class AppLanguage extends ChangeNotifier {
 
   Locale _appLocale = Locale('en');
   Locale  appLocal(String string){
+
     _appLocale = Locale(string);
    return  _appLocale;
   }

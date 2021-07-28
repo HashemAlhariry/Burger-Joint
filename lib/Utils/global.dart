@@ -20,5 +20,6 @@ class Global {
   /*** Cart FOR USER'S PRODUCT ***/
   //static List<CartItem> cartItems=[];
 
-
+  /// * APP BAR HEIGHT ***/
+  static double appBarSize = 100.0;
 }
