@@ -1,4 +1,3 @@
-import 'package:burgerjoint/Providers/cart.dart';
 import 'package:burgerjoint/Screens/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
