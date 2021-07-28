@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 class UserAuthentication{
 
   static Future<Map<String, dynamic>> signUp(String url, User user) async {
+
     final Uri uri = Uri.parse(url);
     final response = await http.post(uri,
         headers: {"Content-Type": "application/json",       'Accept': 'application/json',},
@@ -18,6 +19,7 @@ class UserAuthentication{
     Map<String, dynamic> convertDataToJson = json.decode(response.body) as Map<String,dynamic>;
     print(convertDataToJson['message']);
     return convertDataToJson;
+
   }
 
   static Future<Map<String, dynamic>> logIn(

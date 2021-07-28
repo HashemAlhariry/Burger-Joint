@@ -22,52 +22,233 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconButton(icon: const Icon(Icons.clear,color: Colors.white,), onPressed: (){
+            IconButton(icon: const Icon(Icons.clear,color: Colors.white,size: 30,), onPressed: (){
               Navigator.pop(context);
             }),
             // ignore: sized_box_for_whitespace
             Container(
               height: 400,
               width: MediaQuery.of(context).size.width*0.8,
-              decoration:BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20))
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(40),
+                  bottomRight: Radius.circular(40),
+                ),
+                color:  Colors.white,
               ),
-              child: Drawer(
-
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
+                    GestureDetector(
+                     onTap: (){
 
-                    ListTile(
-                      title:   Text('Item 1'),
-                      onTap: () {
+                     },
+                     child:  Row(
+                       children: [
+                         Icon(
+                           Icons.account_circle_sharp,
+                           size: 28,
+                           color: Colors.black,
+                         ),
+                         SizedBox(
+                           width: 30,
+                         ),
+                         Padding(
+                           padding:
+                           const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                           child: Text(
+                           'Profile',
+                             style: TextStyle(
+                               fontWeight: FontWeight.bold,
+                                 color: Colors.black,
+                                 fontSize: 14,
+                                 fontFamily: 'JOSEF'),
+                           ),
+                         ),
+                       ],
+                     ),
+                   ),
+                    SizedBox(height: 25,),
+                    GestureDetector(
+                      onTap: (){
 
                       },
+                      child:  Row(
+                        children: [
+                          Icon(
+                            Icons.shopping_cart,
+                            size: 28,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                            child: Text(
+                              'Cart',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'JOSEF'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    ListTile(
-                      title:   Text('Item 2'),
-                      onTap: () {
+                    SizedBox(height: 25,),
+                    GestureDetector(
+                      onTap: (){
 
                       },
+                      child:  Row(
+                        children: [
+                          Icon(
+                            Icons.location_on,
+                            size: 28,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                            child: Text(
+                              'Track Orders',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'JOSEF'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-
-                    ListTile(
-                      title:   Text('Item 3'),
-                      onTap: () {
+                    SizedBox(height: 25,),
+                    GestureDetector(
+                      onTap: (){
 
                       },
+                      child:  Row(
+                        children: [
+                          Icon(
+                            Icons.history,
+                            size: 28,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                            child: Text(
+                              'Your Orders',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'JOSEF'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    ListTile(
-                      title:   Text('Item 4'),
-                      onTap: () {
+                    SizedBox(height: 25,),
+                    GestureDetector(
+                      onTap: (){
 
                       },
+                      child:  Row(
+                        children: [
+                          Icon(
+                            Icons.house_outlined,
+                            size: 28,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                            child: Text(
+                              'Our Branches',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'JOSEF'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    ListTile(
-                      title:  Text('Item 5'),
-                      onTap: () {
+                    SizedBox(height: 25,),
+                    GestureDetector(
+                      onTap: (){
 
                       },
+                      child:  Row(
+                        children: [
+                          Icon(
+                            Icons.rate_review,
+                            size: 28,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                            child: Text(
+                              'Rate us',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'JOSEF'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 25,),
+                    GestureDetector(
+                      onTap: (){
+
+                      },
+                      child:  Row(
+                        children: [
+                          Icon(
+                            Icons.help,
+                            size: 28,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                            child: Text(
+                              'Help',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: 'JOSEF'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
