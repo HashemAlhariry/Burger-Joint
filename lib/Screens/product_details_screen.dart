@@ -120,23 +120,51 @@ class ProductDetailsScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          "SINGLE",
-                          style: GoogleFonts.ptSans(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color(0xFFF80009),
+                        Expanded(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * .05,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF80009),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  50,
+                                ),
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "SINGLE",
+                              style: GoogleFonts.ptSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
-                        Text(
-                          "DOUBLE",
-                          style: GoogleFonts.ptSans(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color(0xFFF80009),
+                        Expanded(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * .05,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF80009),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  50,
+                                ),
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              "DOUBLE",
+                              style: GoogleFonts.ptSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ],
                     ),
