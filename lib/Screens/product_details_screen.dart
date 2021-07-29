@@ -22,73 +22,131 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _key,
-        drawer: DrawerWidget(),
-        appBar: CustomAppBar(
-            title: "DELIVERING TO",
-            backgroundColor: '#ED1C24',
-            onChanged: (value) {
-              if (value) {
-                _key.currentState!.openDrawer();
-              }
-            }),
-        body: Column(
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 10,
+      key: _key,
+      drawer: DrawerWidget(),
+      appBar: CustomAppBar(
+          title: "DELIVERING TO",
+          backgroundColor: '#ED1C24',
+          onChanged: (value) {
+            if (value) {
+              _key.currentState!.openDrawer();
+            }
+          }),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              IconButton(
+                onPressed: () {},
+                color: Color(0xffED1C24),
+                iconSize: 26,
+                icon: Icon(
+                  Icons.arrow_back_ios,
                 ),
-                IconButton(
-                  onPressed: () {},
-                  color: Color(0xffED1C24),
-                  iconSize: 26,
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                  ),
-                ),
-                Expanded(
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      title,
-                      style: GoogleFonts.bebasNeue(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 50,
-                        color: Color(0xffF80009),
-                      ),
-                      textAlign: TextAlign.left,
+              ),
+              Expanded(
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    title,
+                    style: GoogleFonts.bebasNeue(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50,
+                      color: Color(0xffF80009),
                     ),
+                    textAlign: TextAlign.left,
                   ),
                 ),
-              ],
-            ),
-            Hero(
-              tag: id,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * .3,
-                // width: MediaQuery.of(context).size.width,
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                ),
+              ),
+            ],
+          ),
+          Hero(
+            tag: id,
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * .3,
+              // width: MediaQuery.of(context).size.width,
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.cover,
               ),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  description,
-                  style: GoogleFonts.ptSans(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                    color: Color(0xff5B5B5B),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              description,
+              style: GoogleFonts.ptSans(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                color: Color(0xff5B5B5B),
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * .2,
+            width: MediaQuery.of(context).size.width,
+            color: Color(0xffF8F8F8),
+            alignment: Alignment.center,
+            child: Container(
+              width: MediaQuery.of(context).size.width * .7,
+              height: MediaQuery.of(context).size.height * .15,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    50,
                   ),
-                  textAlign: TextAlign.left,
                 ),
               ),
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * .05,
+                    margin: EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Color(0xFFF80009)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          50,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "SINGLE",
+                          style: GoogleFonts.ptSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Color(0xFFF80009),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          "DOUBLE",
+                          style: GoogleFonts.ptSans(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Color(0xFFF80009),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 }
