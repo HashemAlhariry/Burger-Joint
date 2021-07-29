@@ -51,7 +51,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      "$title",
+                      title,
                       style: GoogleFonts.bebasNeue(
                         fontWeight: FontWeight.bold,
                         fontSize: 50,
@@ -62,6 +62,31 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            Hero(
+              tag: id,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * .3,
+                // width: MediaQuery.of(context).size.width,
+                child: Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  description,
+                  style: GoogleFonts.ptSans(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                    color: Color(0xff5B5B5B),
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
             ),
           ],
         ));

@@ -74,7 +74,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                       "https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:7a727069-b0a9-4385-92e5-8f7801d8c401;revision=0?component_id=75640846-928a-4cb2-bad7-1d3becedb8f8&api_key=CometServer1&access_token=1627592836_urn%3Aaaid%3Asc%3AUS%3A7a727069-b0a9-4385-92e5-8f7801d8c401%3Bpublic_557e57ad286cfdd839b7a4ac9fb912052bdf7cac",
                   title: "Bouncy Burger",
                   description:
-                      "2 Burger Patties Beef Bacon, 2 Smoked Cheddar Cheese ….",
+                      "2 Burger Patties Beef Bacon, 2 Smoked Cheddar Cheese Slices, Tomatoes, Onions,Lettuce, Pickles, Ketchup and Mayonnaise Sauce",
                   price: 80,
                   id: index,
                 )),
