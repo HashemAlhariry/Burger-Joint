@@ -256,7 +256,5 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 
-  SizedBox h8() => SizedBox(
-        height: 8,
-      );
+  SizedBox h8() =>const SizedBox(height: 8,);
 }

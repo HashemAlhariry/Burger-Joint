@@ -1,3 +1,4 @@
+import 'package:burgerjoint/Screens/Cart/cart_main_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../Utils/global.dart';
@@ -108,7 +109,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                        Global.pageRouteBuilder(CartMainScreen());
+                    },
                     icon: Icon(Icons.shopping_cart_rounded),
                     iconSize: 35,
                     color: Colors.white,
