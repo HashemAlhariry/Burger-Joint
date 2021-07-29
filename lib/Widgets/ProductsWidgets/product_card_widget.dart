@@ -1,15 +1,17 @@
-import 'package:burgerjoint/Screens/product_details_screen.dart';
+import 'package:burgerjoint/Screens/Products/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProductCardDesign extends StatelessWidget {
+class ProductCardWidget extends StatelessWidget {
+
   final String imageUrl;
   final String title;
   final String description;
   final double price;
   final int id;
-  const ProductCardDesign({
+
+  const ProductCardWidget({
     Key? key,
     required this.imageUrl,
     required this.title,
@@ -35,7 +37,7 @@ class ProductCardDesign extends StatelessWidget {
         ),
         child: SizedBox(
           width: MediaQuery.of(context).size.width * .9,
-          height: MediaQuery.of(context).size.height * .21,
+          height: MediaQuery.of(context).size.height * .22,
           child: Card(
             clipBehavior: Clip.hardEdge,
             shape: RoundedRectangleBorder(

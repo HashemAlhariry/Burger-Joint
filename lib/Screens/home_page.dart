@@ -1,6 +1,6 @@
 import 'package:burgerjoint/Widgets/custom_appbar.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
-import 'package:burgerjoint/Widgets/product_details.dart';
+import 'package:burgerjoint/Widgets/home_page_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,12 +21,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       key:  _key,
       drawer: DrawerWidget(),
-      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: '#ED1C24' , onChanged: (value){
-        if(value){
-        _key.currentState!.openDrawer();
-        }
-      }),
-      body:  ProductWidget(),
+      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: '#ED1C24' , onChanged: (value){if(value){_key.currentState!.openDrawer();}}),
+      body:  HomePageWidget(),
     );
   }
 

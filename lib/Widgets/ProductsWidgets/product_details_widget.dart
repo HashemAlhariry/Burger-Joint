@@ -1,15 +1,15 @@
-import 'package:burgerjoint/Widgets/product_card_design.dart';
+import 'file:///D:/BurgerJoint/lib/Widgets/ProductsWidgets/product_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProductWidget extends StatefulWidget {
-  const ProductWidget({Key? key}) : super(key: key);
+class ProductsDetailsWidget extends StatefulWidget {
+  const ProductsDetailsWidget({Key? key}) : super(key: key);
 
   @override
-  _ProductWidgetState createState() => _ProductWidgetState();
+  _ProductsDetailsWidgetState createState() => _ProductsDetailsWidgetState();
 }
 
-class _ProductWidgetState extends State<ProductWidget> {
+class _ProductsDetailsWidgetState extends State<ProductsDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -23,7 +23,9 @@ class _ProductWidgetState extends State<ProductWidget> {
               width: 10,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               color: Color(0xffED1C24),
               iconSize: 26,
               icon: Icon(
@@ -69,7 +71,7 @@ class _ProductWidgetState extends State<ProductWidget> {
         ),
         ...List.generate(
             10,
-            (index) => ProductCardDesign(
+            (index) => ProductCardWidget(
                   imageUrl:
                       "https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:7a727069-b0a9-4385-92e5-8f7801d8c401;revision=0?component_id=75640846-928a-4cb2-bad7-1d3becedb8f8&api_key=CometServer1&access_token=1627592836_urn%3Aaaid%3Asc%3AUS%3A7a727069-b0a9-4385-92e5-8f7801d8c401%3Bpublic_557e57ad286cfdd839b7a4ac9fb912052bdf7cac",
                   title: "Bouncy Burger",

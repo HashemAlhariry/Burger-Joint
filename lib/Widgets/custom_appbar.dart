@@ -110,7 +110,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                        Global.pageRouteBuilder(CartMainScreen());
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CartMainScreen()));
+
                     },
                     icon: Icon(Icons.shopping_cart_rounded),
                     iconSize: 35,

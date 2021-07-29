@@ -40,7 +40,9 @@ class ProductDetailsScreen extends StatelessWidget {
                 width: 10,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 color: Color(0xffED1C24),
                 iconSize: 26,
                 icon: Icon(
