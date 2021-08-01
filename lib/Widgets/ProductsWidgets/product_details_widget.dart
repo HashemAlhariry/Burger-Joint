@@ -1,4 +1,4 @@
-import 'file:///D:/BurgerJoint/lib/Widgets/ProductsWidgets/product_card_widget.dart';
+import 'package:burgerjoint/Widgets/ProductsWidgets/product_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
