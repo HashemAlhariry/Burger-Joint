@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import '../Utils/global.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+
   final String title;
-  final String backgroundColor;
+  final Color backgroundColor;
   final ValueChanged<bool> onChanged;
   const CustomAppBar(
       {Key? key,
@@ -16,10 +17,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Container(
         decoration: BoxDecoration(
-          color: _colorFromHex(backgroundColor),
+          color:backgroundColor,
           borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(20),
             bottomLeft: Radius.circular(20),
@@ -27,52 +29,55 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         child: Column(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      // THIS ON CHANGED CALL BACK TO CHECK MENU PRESSED
-                      onChanged(true);
-                    }),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(color: Colors.white, fontSize: 14.0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0,0.0,0.0,0.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.white,
                       ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Icon(
-                              Icons.location_on,
-                              color: Colors.white,
-                              size: 14,
+                      onPressed: () {
+                        // THIS ON CHANGED CALL BACK TO CHECK MENU PRESSED
+                        onChanged(true);
+                      }),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(color: Colors.white, fontSize: 14.0),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Icon(
+                                Icons.location_on,
+                                color: Colors.white,
+                                size: 14,
+                              ),
                             ),
-                          ),
-                          Text(
-                            ' NASR CITY, MOKATTAM',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 14.0),
-                          ),
-                        ],
-                      ),
-                    ],
+                            Text(
+                              'NASR CITY, MOKATTAM',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12.0),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -100,7 +105,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           fillColor: Colors.white,
                           labelText: "Searching...",
                           labelStyle:
-                              TextStyle(color: Colors.grey, fontSize: 14),
+                              TextStyle(color: Colors.grey, fontSize: 12),
                           prefixIcon: Icon(
                             Icons.search,
                             color: Colors.grey,
@@ -114,7 +119,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
                     },
                     icon: Icon(Icons.shopping_cart_rounded),
-                    iconSize: 35,
+                    iconSize: 20,
                     color: Colors.white,
                   )
                 ],

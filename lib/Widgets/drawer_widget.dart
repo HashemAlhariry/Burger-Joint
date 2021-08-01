@@ -1,3 +1,6 @@
+import 'file:///D:/BurgerJoint/lib/Screens/Profile/UserSignIn/login.dart';
+import 'package:burgerjoint/Providers/cart.dart';
+import 'package:burgerjoint/Screens/Cart/cart_main_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -37,7 +40,11 @@ class DrawerWidget extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        print('tapped');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => Login(),
+                          ),
+                        );
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -68,7 +75,9 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     h8(),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CartMainScreen()));
+                      },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Row(

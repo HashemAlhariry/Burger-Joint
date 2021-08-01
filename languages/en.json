@@ -1,5 +1,5 @@
 {
-
+  "sign_up": "Sign Up",
   "login": "Login",
   "help": "Help",
   "settings": "Settings",
@@ -20,7 +20,6 @@
   "repeat_password": "Repeat Password",
   "empty": "Empty",
   "not_match": "Not Match",
-  "create_account_": "Create",
   "log_in_with_your_email": "Log In With Your Email",
   "forgot_your_password": "Forget Your Password?",
   "dont_have_account": "Don't have an account?",
@@ -32,9 +31,9 @@
   "cart": "Cart",
   "enter_password_more_than_six_character":"Please enter password more than six character",
   "valid_mobile_number": "Please enter valid mobile number",
-  "valid_email": "Please enter valid email",
+  "invalid_email": "Please enter valid email",
   "name": "Name",
-  "valid_name": "Please enter correct name",
+  "invalid_name": "Please enter correct name",
   "egyptian_pound": "Egyptian pound",
   "dollar": "Dollar",
   "next": "Next",

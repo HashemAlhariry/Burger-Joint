@@ -1,12 +1,12 @@
+import 'file:///D:/BurgerJoint/lib/Screens/Profile/UserSignIn/signup.dart';
+import 'package:burgerjoint/Screens/Profile/UserSignIn/forget_password.dart';
 import 'package:burgerjoint/Services/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../Models/user.dart';
-import '../../Utils/app_localizations.dart';
-import '../../Utils/global.dart';
-import 'signup.dart';
+import '../../../Utils/app_localizations.dart';
+import '../../../Utils/global.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -18,6 +18,7 @@ class _State extends State<Login> with Validation {
   String password = '';
   bool _isButtonDisabled= false ;
   final formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _State extends State<Login> with Validation {
               child: Stack(
                 children: [
                   Padding(
-                      padding: EdgeInsets.fromLTRB(45.0, 10, 10, 10),
+                      padding: EdgeInsets.all(10.0),
                       child: ListView(
                         children: <Widget>[
                           SizedBox(
@@ -42,7 +43,8 @@ class _State extends State<Login> with Validation {
                           ),
                           Center(
                             child: Text(
-                              AppLocalizations.of(context)!.translate('log_in_with_your_email')!,
+                              AppLocalizations.of(context)?.translate('log_in_with_your_email') ?? 'Log In With Your Email',
+                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 14 ),
                             ),
                           ),
                           SizedBox(
@@ -55,8 +57,9 @@ class _State extends State<Login> with Validation {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  emailField(),
-                                  passwordField(),
+                                 emailField(),
+                                 passwordField(),
+
                                   SizedBox(
                                     height: 40,
                                   ),
@@ -67,10 +70,14 @@ class _State extends State<Login> with Validation {
                                   Center(
                                     child: GestureDetector(
                                       onTap: () {
-
+                                        Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (ctx) => ForgetPassword(),
+                                        ),
+                                      );
                                       },
                                       child: Text(
-                                          AppLocalizations.of(context)!.translate('forgot_your_password')!,
+                                          AppLocalizations.of(context)?.translate('forgot_your_password') ?? 'Forget Your Password',
 
                                       ),
                                     ),
@@ -87,9 +94,9 @@ class _State extends State<Login> with Validation {
                               child: Row(
                                 children: <Widget>[
                                   Text(
-                                    AppLocalizations.of(context)!.translate('dont_have_account')!,
+                                    AppLocalizations.of(context)?.translate('dont_have_account') ?? 'Don\'t Have Account' ,
                                     style: TextStyle(
-                                        fontFamily: 'JOSEF', fontSize: 10),
+                                        fontFamily: 'JOSEF', fontSize: 12),
                                   ),
                                   Expanded(
                                       child: SizedBox(
@@ -102,8 +109,7 @@ class _State extends State<Login> with Validation {
                                       padding:
                                           const EdgeInsets.fromLTRB(0, 4, 0, 0),
                                       child: Text(
-                                        AppLocalizations.of(context)!
-                                            .translate('register')!,
+                                        AppLocalizations.of(context)?.translate('sign_up') ?? 'Sign Up',
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
@@ -112,8 +118,12 @@ class _State extends State<Login> with Validation {
                                       ),
                                     ),
                                     onPressed: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (ctx) => SignUp(),
+                                        ),
+                                      );
 
-                                      Navigator.of(context).push(Global.pageRouteBuilder(SignUp()));
 
                                     },
                                   ),
@@ -152,7 +162,7 @@ class _State extends State<Login> with Validation {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: AppLocalizations.of(context)!.translate('email'),
+          labelText: AppLocalizations.of(context)?.translate('email') ?? 'Email',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -160,7 +170,7 @@ class _State extends State<Login> with Validation {
               color: Colors.black)),
       validator: (String? value) {
         if (value!.length < 7 && !value.contains("@")) {
-          return AppLocalizations.of(context)!.translate('valid_email');
+          return AppLocalizations.of(context)?.translate('invalid_email') ?? 'Invalid Email';
         }
         return '';
       },
@@ -178,7 +188,7 @@ class _State extends State<Login> with Validation {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: AppLocalizations.of(context)!.translate('password'),
+          labelText: AppLocalizations.of(context)?.translate('password') ?? 'Password',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -186,10 +196,9 @@ class _State extends State<Login> with Validation {
               color: Colors.black)),
       validator: (val) {
         if (val!.isEmpty)
-          return AppLocalizations.of(context)!.translate('empty');
+          return AppLocalizations.of(context)?.translate('empty') ?? 'Empty';
         else if (val.length < 5)
-          return AppLocalizations.of(context)!
-              .translate('enter_password_more_than_six_character');
+          return AppLocalizations.of(context)?.translate('enter_password_more_than_six_character') ?? 'Enter Password More Than Siz Characters';
         return '';
       },
       onSaved: (String? value) {
@@ -204,9 +213,9 @@ class _State extends State<Login> with Validation {
         height: 30,
         width: MediaQuery.of(context).size.width,
         child: RaisedButton(
-          color: _isButtonDisabled ? Colors.grey : Colors.black,
+          color: _isButtonDisabled ? Colors.grey : Global.colorFromHex('ED1C24'),
           child: Text(
-            AppLocalizations.of(context)!.translate('login')!,
+            AppLocalizations.of(context)?.translate('login') ?? 'Login',
             style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
@@ -261,4 +270,7 @@ class _State extends State<Login> with Validation {
         ),
       );
   }
+
+
+
 }

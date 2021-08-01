@@ -1,3 +1,4 @@
+import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/custom_appbar.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
+
   final String imageUrl;
   final String title;
   final String description;
   final double price;
   final int id;
+
   ProductDetailsScreen({
     Key? key,
     required this.imageUrl,
@@ -26,7 +29,7 @@ class ProductDetailsScreen extends StatelessWidget {
       drawer: DrawerWidget(),
       appBar: CustomAppBar(
           title: "DELIVERING TO",
-          backgroundColor: '#ED1C24',
+          backgroundColor: Global.colorFromHex('hexColor'),
           onChanged: (value) {
             if (value) {
               _key.currentState!.openDrawer();

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui';
 
-import '../../Models/user.dart';
-import '../../Utils/app_localizations.dart';
-import '../../Utils/global.dart';
+import '../../../Models/user.dart';
+import '../../../Utils/app_localizations.dart';
+import '../../../Utils/global.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -23,11 +23,12 @@ class _State extends State<SignUp> with Validation {
 
   bool _showPassword = false;
 
-  String language = Global.language;
 
   final formkey = GlobalKey<FormState>();
   final TextEditingController _confirmPass = TextEditingController();
   final TextEditingController _pass = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ class _State extends State<SignUp> with Validation {
                               "Burger Joint",
                               style: TextStyle(
                                   fontSize: 32,
-                                  color: Colors.black,
+                                  color: Global.colorFromHex('ED1C24'),
                                   fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -147,7 +148,7 @@ class _State extends State<SignUp> with Validation {
               color: Colors.black)),
         validator: (String? value){
           if (value!.length < 3) {
-            return AppLocalizations.of(context)?.translate('valid_name');
+            return AppLocalizations.of(context)?.translate('invalid_name') ?? 'Please Enter Correct Name';
           }
           return '';
         },
@@ -165,7 +166,7 @@ class _State extends State<SignUp> with Validation {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: AppLocalizations.of(context)?.translate('last_name'),
+          labelText: AppLocalizations.of(context)?.translate('last_name')??'Last Name',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -173,7 +174,7 @@ class _State extends State<SignUp> with Validation {
               color: Colors.black)),
       validator: (String? value) {
         if (value!.length < 3) {
-          return AppLocalizations.of(context)?.translate('valid_name');
+          return AppLocalizations.of(context)?.translate('invalid_name') ?? 'Please Enter Correct Name';
         }
         return '';
       },
@@ -191,7 +192,7 @@ class _State extends State<SignUp> with Validation {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: AppLocalizations.of(context)?.translate('email'),
+          labelText: AppLocalizations.of(context)?.translate('email') ?? 'Email',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 14,
@@ -199,7 +200,7 @@ class _State extends State<SignUp> with Validation {
               color: Colors.black)),
       validator: (String? value) {
         if (value!.length < 7 && !value.contains("@")) {
-          return AppLocalizations.of(context)?.translate('valid_email');
+          return AppLocalizations.of(context)?.translate('invalid_email') ?? 'Invalid Email';
         }
         return '';
       },
@@ -217,7 +218,7 @@ class _State extends State<SignUp> with Validation {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: AppLocalizations.of(context)?.translate('mobile'),
+          labelText: AppLocalizations.of(context)?.translate('mobile') ?? 'Mobile Number',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -225,7 +226,7 @@ class _State extends State<SignUp> with Validation {
               color: Colors.black)),
       validator: (String? value) {
         if (value!.length < 11) {
-          return AppLocalizations.of(context)?.translate('valid_mobile_number');
+          return AppLocalizations.of(context)?.translate('valid_mobile_number') ?? 'Valid Mobile Number';
         }
         return '';
       },
@@ -249,7 +250,7 @@ class _State extends State<SignUp> with Validation {
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
               ),
-              labelText: AppLocalizations.of(context)?.translate('password'),
+              labelText: AppLocalizations.of(context)?.translate('password') ?? 'password',
               labelStyle: TextStyle(
                   fontFamily: 'JOSEF',
                   fontSize: 12,
@@ -267,11 +268,12 @@ class _State extends State<SignUp> with Validation {
               ),
             ),
             validator: (val) {
+
               if (val!.isEmpty)
-                return AppLocalizations.of(context)?.translate('empty');
-              else if (val!.length < 5)
-                return AppLocalizations.of(context)?.translate('enter_password_more_than_six_character');
-              return null;
+                return AppLocalizations.of(context)?.translate('empty') ?? 'Empty';
+              else if (val.length < 5)
+                return AppLocalizations.of(context)?.translate('enter_password_more_than_six_character') ?? 'Enter Password More than six characters';
+
             },
             onSaved: (String? value) {
               password = value!;
@@ -291,16 +293,16 @@ class _State extends State<SignUp> with Validation {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: AppLocalizations.of(context)?.translate('repeat_password'),
+          labelText: AppLocalizations.of(context)?.translate('repeat_password') ?? 'Repeat Password',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
               fontWeight: FontWeight.normal,
               color: Colors.black)),
       validator: (val) {
-        if (val!.isEmpty) return AppLocalizations.of(context)?.translate('empty');
+        if (val!.isEmpty) return AppLocalizations.of(context)?.translate('empty') ?? 'Empty';
         if (val != _pass.text)
-          return AppLocalizations.of(context)?.translate('not_match');
+          return AppLocalizations.of(context)?.translate('not_match') ?? 'Not Match';
         return null;
       },
       onSaved: (String? value) {
@@ -313,12 +315,12 @@ class _State extends State<SignUp> with Validation {
     return Container(
       height: 35,
       width: MediaQuery.of(context).size.width,
-      child: RaisedButton(
-        color:  Colors.black,
+      child:  RaisedButton(
+        color:  Global.colorFromHex('#ED1C24'),
         child: Text(
-          AppLocalizations.of(context)!.translate('continue')!,
+          AppLocalizations.of(context)?.translate('continue') ?? 'Continue',
           style: TextStyle(
-              color: Colors.white,
+              color:Colors.white,
               fontWeight: FontWeight.w700,
               fontSize: 14,
               fontFamily: 'JOSEF'),
