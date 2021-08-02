@@ -1,4 +1,4 @@
-import 'file:///D:/BurgerJoint/lib/Widgets/ProductsWidgets/product_card_widget.dart';
+import 'package:burgerjoint/Widgets/ProductsWidgets/product_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,7 +24,7 @@ class _ProductsDetailsWidgetState extends State<ProductsDetailsWidget> {
             ),
             IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                //Navigator.pop(context);
               },
               color: Color(0xffED1C24),
               iconSize: 26,
@@ -73,7 +73,7 @@ class _ProductsDetailsWidgetState extends State<ProductsDetailsWidget> {
             10,
             (index) => ProductCardWidget(
                   imageUrl:
-                      "https://cdn-sharing.adobecc.com/content/storage/id/urn:aaid:sc:US:7a727069-b0a9-4385-92e5-8f7801d8c401;revision=0?component_id=75640846-928a-4cb2-bad7-1d3becedb8f8&api_key=CometServer1&access_token=1627592836_urn%3Aaaid%3Asc%3AUS%3A7a727069-b0a9-4385-92e5-8f7801d8c401%3Bpublic_557e57ad286cfdd839b7a4ac9fb912052bdf7cac",
+                      "https://images.unsplash.com/photo-1543339469-94ba2391431f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
                   title: "Bouncy Burger",
                   description:
                       "2 Burger Patties Beef Bacon, 2 Smoked Cheddar Cheese Slices, Tomatoes, Onions,Lettuce, Pickles, Ketchup and Mayonnaise Sauce",

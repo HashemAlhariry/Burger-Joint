@@ -27,11 +27,11 @@ class ProductCardWidget extends StatelessWidget {
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (ctx) => ProductDetailsScreen(
-              id: id,
-              price: price,
-              description: description,
-              title: title,
-              imageUrl: imageUrl,
+              imageUrl,
+              title,
+              description,
+              price,
+              id,
             ),
           ),
         ),

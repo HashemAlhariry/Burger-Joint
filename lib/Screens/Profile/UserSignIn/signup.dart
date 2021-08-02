@@ -40,11 +40,12 @@ class _State extends State<SignUp> with Validation {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Padding(
-                padding: EdgeInsets.fromLTRB(10.0, 10, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: Stack(
                   children: [
+
                     Padding(
-                      padding: EdgeInsets.fromLTRB(45.0, 5, 10, 10),
+                      padding: EdgeInsets.all(10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -64,7 +65,7 @@ class _State extends State<SignUp> with Validation {
                           ),
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.all(15.0),
+                              margin: EdgeInsets.all(0.0),
                               child: Form(
                                 key: formkey,
                                 child: ListView(
@@ -126,6 +127,8 @@ class _State extends State<SignUp> with Validation {
                         ),
                       ),
                     ),
+
+
                   ],
                 )),
           ),
