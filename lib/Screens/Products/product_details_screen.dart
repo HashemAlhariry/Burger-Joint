@@ -1,5 +1,3 @@
-import 'package:burgerjoint/Utils/global.dart';
-import 'package:burgerjoint/Widgets/custom_appbar.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

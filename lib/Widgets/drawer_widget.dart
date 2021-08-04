@@ -1,6 +1,7 @@
 import 'package:burgerjoint/Providers/cart.dart';
 import 'package:burgerjoint/Screens/Cart/cart_main_screen.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
+import 'package:burgerjoint/Screens/Profile/proflie.dart';
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
@@ -42,7 +43,7 @@ class DrawerWidget extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => Login(),
+                            builder: (ctx) => Profile(),
                           ),
                         );
                       },

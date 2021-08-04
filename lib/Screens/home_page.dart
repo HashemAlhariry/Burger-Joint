@@ -1,11 +1,9 @@
-import 'package:burgerjoint/Screens/Products/product_details_screen.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/HomePage/home_page_widget.dart';
-import 'package:burgerjoint/Widgets/ProductsWidgets/product_card_widget.dart';
-import 'package:burgerjoint/Widgets/ProductsWidgets/product_details_widget.dart';
 import 'package:burgerjoint/Widgets/custom_appbar.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
 
   //FOR DRAWER
   final GlobalKey<ScaffoldState> _key =  GlobalKey<ScaffoldState>();
@@ -26,7 +25,7 @@ class _HomePageState extends State<HomePage> {
       key:  _key,
       appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex('ED1C24') , onChanged: (value){if(value){_key.currentState!.openDrawer();}}),
       drawer: DrawerWidget(),
-      body:  ProductsDetailsWidget(),
+      body:  HomePageWidget(),
     );
 
   }

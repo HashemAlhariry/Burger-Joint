@@ -99,10 +99,10 @@ class ProductCardWidget extends StatelessWidget {
                                     topLeft: Radius.circular(10))),
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
-                              "$price L.E",
+                              "100 L.E",
                               style: GoogleFonts.oswald(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 28,
+                                fontSize: 25,
                                 color: Colors.white,
                               ),
                             ),

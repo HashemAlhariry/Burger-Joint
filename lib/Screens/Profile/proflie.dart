@@ -1,3 +1,4 @@
+import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -8,6 +9,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    //SEND USER TO LOGIN IF SHARED PREFERENCE EQUALS NULL
+    return Login();
   }
 }
