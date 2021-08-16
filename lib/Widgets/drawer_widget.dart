@@ -1,5 +1,5 @@
 import 'package:burgerjoint/Providers/cart.dart';
-import 'package:burgerjoint/Screens/Cart/cart_main_screen.dart';
+import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
 import 'package:burgerjoint/Screens/Profile/proflie.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +77,7 @@ class DrawerWidget extends StatelessWidget {
                     h8(),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CartMainScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
