@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class CartScreen extends StatefulWidget {
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -10,6 +11,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+
       backgroundColor: Colors.grey.shade100,
       body: SafeArea(
         child:
@@ -29,15 +31,16 @@ class _CartScreenState extends State<CartScreen> {
                 ),
                 margin: EdgeInsets.only(left: 12, top: 12),
             ),
-              Container(
+            Container(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Total(3) Items",
                       style: TextStyle(
                           fontSize: 16,
+
                           color: Colors.black,
                           fontWeight: FontWeight.w400),
-                         ),
+                    ),
                     margin: EdgeInsets.only(left: 12, top: 4),
                   ),
             ListView.builder(
