@@ -1,6 +1,4 @@
-
-
-class Favorite{
+class Favorite {
 
 
 }

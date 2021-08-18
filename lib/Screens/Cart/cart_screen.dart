@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 
 class CartScreen extends StatefulWidget {
+
   @override
   _CartScreenState createState() => _CartScreenState();
+
 }
 
 class _CartScreenState extends State<CartScreen> {
@@ -19,11 +21,11 @@ class _CartScreenState extends State<CartScreen> {
                padding: const EdgeInsets.all(10.0),
                child: ListView(
                 children: <Widget>[
-            Container(
-            alignment: Alignment.topLeft,
-                child: Text(
-                  "SHOPPING CART",
-                  style: TextStyle(
+                    Container(
+                     alignment: Alignment.topLeft,
+                      child: Text(
+                      "SHOPPING CART",
+                      style: TextStyle(
                       fontSize: 16,
 
                       color: Colors.black,

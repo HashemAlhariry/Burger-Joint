@@ -1,5 +1,3 @@
-
-// Home Page Categories
 class HomePageCategory{
   late String image;
   late String id;

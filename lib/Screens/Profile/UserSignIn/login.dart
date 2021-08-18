@@ -271,6 +271,4 @@ class _State extends State<Login> with Validation {
       );
   }
 
-
-
 }

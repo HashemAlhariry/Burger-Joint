@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'Screens/home_page.dart';
 import 'Utils/app_localizations.dart';
 
-
 void main() async {
 
   runApp(MainWidget());

@@ -198,7 +198,9 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     h8(),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+
+                      },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Row(
@@ -228,7 +230,9 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     h8(),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+
+                      },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Row(
