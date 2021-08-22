@@ -27,13 +27,12 @@ class _CartScreenState extends State<CartScreen> {
                       "SHOPPING CART",
                       style: TextStyle(
                       fontSize: 16,
-
                       color: Colors.black,
                       fontWeight: FontWeight.w400),
                 ),
                 margin: EdgeInsets.only(left: 12, top: 12),
             ),
-            Container(
+               Container(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Total(3) Items",
@@ -45,7 +44,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                     margin: EdgeInsets.only(left: 12, top: 4),
                   ),
-            ListView.builder(
+               ListView.builder(
                     shrinkWrap: true,
                     primary: false,
                     itemBuilder: (context, position) {

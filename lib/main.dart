@@ -6,9 +6,7 @@ import 'Screens/home_page.dart';
 import 'Utils/app_localizations.dart';
 
 void main() async {
-
   runApp(MainWidget());
-
 }
 
 class MainWidget extends StatelessWidget {
@@ -18,11 +16,9 @@ class MainWidget extends StatelessWidget {
 
       return MultiProvider(
           providers: [
-
             ChangeNotifierProvider(
               create: (context) => AppLanguage(),
             ),
-
           ],
           child: Consumer<AppLanguage>(builder: (context, model, child) {
 
@@ -30,8 +26,10 @@ class MainWidget extends StatelessWidget {
 
                 debugShowCheckedModeBanner: false,
                 supportedLocales: [
+
                   Locale('ar', 'EG'),
                   Locale('en', 'US'),
+
                 ],
                 localizationsDelegates: [
                   AppLocalizations.delegate,
@@ -49,6 +47,7 @@ class MainWidget extends StatelessWidget {
 }
 
 
+// this code for initiating OneSignal
 /*
 Future<void> initOneSignal() async {
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);

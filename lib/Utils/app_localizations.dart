@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class AppLocalizations {
 
    late Locale locale;
@@ -32,13 +30,14 @@ class AppLocalizations {
     return true;
   }
 
-
   String? translate(String key) {
     return _localizedStrings[key];
   }
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+
   const _AppLocalizationsDelegate();
   @override
   bool isSupported(Locale locale) {

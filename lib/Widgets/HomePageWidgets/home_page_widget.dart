@@ -1,14 +1,11 @@
 import 'package:burgerjoint/Models/home_page_categories.dart';
-import 'package:burgerjoint/Screens/Products/product_details_screen.dart';
-import 'package:burgerjoint/Widgets/ProductsWidgets/product_details_widget.dart';
 import 'package:flutter/material.dart';
 
-
-
-
 class HomePageWidget extends StatefulWidget {
+
   @override
   _HomePageWidgetState createState() => _HomePageWidgetState();
+
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
@@ -36,14 +33,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: GestureDetector(
-
                     onTap: (){
-
-
 
                     },
                     child: Card(
-
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),

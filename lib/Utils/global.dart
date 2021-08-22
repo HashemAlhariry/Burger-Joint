@@ -1,5 +1,7 @@
 import 'package:burgerjoint/Models/user.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -11,7 +13,8 @@ class Global {
 
 
   static String globalUrl = "" ;
-  static String testUrl =   "";
+  // testing local url
+  static String testUrl =  "https://bj.marshelles.com/public/" ;
 
 
   static var language = Global.prefs.getString('language_code') ?? 'en';
@@ -27,7 +30,6 @@ class Global {
 
   /// * PAGE ROUTE FOR ANIMATING SCREEN GLOBALLY ***/
   static PageRouteBuilder pageRouteBuilder (screen) {
-
     return PageRouteBuilder (
         transitionDuration: Duration(milliseconds: 250 ),
         transitionsBuilder: (context, animation, animationTime, child) {
@@ -45,7 +47,6 @@ class Global {
         pageBuilder: (context, animation, animationTime) {
           return screen;
         });
-
   }
 
   /// FUNCTION TAKES STRING HEXCOLOR AND CHANGE IT TO COLOR ***/
@@ -54,5 +55,16 @@ class Global {
     return Color(int.parse('FF$hexCode', radix: 16));
   }
 
-
+  //global toast_message send message in an argument
+  static void toastMessage(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: 14.0,
+    );
+  }
 }

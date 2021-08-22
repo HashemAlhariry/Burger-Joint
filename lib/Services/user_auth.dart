@@ -6,19 +6,30 @@ import 'package:http/http.dart' as http;
 class UserAuthentication{
 
   static Future<Map<String, dynamic>> signUp(String url, User user) async {
+   try{
 
     final Uri uri = Uri.parse(url);
     final response = await http.post(uri,
-        headers: {"Content-Type": "application/json",       'Accept': 'application/json',},
+        headers: {"Content-Type": "application/json",'Accept': 'application/json',},
         body: json.encode({
+
           "name": user.name,
-          "email": user.email,
+          "username":user.userName,
           "password": user.password,
-          "phone": user.mobileNumber
+          "phone": user.mobileNumber,
+          "gender": user.gender
+
         }));
-    Map<String, dynamic> convertDataToJson = json.decode(response.body) as Map<String,dynamic>;
-    print(convertDataToJson['message']);
-    return convertDataToJson;
+
+      Map<String, dynamic> convertDataToJson = json.decode(response.body) as Map<String,dynamic>;
+      return convertDataToJson;
+
+   }
+   catch (exception) {
+     print(exception);
+     return Map();
+   }
+
 
   }
 

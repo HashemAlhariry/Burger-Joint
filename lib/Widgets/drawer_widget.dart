@@ -1,6 +1,4 @@
-import 'package:burgerjoint/Providers/cart.dart';
 import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
-import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
 import 'package:burgerjoint/Screens/Profile/proflie.dart';
 import 'package:flutter/material.dart';
 
@@ -270,5 +268,5 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 
-  SizedBox h8() =>const SizedBox(height: 8,);
+  SizedBox h8() => const SizedBox(height: 8,);
 }

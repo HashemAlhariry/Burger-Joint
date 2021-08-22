@@ -1,11 +1,16 @@
+import 'package:burgerjoint/Models/gender.dart';
+import 'package:burgerjoint/Services/user_auth.dart';
 import 'package:burgerjoint/Services/validation.dart';
+import 'package:burgerjoint/Widgets/customRadio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:ui';
 
 import '../../../Models/user.dart';
 import '../../../Utils/app_localizations.dart';
 import '../../../Utils/global.dart';
+
 
 class SignUp extends StatefulWidget {
   @override
@@ -14,20 +19,26 @@ class SignUp extends StatefulWidget {
 
 class _State extends State<SignUp> with Validation {
 
+
+  //String userEmailForm = '';
+
+
+  String nameForm = '';
   String userNameForm = '';
-  String userLastNameForm = '';
-  String userEmailForm = '';
   String phone = '';
   String password = '';
   String confirmPassword = '';
 
+  int checkGender= -1 ;
   bool _showPassword = false;
+
+
 
 
   final formkey = GlobalKey<FormState>();
   final TextEditingController _confirmPass = TextEditingController();
   final TextEditingController _pass = TextEditingController();
-
+  List<Gender> genders = [  Gender("Male",  FontAwesomeIcons.mars , false), Gender("Female",  FontAwesomeIcons.venus  , false)];
 
 
   @override
@@ -85,7 +96,13 @@ class _State extends State<SignUp> with Validation {
                                     SizedBox(
                                       height: 15,
                                     ),
+                                    /*
                                     emailField(),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    */
+                                    userNameField(),
                                     SizedBox(
                                       height: 3,
                                     ),
@@ -93,10 +110,7 @@ class _State extends State<SignUp> with Validation {
                                     SizedBox(
                                       height: 3,
                                     ),
-                                    lastNameField(),
-                                    SizedBox(
-                                      height: 3,
-                                    ),
+
                                     passwordField(),
                                     SizedBox(
                                       height: 3,
@@ -106,6 +120,37 @@ class _State extends State<SignUp> with Validation {
                                       height: 3,
                                     ),
                                     mobileField(),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Row(
+                                      children: [
+                                       Expanded(child: Container()),
+
+                                       Container(height:75, width: 150, child:
+                                        ListView.builder(
+                                           scrollDirection: Axis.horizontal,
+                                           shrinkWrap: true,
+                                           itemCount: genders.length,
+                                           itemBuilder: (context, index) {
+                                             return InkWell(
+                                               splashColor: Colors.pinkAccent,
+                                               onTap: () {
+                                                 setState(() {
+                                                   genders.forEach((gender) => gender.isSelected = false);
+                                                   genders[index].isSelected = true;
+                                                   checkGender=index+1;
+
+
+                                                 });
+                                               },
+                                               child: CustomRadio(genders[index]),
+                                             );
+                                           }),),
+
+                                       Expanded(child: Container()),
+                                   ],)
+
                                   ],
                                 ),
                               ),
@@ -131,7 +176,6 @@ class _State extends State<SignUp> with Validation {
                       ),
                     ),
 
-
                   ],
                 )),
           ),
@@ -156,15 +200,15 @@ class _State extends State<SignUp> with Validation {
           if (value!.length < 3) {
             return AppLocalizations.of(context)?.translate('invalid_name') ?? 'Please Enter Correct Name';
           }
-          return '';
+
         },
       onSaved: (String? value) {
-        userNameForm = value!;
+        nameForm = value!;
         },
     );
   }
 
-  Widget lastNameField() {
+  Widget userNameField() {
     return TextFormField(
       cursorColor: Colors.grey,
       keyboardType: TextInputType.text,
@@ -172,7 +216,7 @@ class _State extends State<SignUp> with Validation {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: AppLocalizations.of(context)?.translate('last_name')??'Last Name',
+          labelText: AppLocalizations.of(context)?.translate('user_name')??'User Name',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -182,14 +226,15 @@ class _State extends State<SignUp> with Validation {
         if (value!.length < 3) {
           return AppLocalizations.of(context)?.translate('invalid_name') ?? 'Please Enter Correct Name';
         }
-        return '';
+
       },
       onSaved: (String? value) {
-        userLastNameForm = value!;
+        userNameForm = value!;
       },
     );
   }
 
+  /*
   Widget emailField() {
     return TextFormField(
       keyboardType: TextInputType.text,
@@ -215,7 +260,7 @@ class _State extends State<SignUp> with Validation {
       },
     );
   }
-
+  */
   Widget mobileField() {
     return TextFormField(
       cursorColor: Colors.grey,
@@ -234,7 +279,7 @@ class _State extends State<SignUp> with Validation {
         if (value!.length < 11) {
           return AppLocalizations.of(context)?.translate('valid_mobile_number') ?? 'Valid Mobile Number';
         }
-        return '';
+
       },
       onSaved: (String? value) {
         phone = value!;
@@ -266,7 +311,7 @@ class _State extends State<SignUp> with Validation {
               suffixIcon: IconButton(
                 icon: Icon(
                   Icons.remove_red_eye,
-                  color: this._showPassword ? Colors.blue : Colors.grey,
+                  color: this._showPassword ? Colors.red : Colors.grey,
                 ),
                 onPressed: () {
                   setState(() => this._showPassword = !this._showPassword);
@@ -333,14 +378,42 @@ class _State extends State<SignUp> with Validation {
         ),
         onPressed: () async {
           if (formkey.currentState!.validate()) {
-
-
             formkey.currentState!.save();
-            User user = new User.signUpUser(
-                userNameForm + " " + userLastNameForm,
-                userEmailForm,
-                password,
-                phone);
+            if(checkGender!= -1 ){
+
+              User user = new User.signUpUser(
+                              userNameForm,
+                              nameForm,
+                              password,
+                              phone,
+                              checkGender);
+
+              UserAuthentication.signUp(Global.testUrl+"customer/register", user) .then((value){
+
+
+                if(value['access_token'] != null){
+                  // restart app with new signed up user
+                  // save access_token
+
+
+                } else {
+
+                  Global.toastMessage(value.toString());
+
+                }
+
+
+
+
+              });
+
+            }
+            else{
+              Global.toastMessage("CHOOSE A GENDER");
+              
+              
+            }
+
 
 
 
@@ -349,7 +422,6 @@ class _State extends State<SignUp> with Validation {
       ),
     );
   }
-
 
   _showDialog(BuildContext context) {
 
@@ -369,7 +441,9 @@ class _State extends State<SignUp> with Validation {
     );
   }
 
+
 }
+
 /*
 showAlertDialog(BuildContext context,String language,User user) {
   // Create button
@@ -401,6 +475,7 @@ showAlertDialog(BuildContext context,String language,User user) {
 
 }
   */
+
 
 class BlurryDialog extends StatelessWidget {
 
@@ -434,4 +509,6 @@ class BlurryDialog extends StatelessWidget {
           ],
         ));
   }
+
+
 }
