@@ -398,8 +398,15 @@ class _State extends State<SignUp> with Validation {
 
                 } else {
 
-                  Global.toastMessage(value.toString());
+                  var errorText="";
+                    if(value['username']!=null)
+                    errorText+=value['username'].toString();
 
+                    errorText+=" ";
+                    if(value['phone'] !=null)
+                      errorText+=value['phone'].toString();
+
+                  Global.toastMessage(errorText);
                 }
 
 
