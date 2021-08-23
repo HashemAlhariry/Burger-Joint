@@ -9,5 +9,4 @@ class User {
   User.signUpUser(this.userName,this.name, this.password, this.mobileNumber,this.gender);
   User.loggedIn(this.mobileNumber, this.password);
 
-
 }

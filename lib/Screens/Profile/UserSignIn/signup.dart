@@ -1,5 +1,5 @@
 import 'package:burgerjoint/Models/gender.dart';
-import 'package:burgerjoint/Services/user_auth.dart';
+import 'package:burgerjoint/Services/user_authentication.dart';
 import 'package:burgerjoint/Services/validation.dart';
 import 'package:burgerjoint/Widgets/customRadio.dart';
 import 'package:flutter/material.dart';
@@ -395,7 +395,6 @@ class _State extends State<SignUp> with Validation {
                   // restart app with new signed up user
                   // save access_token
 
-
                 } else {
 
                   var errorText="";
@@ -407,8 +406,8 @@ class _State extends State<SignUp> with Validation {
                       errorText+=value['phone'].toString();
 
                   Global.toastMessage(errorText);
-                }
 
+                }
 
 
 

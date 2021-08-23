@@ -1,3 +1,4 @@
+import 'package:burgerjoint/Models/branch.dart';
 import 'package:burgerjoint/Models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -19,7 +20,7 @@ class Global {
 
   static var language = Global.prefs.getString('language_code') ?? 'en';
 
-
+  static late Branch branch;
 
   /*** Cart FOR USER'S PRODUCT ***/
   //static List<CartItem> cartItems=[];

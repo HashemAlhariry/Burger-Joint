@@ -1,5 +1,6 @@
 import 'package:burgerjoint/Screens/Profile/UserSignIn/forget_password.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/signup.dart';
+import 'package:burgerjoint/Services/user_authentication.dart';
 import 'package:burgerjoint/Services/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class Login extends StatefulWidget {
 }
 
 class _State extends State<Login> with Validation {
-  String emailAddress = '';
+  String userName = '';
   String password = '';
   bool _isButtonDisabled= false ;
   final formKey = GlobalKey<FormState>();
@@ -43,7 +44,7 @@ class _State extends State<Login> with Validation {
                           ),
                           Center(
                             child: Text(
-                              AppLocalizations.of(context)?.translate('log_in_with_your_email') ?? 'Log In With Your Email',
+                              AppLocalizations.of(context)?.translate('log_in_with_your_username') ?? 'Log In With Your Username',
                               style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 14 ),
                             ),
                           ),
@@ -57,7 +58,7 @@ class _State extends State<Login> with Validation {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                 emailField(),
+                                 userNameField(),
                                  passwordField(),
 
                                   SizedBox(
@@ -154,33 +155,34 @@ class _State extends State<Login> with Validation {
         ));
   }
 
-  Widget emailField() {
+  Widget userNameField() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.text,
       cursorColor: Colors.grey,
       decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: AppLocalizations.of(context)?.translate('email') ?? 'Email',
+          labelText: AppLocalizations.of(context)?.translate('user_name') ?? 'User Name',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
               fontWeight: FontWeight.normal,
               color: Colors.black)),
       validator: (String? value) {
-        if (value!.length < 7 && !value.contains("@")) {
-          return AppLocalizations.of(context)?.translate('invalid_email') ?? 'Invalid Email';
+        if (value!.length < 2) {
+          return AppLocalizations.of(context)?.translate('invalid_user_name') ?? 'Invalid User Name';
         }
-        return '';
+
       },
       onSaved: (String? value) {
-        emailAddress = value!;
+        userName = value!;
       },
     );
   }
 
   Widget passwordField() {
+
     return TextFormField(
       obscureText: true,
       cursorColor: Colors.grey,
@@ -199,7 +201,7 @@ class _State extends State<Login> with Validation {
           return AppLocalizations.of(context)?.translate('empty') ?? 'Empty';
         else if (val.length < 5)
           return AppLocalizations.of(context)?.translate('enter_password_more_than_six_character') ?? 'Enter Password More Than Siz Characters';
-        return '';
+
       },
       onSaved: (String? value) {
         password = value!;
@@ -222,12 +224,21 @@ class _State extends State<Login> with Validation {
                 fontSize: 14,
                 fontFamily: 'JOSEF'),
           ),
-          onPressed: () {
+          onPressed: !_isButtonDisabled ?  () {
+
             if (formKey.currentState!.validate()) {
 
               formKey.currentState!.save();
               setState(() {
                 _isButtonDisabled=true;
+              });
+
+
+              UserAuthentication.logIn(Global.testUrl+"auth/token" , userName , password).then((value) {
+                //restart app with logged in
+                //save user data
+
+
               });
                 /*
               User.logIn("${Global.globalUrl}/mobile/login", emailAddress,
@@ -265,8 +276,10 @@ class _State extends State<Login> with Validation {
 
               */
 
+
+
             }
-          },
+          } : null,
         ),
       );
   }
