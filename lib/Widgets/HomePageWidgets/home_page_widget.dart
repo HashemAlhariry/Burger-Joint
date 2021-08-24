@@ -2,19 +2,25 @@ import 'package:burgerjoint/Models/home_page_categories.dart';
 import 'package:flutter/material.dart';
 
 class HomePageWidget extends StatefulWidget {
+  final int branchId;
+
+  HomePageWidget(this.branchId);
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _HomePageWidgetState createState() => _HomePageWidgetState(branchId);
 
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
 
+  int branchId;
+  _HomePageWidgetState(this.branchId);
   // LIST OF IMAGES THAT WILL APPEAR AT THE TOP HOMEPAGE
-  List<HomePageCategory> homePageCategory = [ HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg','1') , HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg','1') ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg','1') ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg','1') ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg','1') ,];
+  List<HomePageCategory> homePageCategory = [ HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1') , HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1') ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1') ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1') ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1') ,];
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
@@ -48,7 +54,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: Image.network(
-                              homePageCategory[index].image,
+                              homePageCategory[index].categoryImage,
                               fit: BoxFit.fitWidth,
                             ),
                           ),
@@ -64,5 +70,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       ),
     );
   }
+
+  @override
+  void initState() {
+    // call categories in home screen with branch id
+
+  }
+
+
 
 }

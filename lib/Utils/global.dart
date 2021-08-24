@@ -18,6 +18,8 @@ class Global {
   static String testUrl =  "https://bj.marshelles.com/public/" ;
 
 
+  static String mainColor ="ED1C24";
+
   static var language = Global.prefs.getString('language_code') ?? 'en';
 
   static late Branch branch;

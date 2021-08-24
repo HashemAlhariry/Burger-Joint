@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'package:burgerjoint/Controllers/get_nearest_branch_controller.dart';
 import 'package:burgerjoint/Models/branch.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/HomePageWidgets/home_page_widget.dart';
+import 'package:burgerjoint/Widgets/ShimmersEffectsWidgets/shimmers_effect.dart';
 import 'package:burgerjoint/Widgets/custom_appbar.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +20,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  String branchName='Nasr';
+  String branchName='';
   late Branch homePageBranch;
   late Position userLocation = new Position(longitude: 0, latitude: 0 , accuracy: 0.0, altitude: 0, heading: 0, speed: 0, speedAccuracy: 0, timestamp: null);
   final GlobalKey<ScaffoldState> _key =  GlobalKey<ScaffoldState>();
+
+  // THIS VARIABLE TO CHECK GETTING BRANCH ID
+  bool getBranchId=false;
+  //BranchID to get data in branch id
+  late int branchId;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +36,31 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
 
       key:  _key,
-      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex('ED1C24') , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,),
+      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,),
       drawer: DrawerWidget(),
-      body:  HomePageWidget(),
+      body: getBranchId ? HomePageWidget(branchId) :
+      SingleChildScrollView(
+        child: Column(
+          children: [
+             Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: ShimmerEffect(MediaQuery.of(context).size.height/5, MediaQuery.of(context).size.width),
+             ),
+            GridView.count(
+              shrinkWrap: true,
+              childAspectRatio: 0.9,
+              crossAxisCount: 2,
+              physics: NeverScrollableScrollPhysics(),
+              children: List.generate(6, (index) {
+                return  Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ShimmerEffect(MediaQuery.of(context).size.height, MediaQuery.of(context).size.width),
+                );
+              }),
+            ),
+          ],
+        ),
+      ),
 
     );
 
@@ -96,17 +123,18 @@ class _HomePageState extends State<HomePage> {
     Position position = await Geolocator.getCurrentPosition();
     userLocation = position;
 
-
     // call function to get branch name with location
     GetNearestBranchController.getNearestBranch(Global.testUrl+"nearest-branch?", userLocation.latitude, userLocation.longitude).then((value) {
 
       //Branch details added to global
       Global.branch=value;
+
       setState(() {
 
+        branchId=Global.branch.branchId;
         homePageBranch=value;
         branchName=homePageBranch.name;
-
+        getBranchId=true;
       });
 
     });

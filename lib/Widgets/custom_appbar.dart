@@ -1,7 +1,7 @@
 import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import '../Utils/global.dart';
-import 'package:http/http.dart' as http;
+
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 

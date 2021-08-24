@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerEffect extends StatelessWidget {
+class ShimmerEffect extends StatelessWidget { 
 
   final double width;
   final double height;

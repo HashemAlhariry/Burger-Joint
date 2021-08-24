@@ -1,8 +1,7 @@
 class HomePageCategory{
-  late String image;
-  late String id;
+  late String categoryImage;
+  late int categoryId;
+  late String categoryName;
 
-  HomePageCategory(this.image, this.id);
-
-
+  HomePageCategory(this.categoryImage, this.categoryId, this.categoryName);
 }

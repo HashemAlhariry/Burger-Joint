@@ -25,7 +25,7 @@ class _State extends State<Login> with Validation {
   Widget build(BuildContext context) {
 
     return Scaffold(
-        backgroundColor: Colors.black45,
+
         body: SafeArea(
           child: Container(
             color: Colors.white,

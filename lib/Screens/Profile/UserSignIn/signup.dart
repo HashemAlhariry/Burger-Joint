@@ -44,7 +44,6 @@ class _State extends State<SignUp> with Validation {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black45,
         body: SafeArea(
           child: Container(
             color: Colors.white,
