@@ -25,6 +25,8 @@ dependencies:
   fluttertoast: ^8.0.8
   geolocator: ^7.4.0
 
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _key =  GlobalKey<ScaffoldState>();
 
   // THIS VARIABLE TO CHECK GETTING BRANCH ID
-  bool getBranchId=false;
+  bool getBranchIdBool=false;
   //BranchID to get data in branch id
   late int branchId;
 
@@ -38,22 +38,22 @@ class _HomePageState extends State<HomePage> {
       key:  _key,
       appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,),
       drawer: DrawerWidget(),
-      body: getBranchId ? HomePageWidget(branchId) :
+      body: getBranchIdBool ? HomePageWidget(branchId) :
       SingleChildScrollView(
         child: Column(
           children: [
              Padding(
-               padding: const EdgeInsets.all(8.0),
+               padding: const EdgeInsets.all(4.0),
                child: ShimmerEffect(MediaQuery.of(context).size.height/5, MediaQuery.of(context).size.width),
              ),
-            GridView.count(
+             GridView.count(
               shrinkWrap: true,
               childAspectRatio: 0.9,
               crossAxisCount: 2,
               physics: NeverScrollableScrollPhysics(),
               children: List.generate(6, (index) {
                 return  Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: ShimmerEffect(MediaQuery.of(context).size.height, MediaQuery.of(context).size.width),
                 );
               }),
@@ -75,6 +75,7 @@ class _HomePageState extends State<HomePage> {
 
   // When the location services are not enabled or permissions are denied the Future will return an error
   Future<void> determinePosition() async {
+
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -82,6 +83,16 @@ class _HomePageState extends State<HomePage> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       GetNearestBranchController.getNearestBranch(Global.testUrl+"nearest-branch?", 0, 0).then((value) {
+
+        //Branch details added to global
+        Global.branch=value;
+
+        setState(() {
+          branchId=Global.branch.branchId;
+          homePageBranch=value;
+          branchName=homePageBranch.name;
+          getBranchIdBool=true;
+        });
       });
 
       // Location services are not enabled don't continue
@@ -97,6 +108,15 @@ class _HomePageState extends State<HomePage> {
       if (permission == LocationPermission.denied) {
         GetNearestBranchController.getNearestBranch(Global.testUrl+"nearest-branch?", 0, 0).then((value) {
 
+          //Branch details added to global
+          Global.branch=value;
+
+          setState(() {
+            branchId=Global.branch.branchId;
+            homePageBranch=value;
+            branchName=homePageBranch.name;
+            getBranchIdBool=true;
+          });
         });
         // Permissions are denied, next time you could try
         // requesting permissions again (this is also where
@@ -112,6 +132,15 @@ class _HomePageState extends State<HomePage> {
 
       GetNearestBranchController.getNearestBranch(Global.testUrl+"nearest-branch?", 0, 0).then((value) {
 
+        //Branch details added to global
+        Global.branch=value;
+
+        setState(() {
+          branchId=Global.branch.branchId;
+          homePageBranch=value;
+          branchName=homePageBranch.name;
+          getBranchIdBool=true;
+        });
       });
 
       return Future.error('Location permissions are permanently denied, we cannot request permissions.');
@@ -130,15 +159,16 @@ class _HomePageState extends State<HomePage> {
       Global.branch=value;
 
       setState(() {
-
         branchId=Global.branch.branchId;
         homePageBranch=value;
         branchName=homePageBranch.name;
-        getBranchId=true;
+        getBranchIdBool=true;
       });
 
     });
 
   }
- 
+
+
+
 }
