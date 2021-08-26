@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class HomePageCategoriesController{
 
-  static Future<List<HomePageCategory>> getNearestBranch(String url) async {
+  static Future<List<HomePageCategory>> homePageCategories(String url) async {
     List<HomePageCategory>homePageCategory=[];
     Uri uri = Uri.parse(url);
     try{
@@ -27,10 +27,6 @@ class HomePageCategoriesController{
       print("ERROR");
       return homePageCategory;
     }
-
-
-
-
 
   }
 

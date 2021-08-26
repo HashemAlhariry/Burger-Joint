@@ -38,9 +38,7 @@ class _HomePageState extends State<HomePage> {
       key:  _key,
       appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,),
       drawer: DrawerWidget(),
-      body: getBranchIdBool ? HomePageWidget(branchId) :
-      SingleChildScrollView(
-        child: Column(
+      body:  getBranchIdBool ? HomePageWidget(branchId) : SingleChildScrollView(child: Column(
           children: [
              Padding(
                padding: const EdgeInsets.all(4.0),
@@ -59,8 +57,7 @@ class _HomePageState extends State<HomePage> {
               }),
             ),
           ],
-        ),
-      ),
+        ),),
 
     );
 

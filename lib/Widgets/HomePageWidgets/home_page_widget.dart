@@ -1,5 +1,6 @@
 import 'package:burgerjoint/Controllers/home_page_categories_controller.dart';
 import 'package:burgerjoint/Models/home_page_categories.dart';
+import 'package:burgerjoint/Screens/Products/products_screen.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 class HomePageWidget extends StatefulWidget {
 
   final int branchId;
-
   HomePageWidget(this.branchId);
 
   @override
@@ -35,7 +35,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 150,),
+            SizedBox(height: 20,),
             GridView.count(
               shrinkWrap: true,
               childAspectRatio: 0.8,
@@ -44,17 +44,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               children: List.generate(homePageCategory.length, (index) {
                 return GestureDetector(
                   onTap: (){
-
-                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
-                    //Send page to products details
-
+                    //Send page to products menu
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsScreen(homePageCategory[index].categoryId,homePageCategory[index].categoryName)));
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
                       elevation: 5,
                       child: Stack(
                         children: [
@@ -78,7 +74,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text( homePageCategory[index].categoryName,style:  GoogleFonts.rubik(
-                          textStyle: TextStyle(letterSpacing: .5),
+                          textStyle: TextStyle(letterSpacing: .5,fontSize: 15),
                           )  ),),
 
                           ],)
@@ -98,9 +94,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   
   @override
   void initState() {
+
     // call categories in home screen with branch id
-    print(branchId);
-    HomePageCategoriesController.getNearestBranch(Global.testUrl+"branch/"+branchId.toString()).then((value) {
+    HomePageCategoriesController.homePageCategories(Global.testUrl+"branch/"+branchId.toString()).then((value) {
       setState(() {
         homePageCategory=value;
       });

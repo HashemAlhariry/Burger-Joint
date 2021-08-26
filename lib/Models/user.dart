@@ -1,4 +1,5 @@
 class User {
+
   late String userName;
   late String name;
   late String password;

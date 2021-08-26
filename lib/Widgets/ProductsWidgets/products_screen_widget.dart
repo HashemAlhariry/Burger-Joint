@@ -1,15 +1,19 @@
+import 'package:burgerjoint/Models/product.dart';
 import 'package:burgerjoint/Widgets/ProductsWidgets/product_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProductsDetailsWidget extends StatefulWidget {
-  const ProductsDetailsWidget({Key? key}) : super(key: key);
+class ProductsWidget extends StatefulWidget {
+
+  final List<Product> product;
+  final String categoryName;
+  ProductsWidget(this.product,this.categoryName);
 
   @override
-  _ProductsDetailsWidgetState createState() => _ProductsDetailsWidgetState();
+  _ProductsWidgetState createState() => _ProductsWidgetState();
 }
 
-class _ProductsDetailsWidgetState extends State<ProductsDetailsWidget> {
+class _ProductsWidgetState extends State<ProductsWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -24,7 +28,7 @@ class _ProductsDetailsWidgetState extends State<ProductsDetailsWidget> {
             ),
             IconButton(
               onPressed: () {
-                //Navigator.pop(context);
+                Navigator.pop(context);
               },
               color: Color(0xffED1C24),
               iconSize: 26,
@@ -53,7 +57,7 @@ class _ProductsDetailsWidgetState extends State<ProductsDetailsWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Text(
-                "5 INCH BURGER",
+                  widget.categoryName.toUpperCase(),
                 style: GoogleFonts.bebasNeue(
                   fontWeight: FontWeight.bold,
                   fontSize: 33,
@@ -70,15 +74,15 @@ class _ProductsDetailsWidgetState extends State<ProductsDetailsWidget> {
           ],
         ),
         ...List.generate(
-            10,
+            widget.product.length,
             (index) => ProductCardWidget(
                   imageUrl:
-                      "https://images.unsplash.com/photo-1543339469-94ba2391431f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80",
-                  title: "Bouncy Burger",
+                     widget.product[index].productImage,
+                  title:   widget.product[index].productTitle,
                   description:
-                      "2 Burger Patties Beef Bacon, 2 Smoked Cheddar Cheese Slices, Tomatoes, Onions,Lettuce, Pickles, Ketchup and Mayonnaise Sauce",
-                  price: 80,
-                  id: index,
+                  widget.product[index].productDescription,
+                  price: 0,
+                  id: widget.product[index].productId,
                 )),
       ],
     );

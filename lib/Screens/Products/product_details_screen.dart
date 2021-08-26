@@ -24,24 +24,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
-  //FOR RADIO BUTTON
-  bool _value = false;
-  int val = -1;
 
+  int val = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _key,
       drawer: DrawerWidget(),
-
       body: SafeArea(
         child: Stack(
             children : [
               Padding(
-                padding: const EdgeInsets.all(0.0),
+                padding:  EdgeInsets.all(0.0),
                 child: ListView(
 
                     children: [
+                      SizedBox(height: 20,),
                       Row(
                         children: [
 
@@ -165,7 +163,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
                       ),),),
-
                       // LIST OF ALL SIZES AVAILABLE
                       Container(
                         color: Colors.white,
@@ -221,11 +218,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 val = value as int;
                                 print(value);
                                 print(val);
+
                               },
                               activeColor: Colors.red,
                             ),
-
-
                           ],
                         ),
                       ),
@@ -255,7 +251,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               },
                               activeColor: Colors.red,
                             ),
-
 
                           ],
                         ),
@@ -428,7 +423,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               },
                               activeColor: Colors.red,
                             ),
-
 
                           ],
                         ),

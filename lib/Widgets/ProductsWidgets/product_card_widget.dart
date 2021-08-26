@@ -1,4 +1,4 @@
-import 'package:burgerjoint/Screens/Products/product_details_screen.dart';
+import 'file:///D:/BurgerJoint/lib/Screens/Products/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,7 +71,7 @@ class ProductCardWidget extends StatelessWidget {
                         Text(
                           title,
                           style: GoogleFonts.bebasNeue(
-                            fontWeight: FontWeight.bold,
+
                             fontSize: 24,
                             color: Color(0xff262626),
                           ),
@@ -99,7 +99,7 @@ class ProductCardWidget extends StatelessWidget {
                                     topLeft: Radius.circular(10))),
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
-                              "100 L.E",
+                              price.toString(),
                               style: GoogleFonts.oswald(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,
