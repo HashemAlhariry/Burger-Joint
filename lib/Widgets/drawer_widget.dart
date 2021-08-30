@@ -1,12 +1,16 @@
+import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
 import 'package:burgerjoint/Screens/Profile/proflie.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart' as provider;
+import 'package:burgerjoint/Providers/user_provider.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+   User user = provider.Provider.of<UserProvider>(context, listen: true).user;
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,11 +43,14 @@ class DrawerWidget extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (ctx) => Profile(),
-                          ),
-                        );
+                        if(user.userName==""){
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (ctx) => Profile(),
+                            ),
+                          );
+                        }
+
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -60,7 +67,7 @@ class DrawerWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
                               child: Text(
-                                'Profile',
+                                user.userName=="" ? 'Profile' : "Welcome " + user.userName,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,

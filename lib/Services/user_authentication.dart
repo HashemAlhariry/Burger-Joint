@@ -16,7 +16,7 @@ class UserAuthentication{
           "name": user.name,
           "username":user.userName,
           "password": user.password,
-          "phone": user.mobileNumber,
+          "phone": user.phone,
           "gender": user.gender
 
         }));
@@ -47,8 +47,6 @@ class UserAuthentication{
         "password": password,
         }));
     Map<String, dynamic> convertDataToJson = json.decode(response.body) as Map<String,dynamic>;
-
-    print(convertDataToJson['message']);
 
     return convertDataToJson;
 

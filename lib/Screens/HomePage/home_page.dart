@@ -1,5 +1,7 @@
 import 'package:burgerjoint/Controllers/get_nearest_branch_controller.dart';
 import 'package:burgerjoint/Models/branch.dart';
+import 'package:burgerjoint/Models/user.dart';
+import 'package:burgerjoint/Providers/user_provider.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/HomePageWidgets/home_page_widget.dart';
 import 'package:burgerjoint/Widgets/ShimmersEffectsWidgets/shimmers_effect.dart';
@@ -7,7 +9,7 @@ import 'package:burgerjoint/Widgets/custom_appbar.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-
+import 'package:provider/provider.dart' as provider;
 
 class HomePage extends StatefulWidget {
 
@@ -30,15 +32,19 @@ class _HomePageState extends State<HomePage> {
   //BranchID to get data in branch id
   late int branchId;
 
+
+  late User user;
   @override
   Widget build(BuildContext context) {
+    user = provider.Provider.of<UserProvider>(context, listen: true).user;
 
     return Scaffold(
-
       key:  _key,
       appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,),
       drawer: DrawerWidget(),
-      body:  getBranchIdBool ? HomePageWidget(branchId) : SingleChildScrollView(child: Column(
+      body:  getBranchIdBool ? HomePageWidget(branchId) :
+         SingleChildScrollView(
+        child: Column(
           children: [
              Padding(
                padding: const EdgeInsets.all(4.0),
@@ -66,7 +72,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+
     determinePosition();
+
    }
 
 

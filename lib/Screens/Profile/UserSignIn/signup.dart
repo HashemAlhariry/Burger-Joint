@@ -1,16 +1,17 @@
 import 'package:burgerjoint/Models/gender.dart';
+import 'package:burgerjoint/Providers/user_provider.dart';
 import 'package:burgerjoint/Services/user_authentication.dart';
 import 'package:burgerjoint/Services/validation.dart';
 import 'package:burgerjoint/Widgets/customRadio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:ui';
-
 import '../../../Models/user.dart';
 import '../../../Utils/app_localizations.dart';
 import '../../../Utils/global.dart';
-
+import 'package:provider/provider.dart' as provider;
 
 class SignUp extends StatefulWidget {
   @override
@@ -19,23 +20,17 @@ class SignUp extends StatefulWidget {
 
 class _State extends State<SignUp> with Validation {
 
-
-  //String userEmailForm = '';
-
-
   String nameForm = '';
   String userNameForm = '';
   String phone = '';
   String password = '';
   String confirmPassword = '';
-
   int checkGender= -1 ;
   bool _showPassword = false;
 
 
 
-
-  final formkey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final TextEditingController _confirmPass = TextEditingController();
   final TextEditingController _pass = TextEditingController();
   List<Gender> genders = [  Gender("Male",  FontAwesomeIcons.mars , false), Gender("Female",  FontAwesomeIcons.venus  , false)];
@@ -80,7 +75,7 @@ class _State extends State<SignUp> with Validation {
                               padding: EdgeInsets.all(20),
 
                               child: Form(
-                                key: formkey,
+                                key: formKey,
                                 child: ListView(
                                   children: [
                                     Padding(
@@ -125,7 +120,6 @@ class _State extends State<SignUp> with Validation {
                                     Row(
                                       children: [
                                        Expanded(child: Container()),
-
                                        Container(height:75, width: 150, child:
                                         ListView.builder(
                                            scrollDirection: Axis.horizontal,
@@ -139,14 +133,11 @@ class _State extends State<SignUp> with Validation {
                                                    genders.forEach((gender) => gender.isSelected = false);
                                                    genders[index].isSelected = true;
                                                    checkGender=index+1;
-
-
                                                  });
                                                },
                                                child: CustomRadio(genders[index]),
                                              );
                                            }),),
-
                                        Expanded(child: Container()),
                                    ],)
 
@@ -376,23 +367,43 @@ class _State extends State<SignUp> with Validation {
               fontFamily: 'JOSEF'),
         ),
         onPressed: () async {
-          if (formkey.currentState!.validate()) {
-            formkey.currentState!.save();
+          if (formKey.currentState!.validate()) {
+            formKey.currentState!.save();
             if(checkGender!= -1 ){
 
-              User user = new User.signUpUser(
+              User user = new User.loggedIn(
                               userNameForm,
                               nameForm,
                               password,
                               phone,
                               checkGender);
 
-              UserAuthentication.signUp(Global.testUrl+"customer/register", user) .then((value){
+              UserAuthentication.signUp(Global.testUrl+"customer/register", user).then((value) async {
 
 
                 if(value['access_token'] != null){
                   // restart app with new signed up user
                   // save access_token
+                  provider.Provider.of<UserProvider>(
+                      context,
+                      listen: false)
+                      .userLoggedIn(user);
+
+
+                  Global.loggedInUser = user;
+                  Global.userToken = value['access_token'];
+                  //save user data
+                  Global.prefs = await SharedPreferences.getInstance();
+
+                  //save all user data
+                  Global.prefs.setString('password', password);
+                  Global.prefs.setString('phone', phone);
+                  Global.prefs.setInt('gender', checkGender);
+                  Global.prefs.setString('username', userNameForm);
+                  Global.prefs.setString('token', value['access_token']);
+
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
 
                 } else {
 
@@ -415,8 +426,6 @@ class _State extends State<SignUp> with Validation {
             }
             else{
               Global.toastMessage("CHOOSE A GENDER");
-              
-              
             }
 
 

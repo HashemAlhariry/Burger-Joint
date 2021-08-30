@@ -71,7 +71,6 @@ class ProductCardWidget extends StatelessWidget {
                         Text(
                           title,
                           style: GoogleFonts.bebasNeue(
-
                             fontSize: 24,
                             color: Color(0xff262626),
                           ),

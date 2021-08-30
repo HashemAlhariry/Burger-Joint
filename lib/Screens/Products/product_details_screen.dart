@@ -17,6 +17,7 @@ class ProductDetailsScreen extends StatefulWidget {
 
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
+
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
@@ -28,6 +29,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   int val = -1;
   @override
   Widget build(BuildContext context) {
+    print(widget.description);
     return Scaffold(
       key: _key,
       drawer: DrawerWidget(),
@@ -37,12 +39,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               Padding(
                 padding:  EdgeInsets.all(0.0),
                 child: ListView(
-
                     children: [
                       SizedBox(height: 20,),
                       Row(
                         children: [
-
                           Expanded(
                             child: Center(
                               child: FittedBox(

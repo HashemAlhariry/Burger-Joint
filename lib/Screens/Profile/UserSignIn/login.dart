@@ -1,3 +1,5 @@
+import 'package:burgerjoint/Models/user.dart';
+import 'package:burgerjoint/Providers/user_provider.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/forget_password.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/signup.dart';
 import 'package:burgerjoint/Services/user_authentication.dart';
@@ -5,9 +7,10 @@ import 'package:burgerjoint/Services/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Utils/app_localizations.dart';
 import '../../../Utils/global.dart';
-
+import 'package:provider/provider.dart' as provider;
 
 class Login extends StatefulWidget {
   @override
@@ -15,17 +18,15 @@ class Login extends StatefulWidget {
 }
 
 class _State extends State<Login> with Validation {
+
   String userName = '';
   String password = '';
   bool _isButtonDisabled= false ;
   final formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
         body: SafeArea(
           child: Container(
             color: Colors.white,
@@ -233,48 +234,30 @@ class _State extends State<Login> with Validation {
                 _isButtonDisabled=true;
               });
 
+              UserAuthentication.logIn(Global.testUrl+"auth/token" , userName , password).then((value) async {
 
-              UserAuthentication.logIn(Global.testUrl+"auth/token" , userName , password).then((value) {
-                //restart app with logged in
+
                 //save user data
+                Global.prefs = await SharedPreferences.getInstance();
+                //save all user data
+                Global.prefs.setString('password', password);
+                Global.prefs.setString('username', userName);
+                Global.prefs.setString('token', value['access_token']);
 
+                Global.userToken = value['access_token'];
+
+
+
+                Global.loggedInUser= User.loggedIn(userName, "", password, "", 1);
+                //pop screen and update new user
+                provider.Provider.of<UserProvider>(
+                    context,
+                    listen: false)
+                    .userLoggedIn(User.loggedIn(userName, "", password, "", 1));
+
+                Navigator.of(context).pop();
 
               });
-                /*
-              User.logIn("${Global.globalUrl}/mobile/login", emailAddress,
-                      password)
-                  .then((value) async {
-                if (value['message'] != "Wrong email!" &&
-                    value['message'] != "Wrong Password!") {
-
-                  Global.checkingRestart = false;
-                  // Navigator.of(context).popUntil((route) => route.isFirst);
-                  // Navigator.popAndPushNamed(context,"");
-
-                  //save token and user data
-                  Global.prefs = await SharedPreferences.getInstance();
-                  Utils.toastMessage("Logged in Successfully");
-                  setState(() {
-                    Global.loggedInUser = User.loggedIn(emailAddress, password);
-                    Global.userToken = value['message'];
-
-                    //save all user data
-                    Global.prefs.setString('password', password);
-                    Global.prefs.setString('email', emailAddress);
-                    Global.prefs.setString('token', value['message']);
-                  });
-
-                  RestartWidget.restartApp(context);
-                } else {
-                   setState(() {
-                _isButtonDisabled=false;
-                  });
-
-                  Utils.toastMessage(value['message']);
-                }
-              });
-
-              */
 
 
 

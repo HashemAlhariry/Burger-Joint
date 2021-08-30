@@ -70,4 +70,8 @@ class Global {
       fontSize: 14.0,
     );
   }
+
+
+  //GLOBAL USER LOGGED IN
+  late User user;
 }
