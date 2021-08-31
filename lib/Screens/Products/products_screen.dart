@@ -33,9 +33,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   @override
   void initState() {
-    //Global.testUrl+Global.branch.branchId.toString()+widget.categoryId.toString()
 
-    ProductInCategoriesController.productInCategories( "https://bj.marshelles.com/public/category/31/31").then((value) {
+    //"https://bj.marshelles.com/public/category/31/31"
+    print(Global.testUrl+"category/"+Global.branch.branchId.toString()+"/"+widget.categoryId.toString());
+    ProductInCategoriesController.productInCategories(Global.testUrl+"category/"+Global.branch.branchId.toString()+"/"+widget.categoryId.toString()).then((value) {
       setState(() {
         product=value;
       });

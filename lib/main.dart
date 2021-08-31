@@ -9,6 +9,7 @@ import 'Models/user.dart';
 import 'Screens/HomePage/home_page.dart';
 import 'Utils/app_localizations.dart';
 import 'Utils/global.dart';
+import 'package:provider/provider.dart' as provider;
 
 void main() async {
 
@@ -23,15 +24,11 @@ void main() async {
   var phone = Global.prefs.getString('phone') ?? "";
   var name = Global.prefs.getString('name') ?? "";
   var gender = Global.prefs.getInt('gender') ?? 1;
+  User user = new User.loggedIn(userName,name,password,phone,gender);
+  Global.loggedInUser = user;
+  Global.userToken = token;
 
 
-  if (userName != "" && token != "") {
-
-    User user = new User.loggedIn(userName,name,password,phone,gender);
-    Global.loggedInUser = user;
-    Global.userToken = token;
-
-  }
 
   runApp(MainWidget());
 
@@ -55,6 +52,8 @@ class MainWidget extends StatelessWidget {
             ),
           ],
           child: Consumer<AppLanguage>(builder: (context, model, child) {
+
+
             return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 supportedLocales: [

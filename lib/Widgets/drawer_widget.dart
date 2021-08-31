@@ -1,6 +1,7 @@
 import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
 import 'package:burgerjoint/Screens/Profile/proflie.dart';
+import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart' as provider;
 import 'package:burgerjoint/Providers/user_provider.dart';
@@ -43,7 +44,7 @@ class DrawerWidget extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        if(user.userName==""){
+                        if(user.userName=="" && Global.loggedInUser.name==""){
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (ctx) => Profile(),
@@ -67,7 +68,7 @@ class DrawerWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
                               child: Text(
-                                user.userName=="" ? 'Profile' : "Welcome " + user.userName,
+                                (user.userName=="") ? 'Login' : "Welcome " + user.userName,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,

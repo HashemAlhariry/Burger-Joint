@@ -1,3 +1,4 @@
+import 'package:burgerjoint/Models/product.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,16 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
 
-  late final String imageUrl;
-  late final String title;
-  late final String description;
-  late final double price;
-  late final int id;
-
-
-  ProductDetailsScreen(
-      this.imageUrl, this.title, this.description, this.price, this.id);
-
+  final Product product;
+  const ProductDetailsScreen({
+    Key? key,
+    required this.product
+  }) : super(key: key);
+  
   @override
   _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
 
@@ -25,11 +22,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
+  @override
+  void initState() {
+    extraBoolList =  List<bool>.generate(widget.product.extras.length, (i) => false);
+  }
+  //for extras items
+  late List<bool> extraBoolList;
 
-  int val = -1;
+
+  bool expanded=false;
+
   @override
   Widget build(BuildContext context) {
-    print(widget.description);
+
     return Scaffold(
       key: _key,
       drawer: DrawerWidget(),
@@ -48,7 +53,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  widget.title,
+                                  widget.product.productTitle,
                                   style: GoogleFonts.bebasNeue(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 50,
@@ -62,13 +67,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ],
                       ),
                       Hero(
-                        tag: widget.id,
+                        tag: widget.product.productId,
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height * .3,
                           // width: MediaQuery.of(context).size.width,
                           child: Center(
                             child: Image.network(
-                              widget.imageUrl,
+                              widget.product.productImage,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -77,7 +82,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Text(
-                          widget.description,
+                          widget.product.productDescription,
                           style: GoogleFonts.ptSans(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
@@ -157,105 +162,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Text('Size',style:GoogleFonts.ptSans(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),),),
-                      // LIST OF ALL SIZES AVAILABLE
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Regular',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
-
-                                val = value as int;
-                                print(value);
-                                print(val);
-                              },
-                              activeColor: Colors.red,
-                            ),
 
 
-                          ],
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Regular',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
-
-                                val = value as int;
-                                print(value);
-                                print(val);
-
-                              },
-                              activeColor: Colors.red,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Regular',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
-
-                                val = value as int;
-                                print(value);
-                                print(val);
-                              },
-                              activeColor: Colors.red,
-                            ),
-
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20,),
+                      /*
+                    //EXTRAS
+                      if (widget.product.extras.length>1)
                       Container(
                         padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
                         child: Text('Extras',style:GoogleFonts.ptSans(
@@ -263,202 +174,104 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           fontSize: 20,
                         ),),),
 
-                      // LIST OF ALL SIZES AVAILABLE
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Fries',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
+                   ...List.generate(
+                        widget.product.extras.length,
+                            (i) =>       Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(child: Text( widget.product.extras[i].productName,style:GoogleFonts.ptSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),),),
+                              Expanded(child: Container()),
+                              Container(child: Text(widget.product.extras[i].sizePrice.toString(),style:GoogleFonts.ptSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),),),
+                              Checkbox(
+                                value: extraBoolList[i],
+                                activeColor: Colors.red,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    this.extraBoolList[i] = value! ;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),),
 
-                                val = value as int;
-                                print(value);
-                                print(val);
-                              },
-                              activeColor: Colors.red,
-                            ),
-
-
-                          ],
-                        ),
+                      */
+                      ListView.builder(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ExpansionPanelList(
+                            animationDuration: Duration(milliseconds: 300),
+                            dividerColor: Colors.red,
+                            elevation: 1,
+                            children: [
+                              ExpansionPanel(
+                                body: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      widget.product.extras.length,
+                                          (i) =>       Container(
+                                        color: Colors.white,
+                                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Container(child: Text( widget.product.extras[i].productName,style:GoogleFonts.ptSans(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),),),
+                                            Expanded(child: Container()),
+                                            Container(child: Text(widget.product.extras[i].sizePrice.toString(),style:GoogleFonts.ptSans(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),),),
+                                            Checkbox(
+                                              value: extraBoolList[i],
+                                              activeColor: Colors.red,
+                                              onChanged: (bool? value) {
+                                                setState(() {
+                                                  this.extraBoolList[i] = value! ;
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),),
+                                  ),
+                                ),
+                                headerBuilder: (BuildContext context, bool isExpanded) {
+                                  return Container(
+                                      padding: EdgeInsets.all(10),
+                                    child: Text('Extras',style:GoogleFonts.ptSans(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),)
+                                  );
+                                },
+                                isExpanded: expanded,
+                              )
+                            ],
+                            expansionCallback: (int item, bool status) {
+                              setState(() {
+                                expanded = !expanded;
+                              });
+                            },
+                          );
+                        },
                       ),
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Fries',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
-
-                                val = value as int;
-                                print(value);
-                                print(val);
-                              },
-                              activeColor: Colors.red,
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Fries',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
-
-                                val = value as int;
-                                print(value);
-                                print(val);
-                              },
-                              activeColor: Colors.red,
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20,),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Text('Adds',style:GoogleFonts.ptSans(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),),),
-
-                      // LIST OF ALL SIZES AVAILABLE
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Regular',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
-
-                                val = value as int;
-                                print(value);
-                                print(val);
-                              },
-                              activeColor: Colors.red,
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Regular',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
-
-                                val = value as int;
-                                print(value);
-                                print(val);
-                              },
-                              activeColor: Colors.red,
-                            ),
-
-                          ],
-                        ),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(child: Text('Regular',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Expanded(child: Container()),
-                            Container(child: Text('10 L.E',style:GoogleFonts.ptSans(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),),),
-                            Radio(
-                              value: 1,
-                              groupValue: val,
-                              onChanged: (value) {
-
-                                val = value as int;
-                                print(value);
-                                print(val);
-                              },
-                              activeColor: Colors.red,
-                            ),
-
-
-                          ],
-                        ),
-                      ),
-
                     ],
                 ),
               ),
@@ -482,7 +295,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
-}
 
+}
 
 

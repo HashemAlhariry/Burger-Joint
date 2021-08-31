@@ -382,7 +382,7 @@ class _State extends State<SignUp> with Validation {
 
 
                 if(value['access_token'] != null){
-                  // restart app with new signed up user
+
                   // save access_token
                   provider.Provider.of<UserProvider>(
                       context,

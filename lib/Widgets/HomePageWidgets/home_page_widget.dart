@@ -16,13 +16,12 @@ class HomePageWidget extends StatefulWidget {
 }
 
 class _HomePageWidgetState extends State<HomePageWidget> {
+  //HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"") , HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"") ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"") ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"") ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"")
 
   int branchId;
   _HomePageWidgetState(this.branchId);
   // LIST OF IMAGES THAT WILL APPEAR AT THE TOP HOMEPAGE
-  List<HomePageCategory> homePageCategory = [
-    //HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"") , HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"") ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"") ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"") ,HomePageCategory('https://c4.wallpaperflare.com/wallpaper/219/42/474/food-burgers-burger-wallpaper-preview.jpg',2,'1',"")
-  ];
+  List<HomePageCategory> homePageCategory = [];
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +72,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             Expanded(child: Container()),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text( homePageCategory[index].categoryName,style:  GoogleFonts.rubik(
-                          textStyle: TextStyle(letterSpacing: .5,fontSize: 15),
-                          )  ),),
+                              child: Text( homePageCategory[index].categoryName,style: GoogleFonts.bebasNeue(
+                                fontSize: 24,
+                                color: Color(0xff262626),
+                              ), ),),
 
                           ],)
                         ],

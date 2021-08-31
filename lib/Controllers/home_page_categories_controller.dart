@@ -18,9 +18,14 @@ class HomePageCategoriesController{
       dynamic categories = convertDataToJson['categories'];
 
       for(int i=0;i<categories.length;i++){
-          HomePageCategory homePageCategoryObject =  HomePageCategory(categories[i]['category_image'],categories[i]['category_id'],categories[i]['category_name'],categories[i]['category_icon']);
-          homePageCategory.add(homePageCategoryObject);
+          HomePageCategory homePageCategoryObject =  HomePageCategory(
+              categories[i]['category_image'] ?? "",
+              categories[i]['category_id'],
+              categories[i]['category_name'],
+              categories[i]['category_icon']);
 
+
+          homePageCategory.add(homePageCategoryObject);
       }
       return homePageCategory;
     }catch (exception){

@@ -234,7 +234,7 @@ class _State extends State<Login> with Validation {
                 _isButtonDisabled=true;
               });
 
-              UserAuthentication.logIn(Global.testUrl+"auth/token" , userName , password).then((value) async {
+              UserAuthentication.logIn(Global.testUrl+"auth/token" , userName.trim() , password.trim()).then((value) async {
 
 
                 //save user data

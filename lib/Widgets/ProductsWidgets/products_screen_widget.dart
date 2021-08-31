@@ -14,8 +14,10 @@ class ProductsWidget extends StatefulWidget {
 }
 
 class _ProductsWidgetState extends State<ProductsWidget> {
+
   @override
   Widget build(BuildContext context) {
+    print(widget.product);
     return ListView(
       children: [
         SizedBox(
@@ -76,13 +78,7 @@ class _ProductsWidgetState extends State<ProductsWidget> {
         ...List.generate(
             widget.product.length,
             (index) => ProductCardWidget(
-                  imageUrl:
-                     widget.product[index].productImage,
-                  title:   widget.product[index].productTitle,
-                  description:
-                  widget.product[index].productDescription,
-                  price: 0,
-                  id: widget.product[index].productId,
+                 product:widget.product[index]
                 )),
       ],
     );

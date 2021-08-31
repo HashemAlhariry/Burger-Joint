@@ -38,8 +38,5 @@ class CartProvider extends ChangeNotifier {
         }
     }
 
-    void getProductsFromGlobal() {
-
-    }
 
 }

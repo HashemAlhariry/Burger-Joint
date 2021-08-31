@@ -36,14 +36,15 @@ class _HomePageState extends State<HomePage> {
   late User user;
   @override
   Widget build(BuildContext context) {
+
+
     user = provider.Provider.of<UserProvider>(context, listen: true).user;
 
     return Scaffold(
       key:  _key,
       appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,),
       drawer: DrawerWidget(),
-      body:  getBranchIdBool ? HomePageWidget(branchId) :
-         SingleChildScrollView(
+      body:  getBranchIdBool ? HomePageWidget(branchId) : SingleChildScrollView(
         child: Column(
           children: [
              Padding(
@@ -64,31 +65,33 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),),
-
     );
-
-    
   }
 
   @override
   void initState() {
+    // used to get user`s data
+    Future.delayed(
+        Duration.zero,
+            () => provider.Provider.of<UserProvider>(
+                context,
+                listen: false)
+                .userLoggedIn(Global.loggedInUser));
 
+    // used for getting user`s position
     determinePosition();
-
+    super.initState();
    }
 
 
   // When the location services are not enabled or permissions are denied the Future will return an error
   Future<void> determinePosition() async {
-
     bool serviceEnabled;
     LocationPermission permission;
-
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       GetNearestBranchController.getNearestBranch(Global.testUrl+"nearest-branch?", 0, 0).then((value) {
-
         //Branch details added to global
         Global.branch=value;
 

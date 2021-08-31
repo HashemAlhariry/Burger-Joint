@@ -1,23 +1,16 @@
-import 'file:///D:/BurgerJoint/lib/Screens/Products/product_details_screen.dart';
+import 'package:burgerjoint/Models/product.dart';
+import 'package:burgerjoint/Screens/Products/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProductCardWidget extends StatelessWidget {
 
-  final String imageUrl;
-  final String title;
-  final String description;
-  final double price;
-  final int id;
+  final Product product;
 
   const ProductCardWidget({
     Key? key,
-    required this.imageUrl,
-    required this.title,
-    required this.description,
-    required this.price,
-    required this.id,
+   required this.product
   }) : super(key: key);
 
   @override
@@ -27,11 +20,7 @@ class ProductCardWidget extends StatelessWidget {
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (ctx) => ProductDetailsScreen(
-              imageUrl,
-              title,
-              description,
-              price,
-              id,
+              product:product
             ),
           ),
         ),
@@ -51,11 +40,11 @@ class ProductCardWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: Hero(
-                      tag: id,
+                      tag: product.productId,
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width * .35,
                         child: Image.network(
-                          imageUrl,
+                          product.productImage,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -69,16 +58,16 @@ class ProductCardWidget extends StatelessWidget {
                           height: 16,
                         ),
                         Text(
-                          title,
+                          product.productTitle,
                           style: GoogleFonts.bebasNeue(
                             fontSize: 24,
                             color: Color(0xff262626),
-                          ),
+                            ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 4),
                           child: Text(
-                            description,
+                            product.productDescription,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.ptSans(
@@ -98,7 +87,7 @@ class ProductCardWidget extends StatelessWidget {
                                     topLeft: Radius.circular(10))),
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: Text(
-                              price.toString(),
+                              product.productPrice.toString(),
                               style: GoogleFonts.oswald(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,
