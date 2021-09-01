@@ -30,7 +30,6 @@ class UserAuthentication{
      return Map();
    }
 
-
   }
 
   static Future<Map<String, dynamic>> logIn(
@@ -47,7 +46,6 @@ class UserAuthentication{
         "password": password,
         }));
     Map<String, dynamic> convertDataToJson = json.decode(response.body) as Map<String,dynamic>;
-
     return convertDataToJson;
 
   }

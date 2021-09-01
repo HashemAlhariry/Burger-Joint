@@ -25,12 +25,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     extraBoolList =  List<bool>.generate(widget.product.extras.length, (i) => false);
+
   }
   //for extras items
   late List<bool> extraBoolList;
 
+  int checkerForComboProductOpens=-1;
 
+  //for expanding and closing ExpansionPanelList
   bool expanded=false;
+
+  List<List<bool>> comboItemsClicked=[];
+
+
+  //this for choosing size of product
+  int chosenSizesProduct=0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,21 +54,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 padding:  EdgeInsets.all(0.0),
                 child: ListView(
                     children: [
-                      SizedBox(height: 20,),
+
+                      SizedBox(height: 10,),
                       Row(
                         children: [
                           Expanded(
                             child: Center(
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
-                                child: Text(
-                                  widget.product.productTitle,
-                                  style: GoogleFonts.bebasNeue(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 50,
-                                    color: Color(0xffF80009),
+                                child: FittedBox(
+                                  child: Text(
+                                    widget.product.productTitle,
+                                    style: GoogleFonts.bebasNeue(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 40,
+                                      color: Color(0xffF80009),
+                                    ),
+                                    textAlign: TextAlign.left,
                                   ),
-                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ),
@@ -91,6 +103,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      /*
                       Center(
                         child: Container(
                           height: MediaQuery.of(context).size.height * .15,
@@ -162,8 +175,159 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                         ),
                       ),
+                       */
+                      Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ...List.generate(
+                        widget.product.sizes.length,
+                            (i) => GestureDetector(
+                              onTap: (){
+                                setState(() {
+                                  chosenSizesProduct=i;
+                                });
+                                //update product price
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color:  chosenSizesProduct==i ? Color(0xFFF80009) :Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(
+                                      100,
+                                    ),
+                                  ),
+                                ),
+                          height: MediaQuery.of(context).size.height * .08,
+                          width: chosenSizesProduct==i ? MediaQuery.of(context).size.width * .4 :MediaQuery.of(context).size.width * .28,
+                          padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                               Container(
+                                  child: Text( widget.product.sizes[i].sizeName,style:GoogleFonts.ptSans(
+                                    fontWeight: FontWeight.bold,
+                                    color: chosenSizesProduct==i ? Colors.white : Color(0xFFF80009) ,
+                                    fontSize: 15,
+                                  ),),),
+
+                              ],
+                          ),
+                        ),
+                            ),),],
+                    ),
+
+                      /***FOR COMPO SIZES***/
+                      if(widget.product.combo)
+                      SizedBox(height: 20,),
+                      if(widget.product.combo)
+                        ...List.generate(
+                          widget.product.comboProducts.length,
+                            (i) =>  Container(
+                            color: Colors.white,
+                            padding: EdgeInsets.fromLTRB(10.0, 0, 10.0,0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if(checkerForComboProductOpens==i){
+                                        checkerForComboProductOpens=-1;
+                                        comboItemsClicked=[];
+                                      }else{
+
+                                        comboItemsClicked=[];
+                                        checkerForComboProductOpens=i;
+
+                                        //for initializing  comboItemsClicked = -1;
+                                        for(int j=0;j< widget.product.comboProducts[i].items.length;j++){
+                                              List<bool>items=[];
+                                            for(int k  =0 ;k<widget.product.comboProducts[i].items[j].optionsProduct.length;k++) {
+
+                                                items.add(false);
+                                            }
+                                            comboItemsClicked.add(items);
+                                        }
 
 
+                                      }
+
+                                    });
+                                  },
+                                  child: Container(child: Text( widget.product.comboProducts[i].sizeName,style:GoogleFonts.ptSans(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),),),
+                                ),
+                                SizedBox(height: 10,),
+                                if(checkerForComboProductOpens==i)
+                                ...List.generate(
+                                  widget.product.comboProducts[i].items.length,
+                                      (j) =>  Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0,10.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Container(child: Text(widget.product.comboProducts[i].items[j].productName,style:GoogleFonts.ptSans(
+                                          fontSize: 15,
+                                        ),),),
+                                        ...List.generate(
+                                          widget.product.comboProducts[i].items[j].optionsProduct.length,
+                                              (k) =>  Container(
+                                            color: Colors.white,
+                                            padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                                            child: Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Container(child: Text(  widget.product.comboProducts[i].items[j].optionsProduct[k].productName,style:GoogleFonts.ptSans(
+                                                  fontSize: 12,
+                                                ),),),
+
+                                                Checkbox(
+                                                  value:comboItemsClicked[j][k],
+                                                  activeColor: Colors.red,
+                                                  onChanged: (bool? value) {
+                                                    //for initializing  comboItemsClicked = -1;
+                                                    comboItemsClicked=[];
+                                                    for(int j=0;j< widget.product.comboProducts[i].items.length;j++){
+                                                      List<bool>items=[];
+                                                      for(int k  =0 ;k<widget.product.comboProducts[i].items[j].optionsProduct.length;k++) {
+
+                                                        items.add(false);
+                                                      }
+                                                      comboItemsClicked.add(items);
+                                                    }
+
+                                                    setState(() {
+                                                      comboItemsClicked[j][k]=!comboItemsClicked[j][k];
+                                                    });
+                                                    print(comboItemsClicked);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),),
+
+                                      ],
+                                    ),
+                                  ),),
+                                SizedBox(height: 10,)
+                              ],
+                            ),
+                          ),
+                        ),
+                      /***----------------------------------------***/
+
+
+                      /***FOR PRODUCT EXTRAS***/
+                      if(widget.product.extras.length>0)
+                      SizedBox(height: 20,),
                       /*
                     //EXTRAS
                       if (widget.product.extras.length>1)
@@ -205,6 +369,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),),
 
                       */
+                      if( widget.product.extras.length>0)
                       ListView.builder(
                         physics: ScrollPhysics(),
                         shrinkWrap: true,
@@ -230,12 +395,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
                                             Container(child: Text( widget.product.extras[i].productName,style:GoogleFonts.ptSans(
-                                              fontWeight: FontWeight.bold,
+
                                               fontSize: 15,
                                             ),),),
                                             Expanded(child: Container()),
                                             Container(child: Text(widget.product.extras[i].sizePrice.toString(),style:GoogleFonts.ptSans(
-                                              fontWeight: FontWeight.bold,
+
                                               fontSize: 15,
                                             ),),),
                                             Checkbox(
@@ -272,6 +437,128 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           );
                         },
                       ),
+                      /***-----------------------------------------***/
+
+                      SizedBox(height: 20,),
+
+
+
+                      /***FOR PRODUCT WITHOUT TO REMOVE ITEMS***/
+                      if(widget.product.sizes.length>0)
+                        SizedBox(height: 20,),
+                      /***UPDATE HERE THE REST OF PRODUCTS***/
+                      /*
+                    //EXTRAS
+                      if (widget.product.extras.length>1)
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                        child: Text('Extras',style:GoogleFonts.ptSans(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),),),
+
+                   ...List.generate(
+                        widget.product.extras.length,
+                            (i) =>       Container(
+                          color: Colors.white,
+                          padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(child: Text( widget.product.extras[i].productName,style:GoogleFonts.ptSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),),),
+                              Expanded(child: Container()),
+                              Container(child: Text(widget.product.extras[i].sizePrice.toString(),style:GoogleFonts.ptSans(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),),),
+                              Checkbox(
+                                value: extraBoolList[i],
+                                activeColor: Colors.red,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    this.extraBoolList[i] = value! ;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),),
+
+                      */
+                      if(widget.product.sizes.length>0)
+                        ListView.builder(
+                          physics: ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ExpansionPanelList(
+                              animationDuration: Duration(milliseconds: 300),
+                              dividerColor: Colors.red,
+                              elevation: 1,
+                              children: [
+                                ExpansionPanel(
+                                  body: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: List.generate(
+                                        widget.product.extras.length,
+                                            (i) =>       Container(
+                                          color: Colors.white,
+                                          padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(child: Text( widget.product.extras[i].productName,style:GoogleFonts.ptSans(
+
+                                                fontSize: 15,
+                                              ),),),
+                                              Expanded(child: Container()),
+                                              Container(child: Text(widget.product.extras[i].sizePrice.toString(),style:GoogleFonts.ptSans(
+
+                                                fontSize: 15,
+                                              ),),),
+                                              Checkbox(
+                                                value: extraBoolList[i],
+                                                activeColor: Colors.red,
+                                                onChanged: (bool? value) {
+                                                  setState(() {
+                                                    this.extraBoolList[i] = value! ;
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),),
+                                    ),
+                                  ),
+                                  headerBuilder: (BuildContext context, bool isExpanded) {
+                                    return Container(
+                                        padding: EdgeInsets.all(10),
+                                        child: Text('Extras',style:GoogleFonts.ptSans(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),)
+                                    );
+                                  },
+                                  isExpanded: expanded,
+                                )
+                              ],
+                              expansionCallback: (int item, bool status) {
+                                setState(() {
+                                  expanded = !expanded;
+                                });
+                              },
+                            );
+                          },
+                        ),
+                      /***-----------------------------------------***/
+
+
                     ],
                 ),
               ),

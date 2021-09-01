@@ -237,13 +237,13 @@ class _State extends State<Login> with Validation {
               UserAuthentication.logIn(Global.testUrl+"auth/token" , userName.trim() , password.trim()).then((value) async {
 
 
+
                 //save user data
                 Global.prefs = await SharedPreferences.getInstance();
                 //save all user data
                 Global.prefs.setString('password', password);
                 Global.prefs.setString('username', userName);
                 Global.prefs.setString('token', value['access_token']);
-
                 Global.userToken = value['access_token'];
 
 

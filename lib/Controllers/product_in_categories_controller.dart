@@ -99,11 +99,22 @@ class ProductInCategoriesController{
           if(j==0){
             productPrice=products[i]['sizes'][j]['price'];
           }
-
+          List<WithOut>withOuts=[];
+          var withoutProduct=products[i]['sizes'][j]['without'];
+          for(int k = 0;k<withoutProduct.length;k++){
+              WithOut withOut = new WithOut(
+                  withoutProduct[k]['id'],
+                  withoutProduct[k]['size'],
+                  withoutProduct[k]['name'],
+                  withoutProduct[k]['value'],
+                  withoutProduct[k]['unit']);
+              withOuts.add(withOut);
+          }
           Size size = new Size(
               products[i]['sizes'][j]['size_id'],
               products[i]['sizes'][j]['size_name'],
-              products[i]['sizes'][j]['price']);
+              products[i]['sizes'][j]['price'],
+          withOuts);
           sizes.add(size);
         }
         /*** ------------------------------------------------***/
