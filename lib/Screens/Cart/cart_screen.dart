@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 
 class CartScreen extends StatefulWidget {
 
@@ -13,7 +13,6 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       backgroundColor: Colors.grey.shade100,
       body: SafeArea(
         child:
@@ -25,22 +24,19 @@ class _CartScreenState extends State<CartScreen> {
                      alignment: Alignment.topLeft,
                       child: Text(
                       "SHOPPING CART",
-                      style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400),
+                      style:GoogleFonts.ptSans(
+                        fontSize: 18,
+                      ),
                 ),
                 margin: EdgeInsets.only(left: 12, top: 12),
             ),
                Container(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Total(3) Items",
-                      style: TextStyle(
-                          fontSize: 16,
-
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400),
+                      "Total Items",
+                      style: GoogleFonts.ptSans(
+                        fontSize: 16,
+                      ),
                     ),
                     margin: EdgeInsets.only(left: 12, top: 4),
                   ),
@@ -52,7 +48,7 @@ class _CartScreenState extends State<CartScreen> {
                     },
                     itemCount: 5,
                   ),
-                  Container(
+               Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -116,9 +112,6 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-
-
-
 
   createCartListItem() {
     return Stack(
@@ -246,3 +239,4 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
+

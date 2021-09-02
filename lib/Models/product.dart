@@ -15,7 +15,8 @@ class Product {
   late bool combo;
   late List<ComboProduct> comboProducts;
   late int discount;
-  late List<Size>sizes;
+  late List<ProductSize>productSizes;
+  late int totalProductPrice;
 
   Product(
       this.status,
@@ -29,7 +30,7 @@ class Product {
       this.combo,
       this.comboProducts,
       this.discount,
-      this.sizes);
-
+      this.productSizes,
+      this.totalProductPrice);
 
 }

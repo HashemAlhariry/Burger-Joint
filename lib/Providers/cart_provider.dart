@@ -1,4 +1,5 @@
 import 'package:burgerjoint/Models/cart.dart';
+import 'package:burgerjoint/Models/product.dart';
 import 'package:flutter/cupertino.dart';
 
 class CartProvider extends ChangeNotifier {
@@ -6,9 +7,9 @@ class CartProvider extends ChangeNotifier {
     Cart cart = new Cart();
     double totalPrice = 0;
 
-    void addCart(CartItem cartItem) {
-        cart.cartItems.add(cartItem);
-        totalPrice += cartItem.price;
+    void addCart(Product product) {
+        cart.cartItems.add(product);
+        totalPrice += product.totalProductPrice;
         notifyListeners();
     }
 
@@ -19,23 +20,20 @@ class CartProvider extends ChangeNotifier {
     }
 
     void deleteCartItem(int index) {
-        totalPrice -= cart.cartItems[index].price * cart.cartItems[index].quantity;
+        totalPrice -= cart.cartItems[index].productPrice;
         cart.cartItems.removeAt(index);
         notifyListeners();
     }
 
+
     void addQuantity(int index) {
-        cart.cartItems[index].quantity++;
-        totalPrice += cart.cartItems[index].price;
+
         notifyListeners();
     }
 
     void deleteQuantity(int index) {
-        if (cart.cartItems[index].quantity != 1) {
-            cart.cartItems[index].quantity--;
-            totalPrice -= cart.cartItems[index].price;
-            notifyListeners();
-        }
+
+
     }
 
 

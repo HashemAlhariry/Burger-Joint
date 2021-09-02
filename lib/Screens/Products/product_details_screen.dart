@@ -24,22 +24,41 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   void initState() {
+
     extraBoolList =  List<bool>.generate(widget.product.extras.length, (i) => false);
+    withOutBoolList =  List<bool>.generate(widget.product.productSizes[chosenSizesProduct].withOuts.length, (i) => false);
+    totalPriceProduct = widget.product.productSizes[0].price;
 
   }
+
+
+
   //for extras items
   late List<bool> extraBoolList;
 
+  //for without items
+  late List<bool>  withOutBoolList;
+
+  //for combo items clicked example( Combo Medium - Combo Large)
   int checkerForComboProductOpens=-1;
 
   //for expanding and closing ExpansionPanelList
-  bool expanded=false;
+  bool expandedExtras=false;
+
+
+  //for expanding and closing ExpansionPanelList
+  bool expandedWithOut=false;
+
 
   List<List<bool>> comboItemsClicked=[];
 
 
-  //this for choosing size of product
+  //for choosing size of product
   int chosenSizesProduct=0;
+
+  //total price for product
+  late int totalPriceProduct;
+  int comboPrice=0;
 
   @override
   Widget build(BuildContext context) {
@@ -181,11 +200,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         ...List.generate(
-                        widget.product.sizes.length,
+                        widget.product.productSizes.length,
                             (i) => GestureDetector(
                               onTap: (){
                                 setState(() {
+                                  //RESET ALL THE EXTRA COMBO AND WITHOUT
+                                  checkerForComboProductOpens=-1;
                                   chosenSizesProduct=i;
+                                  comboPrice=0;
+                                  totalPriceProduct=widget.product.productSizes[i].price;
+                                  extraBoolList =  List<bool>.generate(widget.product.extras.length, (i) => false);
+
                                 });
                                 //update product price
                               },
@@ -206,7 +231,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                Container(
-                                  child: Text( widget.product.sizes[i].sizeName,style:GoogleFonts.ptSans(
+                                  child: Text( widget.product.productSizes[i].sizeName,style:GoogleFonts.ptSans(
                                     fontWeight: FontWeight.bold,
                                     color: chosenSizesProduct==i ? Colors.white : Color(0xFFF80009) ,
                                     fontSize: 15,
@@ -222,7 +247,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       if(widget.product.combo)
                       SizedBox(height: 20,),
                       if(widget.product.combo)
-                        ...List.generate(
+                      ...List.generate(
                           widget.product.comboProducts.length,
                             (i) =>  Container(
                             color: Colors.white,
@@ -235,18 +260,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   onTap: () {
                                     setState(() {
                                       if(checkerForComboProductOpens==i){
+
                                         checkerForComboProductOpens=-1;
                                         comboItemsClicked=[];
-                                      }else{
+                                        totalPriceProduct-=comboPrice;
+                                        comboPrice=0;
+
+                                      }
+                                      else{
+                                        totalPriceProduct-=comboPrice;
+                                        comboPrice=0;
+                                        comboPrice= widget.product.comboProducts[i].price;
+                                        totalPriceProduct+=comboPrice;
+
 
                                         comboItemsClicked=[];
                                         checkerForComboProductOpens=i;
 
                                         //for initializing  comboItemsClicked = -1;
                                         for(int j=0;j< widget.product.comboProducts[i].items.length;j++){
-                                              List<bool>items=[];
-                                            for(int k  =0 ;k<widget.product.comboProducts[i].items[j].optionsProduct.length;k++) {
-
+                                            List<bool>items=[];
+                                            for(int k =0 ;k<widget.product.comboProducts[i].items[j].optionsProduct.length;k++) {
                                                 items.add(false);
                                             }
                                             comboItemsClicked.add(items);
@@ -324,10 +358,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                       /***----------------------------------------***/
 
+                      SizedBox(height: 10,),
 
                       /***FOR PRODUCT EXTRAS***/
                       if(widget.product.extras.length>0)
-                      SizedBox(height: 20,),
+                      SizedBox(height: 10,),
                       /*
                     //EXTRAS
                       if (widget.product.extras.length>1)
@@ -408,7 +443,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                               activeColor: Colors.red,
                                               onChanged: (bool? value) {
                                                 setState(() {
-                                                  this.extraBoolList[i] = value! ;
+                                                  this.extraBoolList[i] = value!;
+                                                  if(extraBoolList[i]){
+                                                    totalPriceProduct+=widget.product.extras[i].sizePrice;
+                                                  }else{
+                                                    totalPriceProduct-=widget.product.extras[i].sizePrice;
+                                                  }
                                                 });
                                               },
                                             ),
@@ -426,12 +466,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     ),)
                                   );
                                 },
-                                isExpanded: expanded,
+                                isExpanded: expandedExtras,
                               )
                             ],
                             expansionCallback: (int item, bool status) {
                               setState(() {
-                                expanded = !expanded;
+                                expandedExtras = !expandedExtras;
                               });
                             },
                           );
@@ -439,148 +479,139 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       /***-----------------------------------------***/
 
-                      SizedBox(height: 20,),
-
-
+                      SizedBox(height: 10,),
 
                       /***FOR PRODUCT WITHOUT TO REMOVE ITEMS***/
-                      if(widget.product.sizes.length>0)
-                        SizedBox(height: 20,),
-                      /***UPDATE HERE THE REST OF PRODUCTS***/
-                      /*
-                    //EXTRAS
-                      if (widget.product.extras.length>1)
-                      Container(
-                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                        child: Text('Extras',style:GoogleFonts.ptSans(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),),),
-
-                   ...List.generate(
-                        widget.product.extras.length,
-                            (i) =>       Container(
-                          color: Colors.white,
-                          padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                      if(widget.product.productSizes.length>0)
+                        SizedBox(height: 10,),
+                      if(widget.product.productSizes.length>0)
+                       ListView.builder(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ExpansionPanelList(
+                            animationDuration: Duration(milliseconds: 300),
+                            dividerColor: Colors.red,
+                            elevation: 1,
                             children: [
-                              Container(child: Text( widget.product.extras[i].productName,style:GoogleFonts.ptSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),),),
-                              Expanded(child: Container()),
-                              Container(child: Text(widget.product.extras[i].sizePrice.toString(),style:GoogleFonts.ptSans(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),),),
-                              Checkbox(
-                                value: extraBoolList[i],
-                                activeColor: Colors.red,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    this.extraBoolList[i] = value! ;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ),),
+                              ExpansionPanel(
+                                body: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: List.generate(
+                                      widget.product.productSizes[chosenSizesProduct].withOuts.length,
+                                          (i) =>       Container(
+                                        color: Colors.white,
+                                        padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Container(child: Text( widget.product.productSizes[chosenSizesProduct].withOuts[i].name,style:GoogleFonts.ptSans(
+                                              fontSize: 15,
+                                            ),),),
 
-                      */
-                      if(widget.product.sizes.length>0)
-                        ListView.builder(
-                          physics: ScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ExpansionPanelList(
-                              animationDuration: Duration(milliseconds: 300),
-                              dividerColor: Colors.red,
-                              elevation: 1,
-                              children: [
-                                ExpansionPanel(
-                                  body: Container(
-                                    padding: EdgeInsets.all(10),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: List.generate(
-                                        widget.product.extras.length,
-                                            (i) =>       Container(
-                                          color: Colors.white,
-                                          padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                                          child: Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Container(child: Text( widget.product.extras[i].productName,style:GoogleFonts.ptSans(
-
-                                                fontSize: 15,
-                                              ),),),
-                                              Expanded(child: Container()),
-                                              Container(child: Text(widget.product.extras[i].sizePrice.toString(),style:GoogleFonts.ptSans(
-
-                                                fontSize: 15,
-                                              ),),),
-                                              Checkbox(
-                                                value: extraBoolList[i],
-                                                activeColor: Colors.red,
-                                                onChanged: (bool? value) {
-                                                  setState(() {
-                                                    this.extraBoolList[i] = value! ;
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),),
-                                    ),
+                                          Expanded(child: Container(),),
+                                            Checkbox(
+                                              value: extraBoolList[i],
+                                              activeColor: Colors.red,
+                                              onChanged: (bool? value) {
+                                                setState(() {
+                                                  this.extraBoolList[i] = value! ;
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),),
                                   ),
-                                  headerBuilder: (BuildContext context, bool isExpanded) {
-                                    return Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Text('Extras',style:GoogleFonts.ptSans(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                        ),)
-                                    );
-                                  },
-                                  isExpanded: expanded,
-                                )
-                              ],
-                              expansionCallback: (int item, bool status) {
-                                setState(() {
-                                  expanded = !expanded;
-                                });
-                              },
-                            );
-                          },
-                        ),
+                                ),
+                                headerBuilder: (BuildContext context, bool isExpanded) {
+                                  return Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text('Remove',style:GoogleFonts.ptSans(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),)
+                                  );
+                                },
+                                isExpanded: expandedWithOut,
+                              )
+                            ],
+                            expansionCallback: (int item, bool status) {
+                              setState(() {
+                                expandedWithOut = !expandedWithOut;
+                              });
+                            },
+                          );
+                        },
+                      ),
                       /***-----------------------------------------***/
 
+
+                      SizedBox(height: 70,),
 
                     ],
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  color: Color(0xffED1C24),
-                  iconSize: 26,
-                  icon: Icon(
-                    Icons.arrow_back_ios,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      color: Color(0xffED1C24),
+                      iconSize: 26,
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(child: Container(),),
+                  Container(
+                    color: Colors.white,
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                          child: Text("PRICE  "+ totalPriceProduct.toString()+" EGP",style:  GoogleFonts.bebasNeue(
+
+                            fontSize: 25,
+                          ),),
+                        ),
+                        Expanded(child: Container(),),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                          child: FlatButton(color:Colors.red,onPressed: (){
+
+                            widget.product.totalProductPrice=totalPriceProduct;
+                            //add product to cart
+                            //update design cart
+
+                          }, child: Container(
+                           width: 150,
+                            child: Center(child: Text("Add To Cart",style: TextStyle(color: Colors.white),)),
+                          )),
+                        )
+                      ],
+                    ),
+                  ),
+
+
+                ],
               ),
             ]
 
         ),
       ),
     );
+
   }
 
 }

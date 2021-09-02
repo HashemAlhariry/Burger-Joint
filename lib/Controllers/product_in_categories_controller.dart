@@ -94,7 +94,7 @@ class ProductInCategoriesController{
 
         //for the sizes in product
         /*** DONE ***/
-        List<Size> sizes = [] ;
+        List<ProductSize> sizes = [] ;
         for(int j=0;j<products[i]['sizes'].length;j++){
           if(j==0){
             productPrice=products[i]['sizes'][j]['price'];
@@ -110,7 +110,7 @@ class ProductInCategoriesController{
                   withoutProduct[k]['unit']);
               withOuts.add(withOut);
           }
-          Size size = new Size(
+          ProductSize size = new ProductSize(
               products[i]['sizes'][j]['size_id'],
               products[i]['sizes'][j]['size_name'],
               products[i]['sizes'][j]['price'],
@@ -133,7 +133,8 @@ class ProductInCategoriesController{
             products[i]['combo'],
             comboProducts,
             products[i]['discount'],
-            sizes
+            sizes,
+            0
         );
         productsList.add(product);
       }
