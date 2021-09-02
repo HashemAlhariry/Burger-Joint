@@ -515,11 +515,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                           Expanded(child: Container(),),
                                             Checkbox(
-                                              value: extraBoolList[i],
+                                              value: withOutBoolList[i],
                                               activeColor: Colors.red,
                                               onChanged: (bool? value) {
                                                 setState(() {
-                                                  this.extraBoolList[i] = value! ;
+                                                  this.withOutBoolList[i] = value! ;
                                                 });
                                               },
                                             ),
