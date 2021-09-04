@@ -117,13 +117,78 @@ class _CartScreenState extends State<CartScreen> {
                                           ),
                                         ),
                                         SizedBox(height: 8,),
-                                        Text(
-                                          cart.cartItems[i].productSizes[0].sizeName,
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w400),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              cart.cartItems[i].productSizes[0].sizeName,
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            Expanded(child:Container()),
+                                            if( cart.cartItems[i].comboProducts.length>0)
+                                            Text(
+                                              cart.cartItems[i].comboProducts[0].sizeName,
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ],
                                         ),
+                                        SizedBox(height: 8,),
+
+                                        if(  cart.cartItems[i].extras.length>0)
+                                          ...List.generate(
+                                            cart.cartItems[i].extras.length,
+                                                (index) =>     Container(
+                                              color: Colors.white,
+                                              padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  if(index==0)
+                                                    Container(child: Text( "Extras: ",style:GoogleFonts.ptSans(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 10,
+                                                    ),),),
+                                                  Container(child: Text( cart.cartItems[i].extras[index].productName,style:GoogleFonts.ptSans(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 8,
+                                                  ),),),
+
+
+
+                                                ],
+                                              ),
+                                            ),),
+                                        SizedBox(height: 5,),
+                                        if(  cart.cartItems[i].productSizes[0].withOuts.length>0)
+                                          ...List.generate(
+                                            cart.cartItems[i].productSizes[0].withOuts.length,
+                                                (index) =>     Container(
+                                              color: Colors.white,
+                                              padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  if(index==0)
+                                                    Container(child: Text( "Without: ",style:GoogleFonts.ptSans(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 10,
+                                                    ),),),
+                                                  Container(child: Text( cart.cartItems[i].productSizes[0].withOuts[index].name,style:GoogleFonts.ptSans(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 8,
+                                                  ),),),
+
+
+
+                                                ],
+                                              ),
+                                            ),),
+                                        SizedBox(height: 8,),
                                         Container(
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,17 +293,11 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   Expanded(child: Container(),),
                   Container(
-
                     child:   Row(
-
-
                     children: <Widget>[
-
-
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
                             child: Text("TOTAL  "+    provider.Provider.of<CartProvider>(context, listen: true).totalPrice.toString()+" EGP",style:  GoogleFonts.bebasNeue(
-
                               fontSize: 25,
                             ),),
                           )
@@ -258,7 +317,6 @@ class _CartScreenState extends State<CartScreen> {
                       SizedBox(height: 8,),
                     ],
                   ),color: Colors.white,)
-
                 ],
               )
 
@@ -269,8 +327,6 @@ class _CartScreenState extends State<CartScreen> {
     );
 
   }
-
-
 }
 
 /*
