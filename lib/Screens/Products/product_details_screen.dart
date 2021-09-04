@@ -1,8 +1,16 @@
+import 'package:burgerjoint/Models/cart.dart';
+import 'package:burgerjoint/Models/extra.dart';
 import 'package:burgerjoint/Models/product.dart';
+import 'package:burgerjoint/Models/size.dart';
+import 'package:burgerjoint/Models/combo_product.dart';
+import 'package:burgerjoint/Providers/cart_provider.dart';
+import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart' as provider;
+
 
 class ProductDetailsScreen extends StatefulWidget {
 
@@ -60,8 +68,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   late int totalPriceProduct;
   int comboPrice=0;
 
+
+  late Cart cart;
+
+
   @override
   Widget build(BuildContext context) {
+    cart = provider.Provider.of<CartProvider>(context, listen: true).cart;
 
     return Scaffold(
       key: _key,
@@ -210,7 +223,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   comboPrice=0;
                                   totalPriceProduct=widget.product.productSizes[i].price;
                                   extraBoolList =  List<bool>.generate(widget.product.extras.length, (i) => false);
-
+                                  withOutBoolList =  List<bool>.generate(widget.product.productSizes[i].withOuts.length, (i) => false);
                                 });
                                 //update product price
                               },
@@ -588,14 +601,132 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Expanded(child: Container(),),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
-                          child: FlatButton(color:Colors.red,onPressed: (){
+                          child: FlatButton(color:Colors.red,
+                              onPressed: (){
 
+                            //updating the total price of a product after user added combo, extra etc...
                             widget.product.totalProductPrice=totalPriceProduct;
-                            //add product to cart
-                            //update design cart
 
-                          }, child: Container(
-                           width: 150,
+                            //List to get all user`s extra to add it to the product details
+                            List<Extra> extraAddedByUser=[];
+                            for(int i=0;i<extraBoolList.length;i++){
+                              if(extraBoolList[i]){
+                                extraAddedByUser.add(widget.product.extras[i]);
+                              }
+                            }
+
+                            //List to get all user`s without to add it to the product details
+                            List<WithOut> withOutAddedByUser=[];
+                            for(int i=0;i<withOutBoolList.length;i++){
+                              if(withOutBoolList[i]){
+                                withOutAddedByUser.add(widget.product.productSizes[chosenSizesProduct].withOuts[i]);
+                              }
+                            }
+
+                            //productSize where user clicked without items to be added in the order
+                            List<ProductSize>productSizeWhichUserChoose=[];
+                            ProductSize productSizeUserChoose = new ProductSize(
+                                widget.product.productSizes[chosenSizesProduct].sizeId,
+                                widget.product.productSizes[chosenSizesProduct].sizeName,
+                                widget.product.productSizes[chosenSizesProduct].price,
+                                withOutAddedByUser);
+                            productSizeWhichUserChoose.add(productSizeUserChoose);
+
+
+                            List<ComboProduct> comboProducts=[];
+                            //to check if user click on combo or not and if clicked add the combo chosen by user
+
+
+                            if(checkerForComboProductOpens!=-1){
+
+                                List<Item> itemUsersChoose=[];
+                                for(int i =0;i< widget.product.comboProducts[checkerForComboProductOpens].items.length;i++){
+                                  List<OptionProduct> optionProductListClickedByUser = [];
+                                 for(int j = 0;j<widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct.length;j++){
+
+                                       if(comboItemsClicked[i][j]){
+                                         OptionProduct optionProductClickedByUser = new OptionProduct(
+                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productComboOptionId,
+                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productName,
+                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productId,
+                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productSize,
+                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].sizeId);
+                                         optionProductListClickedByUser.add(optionProductClickedByUser);
+
+                                       }
+                                 }
+                                  Item itemChosenByUser= new Item(
+                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].productCombo,
+                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].productName,
+                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].productId,
+                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].productSize,
+                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].sizeId,
+                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].options,
+                                      optionProductListClickedByUser);
+                                 itemUsersChoose.add(itemChosenByUser);
+                                }
+
+
+
+
+
+                                ComboProduct comboProductByUser = new ComboProduct(
+                                    widget.product.comboProducts[checkerForComboProductOpens].comboSize,
+                                    widget.product.comboProducts[checkerForComboProductOpens].sizeName,
+                                    widget.product.comboProducts[checkerForComboProductOpens].price,
+                                    itemUsersChoose);
+
+                                comboProducts.add(comboProductByUser);
+                            }
+
+
+
+                                  for(int i=0;i<comboProducts.length;i++){
+                                    print(comboProducts[i].sizeName+" ");
+                                    for(int j=0;j<comboProducts[i].items.length;j++){
+                                      print(comboProducts[i].items[j].productName+" ");
+                                      for(int k=0;k<comboProducts[i].items[j].optionsProduct.length;k++){
+                                        print(comboProducts[i].items[j].optionsProduct[k].productName+" ");
+                                      }
+                                    }
+                                  }
+                            
+
+
+
+
+
+
+                            //add product to cart
+                            //product to add to cart product to be update with all user choices to add it to the cart
+                            Product productToAddToCart = new Product(
+                                widget.product.status,
+                                widget.product.productId,
+                                widget.product.productDescription,
+                                widget.product.productImage,
+                                widget.product.productTitle,
+                                widget.product.taxes,
+                                widget.product.productPrice,
+                                extraAddedByUser,
+                                widget.product.combo,
+                                comboProducts,
+                                widget.product.discount,
+                                productSizeWhichUserChoose,
+                                widget.product.totalProductPrice);
+
+
+                            provider.Provider.of<CartProvider>(
+                                context,
+                                listen: false)
+                                .addCart(productToAddToCart);
+
+
+                             Global.toastMessage("Added to Cart");
+
+
+                          },
+                         child: Container(
+                            width: 150,
                             child: Center(child: Text("Add To Cart",style: TextStyle(color: Colors.white),)),
                           )),
                         )

@@ -8,19 +8,23 @@ class CartProvider extends ChangeNotifier {
     double totalPrice = 0;
 
     void addCart(Product product) {
+
         cart.cartItems.add(product);
         totalPrice += product.totalProductPrice;
         notifyListeners();
+
     }
 
     void deleteCart() {
+
         cart.cartItems.clear();
         totalPrice = 0;
         notifyListeners();
+
     }
 
     void deleteCartItem(int index) {
-        totalPrice -= cart.cartItems[index].productPrice;
+        totalPrice -= cart.cartItems[index].totalProductPrice;
         cart.cartItems.removeAt(index);
         notifyListeners();
     }

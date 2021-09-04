@@ -13,7 +13,9 @@ class Product {
   late int productPrice;
   late List<Extra>extras;
   late bool combo;
+
   late List<ComboProduct> comboProducts;
+
   late int discount;
   late List<ProductSize>productSizes;
   late int totalProductPrice;
