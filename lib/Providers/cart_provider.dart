@@ -24,21 +24,15 @@ class CartProvider extends ChangeNotifier {
     }
 
     void deleteCartItem(int index) {
-        totalPrice -= cart.cartItems[index].totalProductPrice;
+
+        totalPrice -= cart.cartItems[index].totalProductPrice*cart.cartItems[index].quantity;
         cart.cartItems.removeAt(index);
         notifyListeners();
-    }
-
-
-    void addQuantity(int index) {
-
-        notifyListeners();
-    }
-
-    void deleteQuantity(int index) {
-
 
     }
+
+
+
 
 
 }

@@ -13,6 +13,8 @@ import '../../../Utils/app_localizations.dart';
 import '../../../Utils/global.dart';
 import 'package:provider/provider.dart' as provider;
 
+import '../user_address.dart';
+
 class SignUp extends StatefulWidget {
   @override
   _State createState() => _State();
@@ -190,14 +192,12 @@ class _State extends State<SignUp> with Validation {
           if (value!.length < 3) {
             return AppLocalizations.of(context)?.translate('invalid_name') ?? 'Please Enter Correct Name';
           }
-
         },
       onSaved: (String? value) {
         nameForm = value!;
         },
     );
   }
-
   Widget userNameField() {
     return TextFormField(
       cursorColor: Colors.grey,
@@ -276,7 +276,6 @@ class _State extends State<SignUp> with Validation {
       },
     );
   }
-
   Widget passwordField() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -324,7 +323,6 @@ class _State extends State<SignUp> with Validation {
       ],
     );
   }
-
   Widget passwordFieldConfirmation() {
     return TextFormField(
       cursorColor: Colors.grey,
@@ -351,7 +349,6 @@ class _State extends State<SignUp> with Validation {
       },
     );
   }
-
   Widget submitButton() {
     return Container(
       height: 35,
@@ -379,7 +376,6 @@ class _State extends State<SignUp> with Validation {
                               checkGender);
 
               UserAuthentication.signUp(Global.testUrl+"customer/register", user).then((value) async {
-
 
                 if(value['access_token'] != null){
 
@@ -437,92 +433,9 @@ class _State extends State<SignUp> with Validation {
     );
   }
 
-  _showDialog(BuildContext context) {
-
-    VoidCallback continueCallBack = () => {
-      Navigator.of(context).pop(),
-      // code on continue comes here
-
-    };
-    BlurryDialog  alert = BlurryDialog("Abort","Are you sure you want to abort this operation?",continueCallBack);
-
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
 
 }
 
-/*
-showAlertDialog(BuildContext context,String language,User user) {
-  // Create button
-  Widget okButton = FlatButton(
-    child: Text(AppLocalizations.of(context)?.translate('accept')),
-    onPressed: () {
 
 
-    },
-  );
 
-
-  // Create AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("Terms & Condidtion"),
-    content: language=='en' ?  TermsAndConditionsEn() : TermsAndConditionsAr() ,
-    actions: [
-      okButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-
-}
-  */
-
-
-class BlurryDialog extends StatelessWidget {
-
-  String title;
-  String content;
-  VoidCallback continueCallBack;
-
-  BlurryDialog(this.title, this.content, this.continueCallBack);
-  TextStyle textStyle = TextStyle (color: Colors.black);
-
-  @override
-  Widget build(BuildContext context) {
-    return BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
-        child:  AlertDialog(
-          title: new Text(title,style: textStyle,),
-          content: new Text(content, style: textStyle,),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("Continue"),
-              onPressed: () {
-                continueCallBack();
-              },
-            ),
-            new FlatButton(
-              child: Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        ));
-  }
-
-
-}

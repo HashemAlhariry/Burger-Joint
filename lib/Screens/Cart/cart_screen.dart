@@ -1,5 +1,9 @@
 import 'package:burgerjoint/Models/cart.dart';
+import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Providers/cart_provider.dart';
+import 'package:burgerjoint/Providers/user_provider.dart';
+import 'package:burgerjoint/Screens/Profile/user_address.dart';
+import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
@@ -16,10 +20,15 @@ class _CartScreenState extends State<CartScreen> {
   // cart provider
   late Cart cart;
 
+  // user provide
+  late User user;
+
   @override
   Widget build(BuildContext context) {
 
     cart = provider.Provider.of<CartProvider>(context, listen: true).cart;
+    user =  provider.Provider.of<UserProvider>(context, listen: true).user;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade100,
@@ -34,10 +43,13 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          "SHOPPING CART",
-                          style:GoogleFonts.ptSans(
-                            fontSize: 18,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(45.0, 0, 0, 0),
+                          child: Text(
+                            "SHOPPING CART",
+                            style:GoogleFonts.ptSans(
+                              fontSize: 18,
+                            ),
                           ),
                         ),
                         margin: EdgeInsets.only(left: 12, top: 12),
@@ -59,15 +71,18 @@ class _CartScreenState extends State<CartScreen> {
                       )
                     ],
                   ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Total Items " + cart.cartItems.length.toString(),
-                      style: GoogleFonts.ptSans(
-                        fontSize: 16,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(45.0, 0, 0, 0),
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "Total Items " + cart.cartItems.length.toString(),
+                        style: GoogleFonts.ptSans(
+                          fontSize: 16,
+                        ),
                       ),
+                      margin: EdgeInsets.only(left: 12, top: 4),
                     ),
-                    margin: EdgeInsets.only(left: 12, top: 4),
                   ),
                   cart.cartItems.length>0 ?
                   ListView.builder(
@@ -192,43 +207,70 @@ class _CartScreenState extends State<CartScreen> {
                                         Container(
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
                                             children: <Widget>[
                                               Text(
-                                                cart.cartItems[i].totalProductPrice.toString(),
+                                                ( cart.cartItems[i].totalProductPrice* cart.cartItems[i].quantity ).toString() ,
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.w400),
                                               ),
+                                              SizedBox(width: 5,),
+                                              Text(
+                                                " EGP" ,
+                                                style: TextStyle(
+                                                    fontSize: 10,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                              Expanded(child: Container()),
                                               Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                   crossAxisAlignment: CrossAxisAlignment.end,
                                                   children: <Widget>[
-                                                    Icon(
-                                                      Icons.remove,
-                                                      size: 24,
-                                                      color: Colors.grey.shade700,
+                                                    InkWell(
+                                                      onTap:(){
+                                                        if( cart.cartItems[i].quantity>1){
+                                                          setState(() {
+                                                            cart.cartItems[i].quantity--;
+                                                            provider.Provider.of<CartProvider>(context, listen: false).totalPrice-= cart.cartItems[i].totalProductPrice;
+                                                          });
+                                                        }
+                                                      },
+                                                      child: Icon(
+                                                        Icons.remove,
+                                                        size: 24,
+                                                        color: Colors.grey.shade700,
+                                                      ),
                                                     ),
                                                     Container(
                                                       color: Colors.grey.shade200,
                                                       padding: const EdgeInsets.only(
                                                           bottom: 2, right: 12, left: 12),
                                                       child: Text(
-                                                        "1",
+                                                        cart.cartItems[i].quantity.toString(),
                                                         style:
                                                         TextStyle(
                                                             fontSize: 16,
-
                                                             color: Colors.black,
                                                             fontWeight: FontWeight.w400),
                                                       ),
                                                     ),
-                                                    Icon(
-                                                      Icons.add,
-                                                      size: 24,
-                                                      color: Colors.grey.shade700,
+                                                    InkWell(
+                                                      onTap:(){
+                                                        setState(() {
+                                                        cart.cartItems[i].quantity++;
+                                                        provider.Provider.of<CartProvider>(context, listen: false).totalPrice+= cart.cartItems[i].totalProductPrice;
+                                                         });
+                                                        },
+                                                      child: Icon(
+                                                        Icons.add,
+                                                        size: 24,
+                                                        color: Colors.grey.shade700,
+                                                      ),
                                                     )
                                                   ],
                                                 ),
@@ -291,22 +333,47 @@ class _CartScreenState extends State<CartScreen> {
             Container(
               child: Column(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: IconButton(
+                          icon: new Icon(
+                            Icons.arrow_back_ios_outlined,
+                            color:  Color(0xffED1C24),
+                          ),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ),
+                    ),
+                  ),
                   Expanded(child: Container(),),
                   Container(
-                    child:   Row(
+                    child: Row(
                     children: <Widget>[
-                          Padding(
+
+                      Padding(
                             padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
                             child: Text("TOTAL  "+    provider.Provider.of<CartProvider>(context, listen: true).totalPrice.toString()+" EGP",style:  GoogleFonts.bebasNeue(
                               fontSize: 25,
                             ),),
-                          )
-                       ,
+                          ),
                       Expanded(child: Container(),),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
-                        child: FlatButton(color:Colors.red,
-                            onPressed: (){
+                        child: FlatButton(
+                             color:cart.cartItems.length>0 ?Colors.red:Colors.grey,
+                            onPressed:cart.cartItems.length>0 ? (){
+                             //send user to address screen
+                              if(user.userName != "" ){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAddress()));
+                              }else{
+                                Global.toastMessage('Please login first');
+                              }
+
+
+                            }:(){
 
                             },
                             child: Container(
@@ -315,8 +382,10 @@ class _CartScreenState extends State<CartScreen> {
                             )),
                       ),
                       SizedBox(height: 8,),
+
                     ],
-                  ),color: Colors.white,)
+                  ),
+                  color: Colors.white,)
                 ],
               )
 

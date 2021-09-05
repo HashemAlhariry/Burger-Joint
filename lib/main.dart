@@ -29,7 +29,7 @@ void main() async {
   Global.userToken = token;
 
 
-
+  print(token);
   runApp(MainWidget());
 
 }

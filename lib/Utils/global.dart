@@ -14,14 +14,11 @@ class Global {
 
 
   static String globalUrl = "" ;
+
   // testing local url
-  static String testUrl =  "https://bj.marshelles.com/public/" ;
-
-
-  static String mainColor ="ED1C24";
-
+  static String testUrl  =  "https://bj.marshelles.com/public/";
+  static String mainColor = "ED1C24";
   static var language = Global.prefs.getString('language_code') ?? 'en';
-
   static late Branch branch;
 
   /*** Cart FOR USER'S PRODUCT ***/
@@ -29,7 +26,6 @@ class Global {
 
   /// * APP BAR HEIGHT ***/
   static double appBarSize = 120.0;
-
 
   /// * PAGE ROUTE FOR ANIMATING SCREEN GLOBALLY ***/
   static PageRouteBuilder pageRouteBuilder (screen) {
@@ -65,12 +61,11 @@ class Global {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.grey,
       textColor: Colors.white,
       fontSize: 14.0,
     );
   }
-
 
   //GLOBAL USER LOGGED IN
   late User user;

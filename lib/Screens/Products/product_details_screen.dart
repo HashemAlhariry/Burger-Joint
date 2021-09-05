@@ -594,7 +594,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
                           child: Text("PRICE  "+ totalPriceProduct.toString()+" EGP",style:  GoogleFonts.bebasNeue(
-
                             fontSize: 25,
                           ),),
                         ),
@@ -632,10 +631,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 withOutAddedByUser);
                             productSizeWhichUserChoose.add(productSizeUserChoose);
 
-
                             List<ComboProduct> comboProducts=[];
                             //to check if user click on combo or not and if clicked add the combo chosen by user
-
 
                             if(checkerForComboProductOpens!=-1){
 
@@ -655,6 +652,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                        }
                                  }
+                                 if(optionProductListClickedByUser.length==0 &&widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct.length>0 ){
+                                   OptionProduct optionProductClickedByUser = new OptionProduct(
+                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productComboOptionId,
+                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productName,
+                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productId,
+                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productSize,
+                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].sizeId);
+                                   optionProductListClickedByUser.add(optionProductClickedByUser);
+                                 }
+
                                   Item itemChosenByUser= new Item(
                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].productCombo,
                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].productName,
@@ -666,10 +673,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                  itemUsersChoose.add(itemChosenByUser);
                                 }
 
-
-
-
-
                                 ComboProduct comboProductByUser = new ComboProduct(
                                     widget.product.comboProducts[checkerForComboProductOpens].comboSize,
                                     widget.product.comboProducts[checkerForComboProductOpens].sizeName,
@@ -679,9 +682,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 comboProducts.add(comboProductByUser);
                             }
 
-
-
-                                  for(int i=0;i<comboProducts.length;i++){
+                            for(int i=0;i<comboProducts.length;i++){
                                     print(comboProducts[i].sizeName+" ");
                                     for(int j=0;j<comboProducts[i].items.length;j++){
                                       print(comboProducts[i].items[j].productName+" ");
@@ -690,12 +691,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       }
                                     }
                                   }
-                            
-
-
-
-
-
 
                             //add product to cart
                             //product to add to cart product to be update with all user choices to add it to the cart
@@ -712,29 +707,25 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 comboProducts,
                                 widget.product.discount,
                                 productSizeWhichUserChoose,
-                                widget.product.totalProductPrice);
-
-
+                                widget.product.totalProductPrice,
+                                1);
                             provider.Provider.of<CartProvider>(
                                 context,
                                 listen: false)
                                 .addCart(productToAddToCart);
 
+                            Global.toastMessage("Added to Cart");
 
-                             Global.toastMessage("Added to Cart");
-
-
-                          },
-                         child: Container(
-                            width: 150,
-                            child: Center(child: Text("Add To Cart",style: TextStyle(color: Colors.white),)),
-                          )),
+                             },
+                              child: Container(
+                                width: 150,
+                                child: Center(child: Text("Add To Cart",style: TextStyle(color: Colors.white),)),
+                              )
+                              ),
                         )
                       ],
                     ),
                   ),
-
-
                 ],
               ),
             ]

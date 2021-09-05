@@ -23,9 +23,6 @@ class ProductInCategoriesController{
         int productPrice=0;
 
 
-
-
-
         //for the extra items in product
         /*** DONE ***/
         List<Extra>extras=[];
@@ -46,8 +43,7 @@ class ProductInCategoriesController{
         //for the combo items in product
         /*** DONE ***/
         List<ComboProduct> comboProducts=[];
-        for(int j=0;j<products[i]['combo_products'].length;j++)
-        {
+        for(int j=0;j<products[i]['combo_products'].length;j++) {
           List<Item>items=[];
           //for items in combo items in product
           var itemsComboProducts=products[i]['combo_products'][j]['items'];
@@ -134,7 +130,8 @@ class ProductInCategoriesController{
             comboProducts,
             products[i]['discount'],
             sizes,
-            0
+            0,
+          1
         );
         productsList.add(product);
       }

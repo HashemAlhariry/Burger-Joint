@@ -27,7 +27,7 @@ class DrawerWidget extends StatelessWidget {
               }),
           // ignore: sized_box_for_whitespace
           Container(
-            height: 400,
+            height: user.userName!="" ?450 : 410,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -222,7 +222,7 @@ class DrawerWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
                               child: Text(
-                                'Rate us',
+                                'Rate Us',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -255,6 +255,41 @@ class DrawerWidget extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
                               child: Text(
                                 'Help',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: 'JOSEF'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    h8(),
+                    if(user.userName!="")
+                    InkWell(
+                      onTap: () {
+                        User user = new User.loggedIn("","","","",0);
+                        provider.Provider.of<UserProvider>(context, listen: false).userLoggedIn(user);
+                        Global.loggedInUser=user;
+                        },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              size: 28,
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                              child: Text(
+                               "Log Out",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
