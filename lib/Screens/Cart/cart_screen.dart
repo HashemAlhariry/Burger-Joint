@@ -352,7 +352,6 @@ class _CartScreenState extends State<CartScreen> {
                   Container(
                     child: Row(
                     children: <Widget>[
-
                       Padding(
                             padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
                             child: Text("TOTAL  "+    provider.Provider.of<CartProvider>(context, listen: true).totalPrice.toString()+" EGP",style:  GoogleFonts.bebasNeue(

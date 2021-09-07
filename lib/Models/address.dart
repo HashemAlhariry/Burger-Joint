@@ -14,7 +14,7 @@ class Address{
   late String floor;
   late String comment;
   late int addressId;
-
+  Address.empty();
   Address(
       this.title,
       this.branchId,
