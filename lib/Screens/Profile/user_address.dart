@@ -1,7 +1,8 @@
-
+import 'package:burgerjoint/Controllers/address_controller.dart';
+import 'package:burgerjoint/Models/address.dart';
+import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 
 class UserAddress extends StatefulWidget {
@@ -18,7 +19,9 @@ class _UserAddressState extends State<UserAddress> {
   String streetName = '';
   String buildingNumber = '';
   String apartmentNumber = '';
+  String floorNumber = '';
   bool _isButtonDisabled = false;
+
   final formKeyNew = GlobalKey<FormState>();
 
   @override
@@ -73,6 +76,10 @@ class _UserAddressState extends State<UserAddress> {
                                     SizedBox(
                                       height: 7,
                                     ),
+                                   regionField(),
+                                    SizedBox(
+                                      height: 7,
+                                    ),
                                     streetNameField(),
                                     SizedBox(
                                       height: 7,
@@ -86,12 +93,30 @@ class _UserAddressState extends State<UserAddress> {
                                         Expanded(child: apartmentNumberField())
                                       ],
                                     ),
-                                    RaisedButton(onPressed: (){}, child:Text(
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+                                    floorNumberField(),
+                                    SizedBox(
+                                      height: 7,
+                                    ),
+
+
+
+                                    /*
+                                        RaisedButton(
+                                    onPressed: (){
+
+                                    },
+                                      color: Colors.red,
+                                      child:Text(
                                       'Choose from saved addresses',
                                       style: GoogleFonts.ptSans(
                                           fontSize: 20,
-                                          color: Colors.black
+                                          color: Colors.white
                                       ),),)
+                                     */
+
                                   ],
                                 ),
                               ),
@@ -181,7 +206,7 @@ class _UserAddressState extends State<UserAddress> {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText: 'Title Name',
+          labelText: 'Address Title',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -194,7 +219,7 @@ class _UserAddressState extends State<UserAddress> {
 
       },
       onSaved: (String? value) {
-        streetName = value!;
+        titleName = value!;
       },
     );
   }
@@ -251,7 +276,7 @@ class _UserAddressState extends State<UserAddress> {
   Widget apartmentNumberField() {
     return TextFormField(
       cursorColor: Colors.grey,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
@@ -266,10 +291,57 @@ class _UserAddressState extends State<UserAddress> {
         if (value!.length < 1) {
           return "Enter valid apartment number";
         }
-
       },
       onSaved: (String? value) {
         apartmentNumber = value!;
+      },
+    );
+  }
+  Widget floorNumberField() {
+    return TextFormField(
+      cursorColor: Colors.grey,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          labelText:'Floor Number',
+          labelStyle: TextStyle(
+              fontFamily: 'JOSEF',
+              fontSize: 12,
+              fontWeight: FontWeight.normal,
+              color: Colors.black)),
+      validator: (String? value) {
+        if (value!.length < 1) {
+          return "Enter valid floor number";
+        }
+      },
+      onSaved: (String? value) {
+        floorNumber = value!;
+      },
+    );
+  }
+  Widget regionField() {
+    return TextFormField(
+      cursorColor: Colors.grey,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          labelText:'Region',
+          labelStyle: TextStyle(
+              fontFamily: 'JOSEF',
+              fontSize: 12,
+              fontWeight: FontWeight.normal,
+              color: Colors.black)),
+      validator: (String? value) {
+        if (value!.length < 1) {
+          return "Enter valid region";
+        }
+      },
+      onSaved: (String? value) {
+        regionName = value!;
       },
     );
   }
@@ -288,12 +360,36 @@ class _UserAddressState extends State<UserAddress> {
               fontFamily: 'JOSEF'),
         ),
         onPressed: () async {
-          if (formKeyNew.currentState!.validate()) {
-            formKeyNew.currentState!.save();
-            setState(() {
-              _isButtonDisabled = true;
-            });
+          if(!_isButtonDisabled){
+            if (formKeyNew.currentState!.validate()) {
+              formKeyNew.currentState!.save();
+              setState(() {
+                //_isButtonDisabled = true;
+              });
+              String userAddress = buildingNumber+ " "+streetName+" "+regionName+" "+city+" "+country;
+              Address address = new Address(titleName,
+                  Global.branch.branchId,
+                  country,
+                  city,
+                  0,
+                  regionName,
+                  userAddress,
+                  buildingNumber,
+                  apartmentNumber,
+                  floorNumber,
+                  "",
+                  0);
+
+              AddressController.addAddress(address,
+                  Global.testUrl+"addresses",
+                  Global.userToken).then((value) {
+                //send user to check out
+                // with cart details
+
+              });
+            }
           }
+
         },
       ),
     );

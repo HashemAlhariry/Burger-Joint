@@ -3,17 +3,17 @@
 class Address{
 
   late String title;
-  late String branchId;
+  late int branchId;
   late String country;
   late String city;
-  late String zoneId;
+  late int zoneId;
   late String region;
   late String address;
   late String building;
   late String apartment;
   late String floor;
   late String comment;
-  late String addressId;
+  late int addressId;
 
   Address(
       this.title,

@@ -60,7 +60,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                                 child: SizedBox(
                                   width: MediaQuery.of(context).size.width,
-                                  child: Image.network(
+                                  child: Image. network(
                                     homePageCategory[index].categoryImage,
                                     fit: BoxFit.fitWidth,
                                   ),
