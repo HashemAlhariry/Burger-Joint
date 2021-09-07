@@ -369,7 +369,7 @@ class _UserAddressState extends State<UserAddress> {
               String userAddress = buildingNumber+ " "+streetName+" "+regionName+" "+city+" "+country;
               Address address = new Address(titleName,
                   Global.branch.branchId,
-                  country,
+                  country, 
                   city,
                   0,
                   regionName,
