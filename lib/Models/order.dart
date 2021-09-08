@@ -45,4 +45,7 @@ class Order {
       this.offerId,
       this.comment,
       this.edit);
+
+
+
 }

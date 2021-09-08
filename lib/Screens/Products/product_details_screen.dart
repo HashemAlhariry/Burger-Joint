@@ -708,7 +708,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 widget.product.discount,
                                 productSizeWhichUserChoose,
                                 widget.product.totalProductPrice,
-                                1);
+                                1,
+                                widget.product.relationId);
                             provider.Provider.of<CartProvider>(
                                 context,
                                 listen: false)

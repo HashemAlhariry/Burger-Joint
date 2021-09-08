@@ -368,7 +368,7 @@ class _UserAddressState extends State<UserAddress> {
               setState(() {
                 //_isButtonDisabled = true;
               });
-              String userAddress = buildingNumber+ " "+streetName+" "+regionName+" "+city+" "+country;
+              String userAddress = buildingNumber+ ", "+streetName+", "+regionName+", "+city+", "+country;
 
               Address address = new Address(
                   titleName,
@@ -390,7 +390,7 @@ class _UserAddressState extends State<UserAddress> {
                   //send user to check out
                   // with cart details
                 if(value['address'] != ""){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(value['id'],value['zone_id'])));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(value['id'],value['zone_id'],value['address'])));
                 }
                 else{
 

@@ -18,6 +18,7 @@ class Product {
   late List<ProductSize>productSizes;
   late int totalProductPrice;
   late int quantity;
+  late int relationId;
 
   Product(
       this.status,
@@ -33,6 +34,49 @@ class Product {
       this.discount,
       this.productSizes,
       this.totalProductPrice,
-      this.quantity);
+      this.quantity,
+      this.relationId);
+
+  static List<dynamic> convertToJson(List<Product> orderProducts) {
+    List<Map<String, dynamic>> jsonData = orderProducts.map((word) => word.productToMap()).toList();
+    return jsonData;
+  }
+  //get ids in list of extras
+  static List<int> getIdsOfExtras(List<Extra> extra){
+    List<int> ids=[];
+    for(int i =0;i<extra.length;i++){
+      ids.add(extra[i].sizeId);
+    }
+    return ids;
+  }
+
+  //get ids in list of without
+  static List<int> getIdsOfWithout(List<WithOut> withOut){
+    List<int> ids=[];
+    for(int i =0;i<withOut.length;i++){
+      ids.add(withOut[i].id);
+    }
+    return ids;
+  }
+
+  Map<String, dynamic> productToMap(){
+    return {
+      'relation_id': this.relationId,
+      'product_id': this.productId,
+      'quantity': this.quantity,
+      'size_id': this.productSizes[0].sizeId,
+      'combo': this.combo,
+      'extra':  getIdsOfExtras(this.extras),
+      'without': getIdsOfWithout(this.productSizes[0].withOuts),
+      'combo_size': this.comboProducts.length>0 ? comboProducts[0].comboSize: 0,
+      'price_after': this.totalProductPrice,
+      'price': this.totalProductPrice ,
+      'combo_products' : [],
+    };
+  }
+
+
+
+
 
 }
