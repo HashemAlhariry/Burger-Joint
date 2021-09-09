@@ -23,7 +23,7 @@ class Order {
   //ignore
   late String transactionReference;
 
-  late int customerId;
+
 
   late int offerId;
 
@@ -41,7 +41,6 @@ class Order {
       this.orderType,
       this.paymentMethod,
       this.transactionReference,
-      this.customerId,
       this.offerId,
       this.comment,
       this.edit);

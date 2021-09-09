@@ -1,8 +1,11 @@
+import 'package:burgerjoint/Controllers/order_controller.dart';
 import 'package:burgerjoint/Models/address.dart';
 import 'package:burgerjoint/Models/cart.dart';
+import 'package:burgerjoint/Models/order.dart';
 import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Providers/cart_provider.dart';
 import 'package:burgerjoint/Providers/user_provider.dart';
+import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
@@ -31,6 +34,7 @@ class _CheckOutState extends State<CheckOut> {
     cart = provider.Provider.of<CartProvider>(context, listen: true).cart;
     user =  provider.Provider.of<UserProvider>(context, listen: true).user;
 
+    String comment="";
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -286,6 +290,25 @@ class _CheckOutState extends State<CheckOut> {
                     fontFamily: 'JOSEF'),
                        ),
                     onPressed: () async {
+
+                      Order  order = new Order(
+                          Global.branch.branchId,
+                          provider.Provider.of<CartProvider>(context, listen: false).totalPrice,
+                          provider.Provider.of<CartProvider>(context, listen: false).totalPrice,
+                          cart.cartItems,
+                          [],
+                          3,
+                          3,
+                          "",
+                          0,
+                          comment,
+                          false);
+                      OrderController.storeOrder(Global.testUrl+"orders", order, comment, Global.userToken).then((value){
+                        //send message to user
+                        //update screen for order created
+
+
+                      });
 
                     },
                   ),

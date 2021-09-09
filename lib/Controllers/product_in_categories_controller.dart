@@ -130,9 +130,10 @@ class ProductInCategoriesController{
             comboProducts,
             products[i]['discount'],
             sizes,
-              0,
-             1,
-           products[i]['relation_id']
+            0,
+            1,
+            products[i]['relation_id'],
+            []
         );
         productsList.add(product);
       }

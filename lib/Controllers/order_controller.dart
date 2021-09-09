@@ -12,18 +12,19 @@ class OrderController {
     Map<String, dynamic> orderToJson = {
 
       'branch_id':Global.branch.branchId,
-      'total': order.total ,
+      'total': order.total,
       "total_after":  order.totalAfter,
-      "products": Product.convertToJson(order.products).map((e) => e.toJson()).toList(),
-      'packages': order.packages.isEmpty ? null : Product.convertToJson(order.packages).map((e) => e.toJson()).toList(),
+      "products": Product.convertToJson(order.products),
+      'packages': order.packages.isEmpty ? null : Product.convertToJson(order.packages),
       'order_type': 3,
       'payment_method': 3,
       "transaction_reference": "",
       'comment': comment,
       'edit': false,
-      'combo_products':[]
+      'offer_id':null
     };
 
+    print(orderToJson);
     Uri uri = Uri.parse(url);
 
 
@@ -37,11 +38,12 @@ class OrderController {
         },
         body: json.encode(orderToJson));
 
+  var message=json.encode(orderToJson);
+    print(message);
     print(json.decode(response.body)['message']);
     Map<String, dynamic> convertDataToJson = json.decode(response.body);
 
     return convertDataToJson;
-
 
   }
 

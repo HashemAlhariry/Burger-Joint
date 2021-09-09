@@ -19,6 +19,7 @@ class Product {
   late int totalProductPrice;
   late int quantity;
   late int relationId;
+  late List<ComboItemsClickedByUser> comboItemsClickedByUser;
 
   Product(
       this.status,
@@ -35,7 +36,8 @@ class Product {
       this.productSizes,
       this.totalProductPrice,
       this.quantity,
-      this.relationId);
+      this.relationId,
+      this.comboItemsClickedByUser);
 
   static List<dynamic> convertToJson(List<Product> orderProducts) {
     List<Map<String, dynamic>> jsonData = orderProducts.map((word) => word.productToMap()).toList();
@@ -63,6 +65,7 @@ class Product {
     return {
       'relation_id': this.relationId,
       'product_id': this.productId,
+       "offer_id": false,
       'quantity': this.quantity,
       'size_id': this.productSizes[0].sizeId,
       'combo': this.combo,
@@ -71,7 +74,7 @@ class Product {
       'combo_size': this.comboProducts.length>0 ? comboProducts[0].comboSize: 0,
       'price_after': this.totalProductPrice,
       'price': this.totalProductPrice ,
-      'combo_products' : [],
+      'combo_products' : ComboItemsClickedByUser.convertToJson(this.comboItemsClickedByUser),
     };
   }
 

@@ -39,6 +39,7 @@ class _CartScreenState extends State<CartScreen> {
               padding: const EdgeInsets.all(10.0),
               child: ListView(
                 children: <Widget>[
+
                   Row(
                     children: [
                       Container(
@@ -198,8 +199,6 @@ class _CartScreenState extends State<CartScreen> {
                                                     fontSize: 8,
                                                   ),),),
 
-
-
                                                 ],
                                               ),
                                             ),),
@@ -290,9 +289,7 @@ class _CartScreenState extends State<CartScreen> {
                             alignment: Alignment.topRight,
                             child: GestureDetector(
                               onTap:(){
-
                                 provider.Provider.of<CartProvider>(context, listen: false).deleteCartItem(i);
-
                               },
                               child: Container(
                                 width: 24,
@@ -325,7 +322,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),),
                     ],
                   ),
-                  SizedBox(height: 50,)
+                  SizedBox(height: 50,),
 
                 ],
               ),

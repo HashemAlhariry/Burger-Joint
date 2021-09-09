@@ -48,6 +48,9 @@ class OptionProduct{
 
 }
 
+
+
+//for combo items
 class ComboItemsClickedByUser{
 
   late int productComboOptionId;
@@ -62,12 +65,12 @@ class ComboItemsClickedByUser{
       this.productId,
       this.productSize,
       this.sizeId);
-/*
-  static List<dynamic> convertToJson(List<Item> orderProducts) {
-   List<Map<String, dynamic>> jsonData = orderProducts.map((word) => word.optionProductToMap()).toList();
-   return jsonData;
-  }
-*/
+
+
+      static List<dynamic> convertToJson(List<ComboItemsClickedByUser> orderProducts) {
+       List<Map<String, dynamic>> jsonData = orderProducts.map((word) => word.optionProductToMap()).toList();
+       return jsonData;
+      }
 
   Map<String, dynamic> optionProductToMap(){
 
