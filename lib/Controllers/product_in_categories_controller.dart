@@ -131,7 +131,9 @@ class ProductInCategoriesController{
             products[i]['discount'],
             sizes,
             0,
-          1
+            1,
+            products[i]['relation_id'],
+            []
         );
         productsList.add(product);
       }

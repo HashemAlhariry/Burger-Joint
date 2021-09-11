@@ -4,6 +4,8 @@ import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../checkout_screen.dart';
+
 
 class UserAddress extends StatefulWidget {
   @override
@@ -366,8 +368,10 @@ class _UserAddressState extends State<UserAddress> {
               setState(() {
                 //_isButtonDisabled = true;
               });
-              String userAddress = buildingNumber+ " "+streetName+" "+regionName+" "+city+" "+country;
-              Address address = new Address(titleName,
+              String userAddress = buildingNumber+ ", "+streetName+", "+regionName+", "+city+", "+country;
+
+              Address address = new Address(
+                  titleName,
                   Global.branch.branchId,
                   country, 
                   city,
@@ -383,8 +387,14 @@ class _UserAddressState extends State<UserAddress> {
               AddressController.addAddress(address,
                   Global.testUrl+"addresses",
                   Global.userToken).then((value) {
-                //send user to check out
-                // with cart details
+                  //send user to check out
+                  // with cart details
+                if(value['address'] != ""){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(value['id'],value['zone_id'],value['address'])));
+                }
+                else{
+
+                }
 
               });
             }

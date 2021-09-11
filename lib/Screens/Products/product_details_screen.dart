@@ -354,7 +354,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                     setState(() {
                                                       comboItemsClicked[j][k]=!comboItemsClicked[j][k];
                                                     });
-                                                    print(comboItemsClicked);
+
                                                   },
                                                 ),
                                               ],
@@ -682,7 +682,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 comboProducts.add(comboProductByUser);
                             }
 
-                            for(int i=0;i<comboProducts.length;i++){
+                            /*
+                                  for(int i=0;i<comboProducts.length;i++){
                                     print(comboProducts[i].sizeName+" ");
                                     for(int j=0;j<comboProducts[i].items.length;j++){
                                       print(comboProducts[i].items[j].productName+" ");
@@ -691,6 +692,43 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       }
                                     }
                                   }
+                             */
+
+                            List<ComboItemsClickedByUser> comboItemsClickedByUser=[];
+                            for(int i =0;i<comboProducts.length;i++){
+                                for(int j=0;j<comboProducts[i].items.length;j++){
+                                  if(comboProducts[i].items[j].optionsProduct.length==0){
+                                    ComboItemsClickedByUser comboItemsClicked=new ComboItemsClickedByUser(
+                                        comboProducts[i].items[j].productCombo,
+                                        comboProducts[i].items[j].productName,
+                                        comboProducts[i].items[j].productId,
+                                        comboProducts[i].items[j].productSize,
+                                        comboProducts[i].items[j].sizeId);
+                                    comboItemsClickedByUser.add(comboItemsClicked);
+                                  }else{
+                                    for(int k=0;k<comboProducts[i].items[j].optionsProduct.length;k++){
+                                      ComboItemsClickedByUser comboItemsClicked= new ComboItemsClickedByUser(
+                                          comboProducts[i].items[j].optionsProduct[k].productComboOptionId,
+                                          comboProducts[i].items[j].optionsProduct[k].productName,
+                                          comboProducts[i].items[j].optionsProduct[k].productId,
+                                          comboProducts[i].items[j].optionsProduct[k].productSize,
+                                          comboProducts[i].items[j].optionsProduct[k].sizeId)  ;
+                                      comboItemsClickedByUser.add(comboItemsClicked);
+                                    }
+                                  }
+                                }
+                            }
+
+
+
+                            for(int i=0;i<comboItemsClickedByUser.length;i++){
+                              print(
+                                  comboItemsClickedByUser[i].productName+
+                                  " "+
+                                  comboItemsClickedByUser[i].productSize+" "+
+                                  comboItemsClickedByUser[i].sizeId.toString()+" ");}
+
+
 
                             //add product to cart
                             //product to add to cart product to be update with all user choices to add it to the cart
@@ -703,12 +741,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 widget.product.taxes,
                                 widget.product.productPrice,
                                 extraAddedByUser,
-                                widget.product.combo,
+                                comboProducts.length>0? true:false,
                                 comboProducts,
                                 widget.product.discount,
                                 productSizeWhichUserChoose,
                                 widget.product.totalProductPrice,
-                                1);
+                                1,
+                                widget.product.relationId,
+                                comboItemsClickedByUser);
+
+
                             provider.Provider.of<CartProvider>(
                                 context,
                                 listen: false)

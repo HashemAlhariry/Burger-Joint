@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 class CartProvider extends ChangeNotifier {
 
     Cart cart = new Cart();
-    double totalPrice = 0;
+    int totalPrice = 0;
 
     void addCart(Product product) {
 

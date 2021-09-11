@@ -5,11 +5,13 @@ import 'package:http/http.dart' as http;
 
 class AddressController{
 
-  static Future<int> addAddress(Address address,String url,String token) async {
+  static Future<Map<String,dynamic>> addAddress(Address address,String url,String token) async {
     try {
       Uri uri = Uri.parse(url);
       final response = await http.post(uri,
           headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
             'Authorization': 'Bearer $token'
           },
           body: json.encode({
@@ -25,20 +27,19 @@ class AddressController{
           }));
       if (response.statusCode == 200) {
         if (response.body.isNotEmpty) {
-
-          if (json.decode(response.body)['address']['id']>0)
-            return json.decode(response.body)['address']['id'];
-          else
-            return -1;
+            return json.decode(response.body)['address'];
         } else {
-          return -1;
+          return  {'address':''};
         }
       } else {
+
         throw Exception('Failed to load data');
+
       }
     } catch (exception) {
       print(exception);
-      return -1;
+      return  {'address':''};
+
     }
   }
 
