@@ -1,10 +1,13 @@
 import 'package:burgerjoint/Controllers/address_controller.dart';
 import 'package:burgerjoint/Models/address.dart';
+import 'package:burgerjoint/Screens/Profile/Addresses/user_saved_address.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../checkout_screen.dart';
+import '../../checkout_screen.dart';
 
 
 class UserAddress extends StatefulWidget {
@@ -24,16 +27,30 @@ class _UserAddressState extends State<UserAddress> {
   String floorNumber = '';
   bool _isButtonDisabled = false;
 
+  var countryController = TextEditingController();
+  var cityController = TextEditingController();
+  var regionController = TextEditingController();
+  var streetNameController = TextEditingController();
+
+
   final formKeyNew = GlobalKey<FormState>();
+  late Position userLocation = new Position(longitude: 0,
+      latitude: 0,
+      accuracy: 0.0,
+      altitude: 0,
+      heading: 0,
+      speed: 0,
+      speedAccuracy: 0,
+      timestamp: null);
+
+  bool getLocationPressed = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.grey.shade100,
         body: SafeArea(
           child: Container(
-            color: Colors.white,
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
             child: Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Stack(
@@ -45,7 +62,7 @@ class _UserAddressState extends State<UserAddress> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(45.0, 0, 0, 0),
-                            child:Text(
+                            child: Text(
                               'Address',
                               style: GoogleFonts.ptSans(
                                   fontSize: 25,
@@ -78,7 +95,7 @@ class _UserAddressState extends State<UserAddress> {
                                     SizedBox(
                                       height: 7,
                                     ),
-                                   regionField(),
+                                    regionField(),
                                     SizedBox(
                                       height: 7,
                                     ),
@@ -100,9 +117,19 @@ class _UserAddressState extends State<UserAddress> {
                                     ),
                                     floorNumberField(),
                                     SizedBox(
-                                      height: 7,
+                                        height: 30
                                     ),
-
+                                    FlatButton(
+                                      child: Text(
+                                        'Or Choose From Saved Addresses',
+                                        style: TextStyle(fontSize: 15),),
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UserSavedAddress()));
+                                      },
+                                    ),
 
 
                                     /*
@@ -127,23 +154,40 @@ class _UserAddressState extends State<UserAddress> {
 
                           Padding(
                             padding: const EdgeInsets.fromLTRB(13.0, 0, 13, 0),
-                            child: addAddress(),
+                            child: Row(
+                              children: [
+
+                                Expanded(child: addAddress()),
+                                SizedBox(width: 10,),
+                                GestureDetector(
+                                  onTap: () {
+                                    determinePosition();
+                                  },
+                                  child: Icon(
+                                    Icons.gps_fixed,
+                                    color: !getLocationPressed
+                                        ? Colors.grey
+                                        : Colors.blue,
+                                  ),),
+
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: IconButton(
-                          icon: new Icon(
-                            Icons.arrow_back_ios_outlined,
-                            color:  Color(0xffED1C24),
-                          ),
-                          onPressed: () => Navigator.of(context).pop(),
+
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios_outlined,
+                          color: Color(0xffED1C24),
                         ),
+                        onPressed: () => Navigator.of(context).pop(),
                       ),
                     ),
+
                   ],
                 )),
           ),
@@ -152,6 +196,7 @@ class _UserAddressState extends State<UserAddress> {
 
   Widget countryField() {
     return TextFormField(
+      controller: countryController,
       cursorColor: Colors.grey,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -168,15 +213,16 @@ class _UserAddressState extends State<UserAddress> {
         if (value!.length < 3) {
           return "Enter a valid country name";
         }
-
       },
       onSaved: (String? value) {
         country = value!;
       },
     );
   }
+
   Widget cityField() {
     return TextFormField(
+      controller: cityController,
       cursorColor: Colors.grey,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -193,13 +239,13 @@ class _UserAddressState extends State<UserAddress> {
         if (value!.length < 3) {
           return "Enter valid city name";
         }
-
       },
       onSaved: (String? value) {
         city = value!;
       },
     );
   }
+
   Widget titleNameField() {
     return TextFormField(
       cursorColor: Colors.grey,
@@ -218,15 +264,16 @@ class _UserAddressState extends State<UserAddress> {
         if (value!.length < 3) {
           return "Enter a valid title name";
         }
-
       },
       onSaved: (String? value) {
         titleName = value!;
       },
     );
   }
+
   Widget streetNameField() {
     return TextFormField(
+      controller: streetNameController,
       cursorColor: Colors.grey,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
@@ -243,13 +290,13 @@ class _UserAddressState extends State<UserAddress> {
         if (value!.length < 3) {
           return "Enter valid street name";
         }
-
       },
       onSaved: (String? value) {
         streetName = value!;
       },
     );
   }
+
   Widget buildingNumberField() {
     return TextFormField(
       cursorColor: Colors.grey,
@@ -268,13 +315,13 @@ class _UserAddressState extends State<UserAddress> {
         if (value!.length < 1) {
           return "Enter valid building number";
         }
-
       },
       onSaved: (String? value) {
         buildingNumber = value!;
       },
     );
   }
+
   Widget apartmentNumberField() {
     return TextFormField(
       cursorColor: Colors.grey,
@@ -283,7 +330,7 @@ class _UserAddressState extends State<UserAddress> {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText:'Apartment Number',
+          labelText: 'Apartment Number',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -299,6 +346,7 @@ class _UserAddressState extends State<UserAddress> {
       },
     );
   }
+
   Widget floorNumberField() {
     return TextFormField(
       cursorColor: Colors.grey,
@@ -307,7 +355,7 @@ class _UserAddressState extends State<UserAddress> {
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText:'Floor Number',
+          labelText: 'Floor Number',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -323,15 +371,17 @@ class _UserAddressState extends State<UserAddress> {
       },
     );
   }
+
   Widget regionField() {
     return TextFormField(
+      controller: regionController,
       cursorColor: Colors.grey,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
-          labelText:'Region',
+          labelText: 'Region',
           labelStyle: TextStyle(
               fontFamily: 'JOSEF',
               fontSize: 12,
@@ -347,10 +397,14 @@ class _UserAddressState extends State<UserAddress> {
       },
     );
   }
+
   Widget addAddress() {
     return Container(
       height: 35,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       child: RaisedButton(
         color: _isButtonDisabled ? Colors.grey : Colors.red,
         child: Text(
@@ -362,18 +416,20 @@ class _UserAddressState extends State<UserAddress> {
               fontFamily: 'JOSEF'),
         ),
         onPressed: () async {
-          if(!_isButtonDisabled){
+          if (!_isButtonDisabled) {
             if (formKeyNew.currentState!.validate()) {
               formKeyNew.currentState!.save();
               setState(() {
                 //_isButtonDisabled = true;
               });
-              String userAddress = buildingNumber+ ", "+streetName+", "+regionName+", "+city+", "+country;
+
+              String userAddress = buildingNumber + ", " + streetName + ", " +
+                  regionName + ", " + city + ", " + country;
 
               Address address = new Address(
                   titleName,
                   Global.branch.branchId,
-                  country, 
+                  country,
                   city,
                   0,
                   regionName,
@@ -385,28 +441,86 @@ class _UserAddressState extends State<UserAddress> {
                   0);
 
               AddressController.addAddress(address,
-                  Global.testUrl+"addresses",
+                  Global.testUrl + "addresses",
                   Global.userToken).then((value) {
-                  //send user to check out
-                  // with cart details
-                if(value['address'] != ""){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(value['id'],value['zone_id'],value['address'])));
+                //send user to check out
+                // with cart details
+                if (value['address'] != "") {
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) =>
+                          CheckOut(value['id'], value['zone_id'],
+                              value['address'])));
                 }
-                else{
+                else {
 
                 }
-
               });
             }
           }
-
         },
       ),
     );
   }
 
+  // When the location services are not enabled or permissions are denied the Future will return an error
+  Future<void> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+
+    Position position = await Geolocator.getCurrentPosition();
+    userLocation = position;
+    List<Placemark> placeMarks = await placemarkFromCoordinates(
+        userLocation.latitude,userLocation.longitude);
+
+    setState(() {
+      countryController.text = placeMarks[0].country ?? "";
+      streetNameController.text = placeMarks[0].street ?? "";
+      cityController.text = placeMarks[0].administrativeArea ?? "";
+      regionController.text = placeMarks[0].subAdministrativeArea ?? "";
+      getLocationPressed = true;
+    });
+  }
+
+
+  void disposeControllers() {
+    countryController.dispose();
+    cityController.dispose();
+    regionController.dispose();
+    streetNameController.dispose();
+  }
+
+  @override
+  void dispose() {
+    disposeControllers();
+    super.dispose();
+  }
+
   @override
   void initState() {
-    //get all user saved location
+    super.initState();
+    determinePosition();
   }
 }

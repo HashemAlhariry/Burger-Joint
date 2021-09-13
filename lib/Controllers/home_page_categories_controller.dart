@@ -24,7 +24,6 @@ class HomePageCategoriesController{
               categories[i]['category_name'],
               categories[i]['category_icon']);
 
-
           homePageCategory.add(homePageCategoryObject);
       }
       return homePageCategory;

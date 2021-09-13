@@ -45,7 +45,6 @@ class OptionProduct{
       this.productSize,
       this.sizeId);
 
-
 }
 
 

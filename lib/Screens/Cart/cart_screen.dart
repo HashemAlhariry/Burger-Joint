@@ -2,8 +2,10 @@ import 'package:burgerjoint/Models/cart.dart';
 import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Providers/cart_provider.dart';
 import 'package:burgerjoint/Providers/user_provider.dart';
-import 'package:burgerjoint/Screens/Profile/user_address.dart';
+import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
+import 'file:///D:/BurgerJoint/lib/Screens/Profile/Addresses/user_address.dart';
 import 'package:burgerjoint/Utils/global.dart';
+import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
@@ -30,6 +32,7 @@ class _CartScreenState extends State<CartScreen> {
     user =  provider.Provider.of<UserProvider>(context, listen: true).user;
 
     return Scaffold(
+      drawer: DrawerWidget(),
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey.shade100,
       body: SafeArea(
@@ -332,7 +335,7 @@ class _CartScreenState extends State<CartScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Positioned.fill(
+
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: IconButton(
@@ -343,7 +346,7 @@ class _CartScreenState extends State<CartScreen> {
                           onPressed: () => Navigator.of(context).pop(),
                         ),
                       ),
-                    ),
+
                   ),
                   Expanded(child: Container(),),
                   Container(
@@ -365,6 +368,7 @@ class _CartScreenState extends State<CartScreen> {
                               if(user.userName != "" ){
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAddress()));
                               }else{
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                                 Global.toastMessage('Please login first');
                               }
 

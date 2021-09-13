@@ -4,13 +4,13 @@ import 'package:burgerjoint/Models/product.dart';
 import 'package:burgerjoint/Models/size.dart';
 import 'package:burgerjoint/Models/combo_product.dart';
 import 'package:burgerjoint/Providers/cart_provider.dart';
+import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
-
 
 class ProductDetailsScreen extends StatefulWidget {
 
@@ -77,6 +77,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     cart = provider.Provider.of<CartProvider>(context, listen: true).cart;
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       key: _key,
       drawer: DrawerWidget(),
       body: SafeArea(
@@ -86,7 +87,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 padding:  EdgeInsets.all(0.0),
                 child: ListView(
                     children: [
-
                       SizedBox(height: 10,),
                       Row(
                         children: [
@@ -262,15 +262,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       if(widget.product.combo)
                       ...List.generate(
                           widget.product.comboProducts.length,
-                            (i) =>  Container(
-                            color: Colors.white,
-                            padding: EdgeInsets.fromLTRB(10.0, 0, 10.0,0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
+                            (i) => Column(
                               children: [
+
                                 GestureDetector(
-                                  onTap: () {
+                                  onTap: (){
                                     setState(() {
                                       if(checkerForComboProductOpens==i){
 
@@ -292,11 +288,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                         //for initializing  comboItemsClicked = -1;
                                         for(int j=0;j< widget.product.comboProducts[i].items.length;j++){
-                                            List<bool>items=[];
-                                            for(int k =0 ;k<widget.product.comboProducts[i].items[j].optionsProduct.length;k++) {
-                                                items.add(false);
-                                            }
-                                            comboItemsClicked.add(items);
+                                          List<bool>items=[];
+                                          for(int k =0 ;k<widget.product.comboProducts[i].items[j].optionsProduct.length;k++) {
+                                            items.add(false);
+                                          }
+                                          comboItemsClicked.add(items);
                                         }
 
 
@@ -304,70 +300,93 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                                     });
                                   },
-                                  child: Container(child: Text( widget.product.comboProducts[i].sizeName,style:GoogleFonts.ptSans(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),),),
+                                  child: Container(
+                                  color: Colors.white,
+                                  padding: EdgeInsets.fromLTRB(10.0, 5, 10.0,5),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(child: Text( widget.product.comboProducts[i].sizeName,style:GoogleFonts.ptSans(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                          ),),),
+                                          Expanded(child: Container()),
+                                          Icon(
+                                            Icons.keyboard_arrow_down,
+
+                                            size: 25.0,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10,),
+                                      if(checkerForComboProductOpens==i)
+                                      ...List.generate(
+                                        widget.product.comboProducts[i].items.length,
+                                            (j) =>  Container(
+                                          color: Colors.white,
+                                          padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0,10.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              Container(child: Text(widget.product.comboProducts[i].items[j].productName,style:GoogleFonts.ptSans(
+                                                fontSize: 15,
+                                              ),),),
+                                              ...List.generate(
+                                                widget.product.comboProducts[i].items[j].optionsProduct.length,
+                                                    (k) =>  Container(
+                                                  color: Colors.white,
+                                                  padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
+                                                  child: Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    children: [
+                                                      Container(child: Text(  widget.product.comboProducts[i].items[j].optionsProduct[k].productName,style:GoogleFonts.ptSans(
+                                                        fontSize: 12,
+                                                      ),),),
+
+                                                      Checkbox(
+                                                        value:comboItemsClicked[j][k],
+                                                        activeColor: Colors.red,
+                                                        onChanged: (bool? value) {
+                                                          //for initializing  comboItemsClicked = -1;
+                                                          comboItemsClicked=[];
+                                                          for(int j=0;j< widget.product.comboProducts[i].items.length;j++){
+                                                            List<bool>items=[];
+                                                            for(int k  =0 ;k<widget.product.comboProducts[i].items[j].optionsProduct.length;k++) {
+
+                                                              items.add(false);
+                                                            }
+                                                            comboItemsClicked.add(items);
+                                                          }
+
+                                                          setState(() {
+                                                            comboItemsClicked[j][k]=!comboItemsClicked[j][k];
+                                                          });
+
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),),
+
+                                            ],
+                                          ),
+                                        ),),
+
+
+                                    ],
+                                  ),
+                          ),
                                 ),
-                                SizedBox(height: 10,),
-                                if(checkerForComboProductOpens==i)
-                                ...List.generate(
-                                  widget.product.comboProducts[i].items.length,
-                                      (j) =>  Container(
-                                    color: Colors.white,
-                                    padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0,10.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Container(child: Text(widget.product.comboProducts[i].items[j].productName,style:GoogleFonts.ptSans(
-                                          fontSize: 15,
-                                        ),),),
-                                        ...List.generate(
-                                          widget.product.comboProducts[i].items[j].optionsProduct.length,
-                                              (k) =>  Container(
-                                            color: Colors.white,
-                                            padding: EdgeInsets.fromLTRB(15.0, 0, 15.0,0),
-                                            child: Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Container(child: Text(  widget.product.comboProducts[i].items[j].optionsProduct[k].productName,style:GoogleFonts.ptSans(
-                                                  fontSize: 12,
-                                                ),),),
-
-                                                Checkbox(
-                                                  value:comboItemsClicked[j][k],
-                                                  activeColor: Colors.red,
-                                                  onChanged: (bool? value) {
-                                                    //for initializing  comboItemsClicked = -1;
-                                                    comboItemsClicked=[];
-                                                    for(int j=0;j< widget.product.comboProducts[i].items.length;j++){
-                                                      List<bool>items=[];
-                                                      for(int k  =0 ;k<widget.product.comboProducts[i].items[j].optionsProduct.length;k++) {
-
-                                                        items.add(false);
-                                                      }
-                                                      comboItemsClicked.add(items);
-                                                    }
-
-                                                    setState(() {
-                                                      comboItemsClicked[j][k]=!comboItemsClicked[j][k];
-                                                    });
-
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),),
-
-                                      ],
-                                    ),
-                                  ),),
-                                SizedBox(height: 10,)
+                                Container(
+                                  color:  Colors.grey.shade100,
+                                    child: SizedBox(height: 15,))
                               ],
                             ),
-                          ),
                         ),
                       /***----------------------------------------***/
 
@@ -764,6 +783,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 child: Center(child: Text("Add To Cart",style: TextStyle(color: Colors.white),)),
                               )
                               ),
+                        ),
+                        SizedBox(width: 10,),
+                        GestureDetector(
+
+                          onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
+                          },
+                          child: Padding(
+
+                          padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                          child: Text(
+                            'CART', style: GoogleFonts.bebasNeue(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w100
+                          ),
+                          )  ,),
                         )
                       ],
                     ),

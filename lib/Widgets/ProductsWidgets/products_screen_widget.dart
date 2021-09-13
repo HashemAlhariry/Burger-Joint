@@ -17,7 +17,7 @@ class _ProductsWidgetState extends State<ProductsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.product);
+
     return ListView(
       children: [
         SizedBox(

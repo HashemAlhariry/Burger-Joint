@@ -27,6 +27,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   Widget build(BuildContext context) {
     
     return Container(
+
+      color: Colors.grey.shade100,
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: SingleChildScrollView(
@@ -68,7 +70,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                           ),
-                          Column(children: [
+                          Column(
+                            children: [
                             Expanded(child: Container()),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -76,7 +79,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 fontSize: 24,
                                 color: Color(0xff262626),
                               ), ),),
-
                           ],)
                         ],
                       ),

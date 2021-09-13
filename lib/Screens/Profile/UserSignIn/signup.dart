@@ -13,7 +13,7 @@ import '../../../Utils/app_localizations.dart';
 import '../../../Utils/global.dart';
 import 'package:provider/provider.dart' as provider;
 
-import '../user_address.dart';
+import '../Addresses/user_address.dart';
 
 class SignUp extends StatefulWidget {
   @override

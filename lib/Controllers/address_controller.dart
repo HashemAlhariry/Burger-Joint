@@ -43,4 +43,48 @@ class AddressController{
     }
   }
 
+  static Future<List<Address>> getAddress(String url,String token) async {
+    try {
+      Uri uri = Uri.parse(url);
+      final response = await http.get(uri,
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token'
+          },);
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+          List<Address> addresses=[];
+          var userAddresses=json.decode(response.body)['addresses'];
+          for(int i=0;i<userAddresses.length;i++){
+              Address address= new Address(
+                  userAddresses[i]['title'],
+                  userAddresses[i]['branch_id'],
+                  userAddresses[i]['country'],
+                  userAddresses[i]['city'],
+                  userAddresses[i]['zone_id'],
+                  userAddresses[i]['region'],
+                  userAddresses[i]['address'],
+                  userAddresses[i]['building'],
+                  userAddresses[i]['apartment'].toString(),
+                  userAddresses[i]['floor'],
+                  userAddresses[i]['comment']?? "",
+                  userAddresses[i]['id']);
+              addresses.add(address);
+          }
+          
+          return addresses;
+        } else {
+          return  [];
+        }
+      } else {
+
+        throw Exception('Failed to load data');
+
+      }
+    } catch (exception) {
+      print(exception);
+      return  [];
+    }
+  }
 }
