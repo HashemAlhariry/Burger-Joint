@@ -152,26 +152,7 @@ class _CheckOutState extends State<CheckOut> {
                                                     fontWeight: FontWeight.w400),
                                               ),
                                               Expanded(child: Container()),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                children: <Widget>[
-                                                  Container(
-                                                    color: Colors.grey.shade200,
-                                                    padding: const EdgeInsets.only(
-                                                        bottom: 2, right: 12, left: 12),
-                                                    child: Text(
-                                                      cart.cartItems[i].quantity.toString(),
-                                                      style:
-                                                      TextStyle(
-                                                          fontSize: 16,
-                                                          color: Colors.black,
-                                                          fontWeight: FontWeight.w400),
-                                                    ),
-                                                  ),
 
-                                                ],
-                                              )
                                             ],
                                           ),
                                         ),
@@ -180,6 +161,26 @@ class _CheckOutState extends State<CheckOut> {
                                   ),
 
                                 ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      color: Colors.grey.shade200,
+                                      padding: const EdgeInsets.only(
+                                          bottom: 2, right: 12, left: 12),
+                                      child: Text(
+                                        cart.cartItems[i].quantity.toString(),
+                                        style:
+                                        TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+
+                                  ],
+                                )
 
                               ],
                             ),
@@ -263,8 +264,8 @@ class _CheckOutState extends State<CheckOut> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Positioned.fill(
-                    child: Align(
+
+                 Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
                         icon: new Icon(
@@ -274,7 +275,7 @@ class _CheckOutState extends State<CheckOut> {
                         onPressed: () => Navigator.of(context).pop(),
                       ),
                     ),
-                  ),
+
                   Expanded(child:Container()),
                   Container(
                     padding:EdgeInsets.fromLTRB(20, 0,20, 0),

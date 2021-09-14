@@ -1,5 +1,6 @@
 import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
+import 'package:burgerjoint/Screens/Profile/Addresses/user_saved_address.dart';
 import 'package:burgerjoint/Screens/Profile/proflie.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class DrawerWidget extends StatelessWidget {
               }),
           // ignore: sized_box_for_whitespace
           Container(
-            height: user.userName!="" ?450 : 410,
+            height: user.userName!="" ? 500 : 415,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -161,6 +162,39 @@ class DrawerWidget extends StatelessWidget {
                               padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
                               child: Text(
                                 'Your Orders',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontFamily: 'JOSEF'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    h8(),
+                    if(user.userName!="")
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSavedAddress(0)));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.add_location_sharp,
+                              size: 28,
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                              child: Text(
+                                'Addresses',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,

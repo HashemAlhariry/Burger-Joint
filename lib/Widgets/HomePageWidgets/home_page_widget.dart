@@ -70,8 +70,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               ),
                             ),
                           ),
-                          Column(
-                            children: [
+                          Column(children: [
                             Expanded(child: Container()),
                             Padding(
                               padding: const EdgeInsets.all(8.0),

@@ -13,8 +13,6 @@ import '../../../Utils/app_localizations.dart';
 import '../../../Utils/global.dart';
 import 'package:provider/provider.dart' as provider;
 
-import '../Addresses/user_address.dart';
-
 class SignUp extends StatefulWidget {
   @override
   _State createState() => _State();
@@ -31,7 +29,7 @@ class _State extends State<SignUp> with Validation {
   bool _showPassword = false;
 
 
-
+  bool _isButtonDisabled= false ;
   final formKey = GlobalKey<FormState>();
   final TextEditingController _confirmPass = TextEditingController();
   final TextEditingController _pass = TextEditingController();
@@ -52,12 +50,12 @@ class _State extends State<SignUp> with Validation {
                   children: [
 
                     Padding(
-                      padding: EdgeInsets.all(20.0),
+                      padding: EdgeInsets.all(10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(15.0, 10, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(15.0, 0, 0, 0),
                             child: Center(
                               child: Text(
                                 "Burger Joint",
@@ -66,6 +64,19 @@ class _State extends State<SignUp> with Validation {
                                     color: Global.colorFromHex('ED1C24'),
                                     fontWeight: FontWeight.bold,
                                     ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15.0, 5, 0, 0),
+                            child: Center(
+                              child: Text(
+                                "All Time Burger",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Global.colorFromHex('ED1C24'),
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -161,7 +172,7 @@ class _State extends State<SignUp> with Validation {
                         child: IconButton(
                           icon: new Icon(
                             Icons.arrow_back_ios_outlined,
-                            color: Colors.black,
+                            color: Colors.red,
                           ),
                           onPressed: () => Navigator.of(context).pop(),
                         ),
@@ -363,9 +374,12 @@ class _State extends State<SignUp> with Validation {
               fontSize: 14,
               fontFamily: 'JOSEF'),
         ),
-        onPressed: () async {
+        onPressed:!_isButtonDisabled ? () async {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
+            setState(() {
+              _isButtonDisabled=true;
+            });
             if(checkGender!= -1 ){
 
               User user = new User.loggedIn(
@@ -412,7 +426,9 @@ class _State extends State<SignUp> with Validation {
                       errorText+=value['phone'].toString();
 
                   Global.toastMessage(errorText);
-
+                  setState(() {
+                    _isButtonDisabled=false;
+                  });
                 }
 
 
@@ -421,6 +437,9 @@ class _State extends State<SignUp> with Validation {
 
             }
             else{
+              setState(() {
+                _isButtonDisabled=false;
+              });
               Global.toastMessage("CHOOSE A GENDER");
             }
 
@@ -428,7 +447,7 @@ class _State extends State<SignUp> with Validation {
 
 
           }
-        },
+        }:null,
       ),
     );
   }

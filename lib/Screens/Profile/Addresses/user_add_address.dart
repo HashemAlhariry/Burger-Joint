@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../checkout_screen.dart';
 
 
@@ -119,18 +118,24 @@ class _UserAddressState extends State<UserAddress> {
                                     SizedBox(
                                         height: 30
                                     ),
-                                    FlatButton(
-                                      child: Text(
-                                        'Or Choose From Saved Addresses',
-                                        style: TextStyle(fontSize: 15),),
-                                      onPressed: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    UserSavedAddress()));
-                                      },
-                                    ),
 
+                                    ElevatedButton(
+
+                                      child: Text(
+                                        'Saved Addresses',
+                                        style: TextStyle(fontSize: 12),),
+                                      onPressed: () =>  Navigator.push(context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UserSavedAddress(1))),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.red,
+                                        onPrimary: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(0.0),
+                                        ),
+                                      ),
+                                    )
 
                                     /*
                                         RaisedButton(

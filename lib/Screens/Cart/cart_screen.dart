@@ -2,8 +2,9 @@ import 'package:burgerjoint/Models/cart.dart';
 import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Providers/cart_provider.dart';
 import 'package:burgerjoint/Providers/user_provider.dart';
+import 'package:burgerjoint/Screens/Profile/Addresses/user_add_address.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
-import 'file:///D:/BurgerJoint/lib/Screens/Profile/Addresses/user_address.dart';
+
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';

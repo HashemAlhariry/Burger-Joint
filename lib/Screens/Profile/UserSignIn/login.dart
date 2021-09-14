@@ -40,17 +40,43 @@ class _State extends State<Login> with Validation {
                       padding: EdgeInsets.all(10.0),
                       child: ListView(
                         children: <Widget>[
-                          SizedBox(
-                            height: 50,
+
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15.0, 0, 0, 0),
+                            child: Center(
+                              child: Text(
+                                "Burger Joint",
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  color: Global.colorFromHex('ED1C24'),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
-                          Center(
-                            child: Text(
-                              AppLocalizations.of(context)?.translate('log_in_with_your_username') ?? 'Log In With Your Username',
-                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 14 ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15.0, 5, 0, 0),
+                            child: Center(
+                              child: Text(
+                                "All Time Burger",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Global.colorFromHex('ED1C24'),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 50,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15.0,0,15.0,0),
+                            child: Text(
+                               'Login',
+                              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 14 ),
+                            ),
                           ),
                           Container(
                             margin: EdgeInsets.all(15.0),
@@ -143,7 +169,7 @@ class _State extends State<Login> with Validation {
                       child: IconButton(
                         icon: new Icon(
                           Icons.arrow_back_ios_outlined,
-                          color: Colors.black,
+                          color: Colors.red,
                         ),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
@@ -226,42 +252,50 @@ class _State extends State<Login> with Validation {
                 fontFamily: 'JOSEF'),
           ),
           onPressed: !_isButtonDisabled ?  () {
+                if (formKey.currentState!.validate()) {
 
-            if (formKey.currentState!.validate()) {
-
-              formKey.currentState!.save();
-              setState(() {
-                _isButtonDisabled=true;
-              });
-
-              UserAuthentication.logIn(Global.testUrl+"auth/token" , userName.trim() , password.trim()).then((value) async {
+                  formKey.currentState!.save();
+                  setState(() {
+                    _isButtonDisabled=true;
+                  });
+                  UserAuthentication.logIn(Global.testUrl+"auth/token" , userName.trim() , password.trim()).then((value) async {
 
 
-
-                //save user data
-                Global.prefs = await SharedPreferences.getInstance();
-                //save all user data
-                Global.prefs.setString('password', password);
-                Global.prefs.setString('username', userName);
-                Global.prefs.setString('token', value['access_token']);
-                Global.userToken = value['access_token'];
+                    if(value['access_token']!=null){
+                      //save user data
+                      Global.prefs = await SharedPreferences.getInstance();
+                      //save all user data
+                      Global.prefs.setString('password', password);
+                      Global.prefs.setString('username', userName);
+                      Global.prefs.setString('token', value['access_token']);
+                      Global.userToken = value['access_token'];
 
 
 
-                Global.loggedInUser= User.loggedIn(userName, "", password, "", 1);
-                //pop screen and update new user
-                provider.Provider.of<UserProvider>(
-                    context,
-                    listen: false)
-                    .userLoggedIn(User.loggedIn(userName, "", password, "", 1));
+                      Global.loggedInUser= User.loggedIn(userName, "", password, "", 1);
+                      //pop screen and update new user
+                      provider.Provider.of<UserProvider>(
+                          context,
+                          listen: false)
+                          .userLoggedIn(User.loggedIn(userName, "", password, "", 1));
 
-                Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    }else{
+                      Global.toastMessage(value['error_description']);
+                      setState(() {
+                        _isButtonDisabled=false;
+                      });
+                    }
 
-              });
+
+                  });
+
+
+                }
 
 
 
-            }
+
           } : null,
         ),
       );

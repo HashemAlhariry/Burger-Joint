@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UserSavedAddress extends StatefulWidget {
+  int checkToProceedToCheckOut=0;
+
+  UserSavedAddress(this.checkToProceedToCheckOut);
 
   @override
   _UserSavedAddressState createState() => _UserSavedAddressState();
-
 }
 
 
@@ -36,7 +38,10 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
                     itemBuilder: (context, i) {
                       return GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address)));
+                          if(widget.checkToProceedToCheckOut==1){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address)));
+                          }
+
                         },
                         child: Card(
                           child: Container(
@@ -44,37 +49,59 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
 
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(userSavedAddresses[i].address,style:  GoogleFonts.ptSans(
-                                      fontSize: 15,
+                                SizedBox(height: 5,),
+                                Center(
+                                 child: Text(userSavedAddresses[i].title,style:  GoogleFonts.ptSans(
+                                      fontSize: 18,
                                       color: Colors.black
                                   ),),
                                 ),
+                                const Divider(
+                                  height: 20,
+                                  thickness: 2,
+                                  indent: 60,
+                                  endIndent: 60,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("Address: "+userSavedAddresses[i].address,style:  GoogleFonts.ptSans(
+                                      fontSize: 14,
+                                      color: Colors.black
+                                  ),),
+                                ),
+                                const Divider(
+                                  height: 20,
+                                  thickness: 2,
+                                  indent: 60,
+                                  endIndent: 60,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("Region: "+userSavedAddresses[i].region,style:  GoogleFonts.ptSans(
+                                      fontSize: 13,
+                                      color: Colors.black
+                                  )),
+                                ),
+
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
+                                      Expanded(child: Container(),),
                                       Text(userSavedAddresses[i].country,style:  GoogleFonts.ptSans(
-                                          fontSize: 15,
+                                          fontSize: 12,
                                           color: Colors.black
                                       )),
                                       SizedBox(width: 10,),
                                       Text(userSavedAddresses[i].city,style:  GoogleFonts.ptSans(
-                                          fontSize: 15,
+                                          fontSize: 12,
                                           color: Colors.black
                                       )),
                                     ],
                                   ),
                                 ),
 
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(userSavedAddresses[i].region,style:  GoogleFonts.ptSans(
-                                      fontSize: 15,
-                                      color: Colors.black
-                                  )),
-                                )
+
                               ],
                             ),
                           ),

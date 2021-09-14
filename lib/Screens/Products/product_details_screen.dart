@@ -490,12 +490,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   ),
                                 ),
                                 headerBuilder: (BuildContext context, bool isExpanded) {
-                                  return Container(
-                                      padding: EdgeInsets.all(10),
-                                    child: Text('Extras',style:GoogleFonts.ptSans(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),)
+                                  return GestureDetector(
+                                    onTap: (){
+                                      setState(() {
+                                        expandedExtras=!expandedExtras;
+                                      });
+                                    },
+                                    child: Container(
+                                        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                        padding: EdgeInsets.fromLTRB(10,0,10,0),
+                                        child: Text('Extras',style:GoogleFonts.ptSans(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),)
+                                    ),
                                   );
                                 },
                                 isExpanded: expandedExtras,
@@ -561,12 +569,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   ),
                                 ),
                                 headerBuilder: (BuildContext context, bool isExpanded) {
-                                  return Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text('Remove',style:GoogleFonts.ptSans(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                      ),)
+                                  return GestureDetector(
+                                    onTap: (){
+                                      setState(() {
+                                        expandedWithOut = !expandedWithOut;
+                                      });
+                                    },
+                                    child: Container(
+                                        padding: EdgeInsets.fromLTRB(10, 0, 10,0),
+                                        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                        child: Text('Remove',style:GoogleFonts.ptSans(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),)
+                                    ),
                                   );
                                 },
                                 isExpanded: expandedWithOut,
@@ -616,190 +632,187 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             fontSize: 25,
                           ),),
                         ),
-                        Expanded(child: Container(),),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
-                          child: FlatButton(color:Colors.red,
-                              onPressed: (){
 
-                            //updating the total price of a product after user added combo, extra etc...
-                            widget.product.totalProductPrice=totalPriceProduct;
+                        SizedBox(width: 10,),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
 
-                            //List to get all user`s extra to add it to the product details
-                            List<Extra> extraAddedByUser=[];
-                            for(int i=0;i<extraBoolList.length;i++){
-                              if(extraBoolList[i]){
-                                extraAddedByUser.add(widget.product.extras[i]);
-                              }
-                            }
+                          },
+                          icon: Icon(Icons.shopping_cart_rounded),
+                          iconSize: 20,
+                          color: Colors.red,
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
+                            child: FlatButton(color:Colors.red,
+                                onPressed: (){
 
-                            //List to get all user`s without to add it to the product details
-                            List<WithOut> withOutAddedByUser=[];
-                            for(int i=0;i<withOutBoolList.length;i++){
-                              if(withOutBoolList[i]){
-                                withOutAddedByUser.add(widget.product.productSizes[chosenSizesProduct].withOuts[i]);
-                              }
-                            }
+                              //updating the total price of a product after user added combo, extra etc...
+                              widget.product.totalProductPrice=totalPriceProduct;
 
-                            //productSize where user clicked without items to be added in the order
-                            List<ProductSize>productSizeWhichUserChoose=[];
-                            ProductSize productSizeUserChoose = new ProductSize(
-                                widget.product.productSizes[chosenSizesProduct].sizeId,
-                                widget.product.productSizes[chosenSizesProduct].sizeName,
-                                widget.product.productSizes[chosenSizesProduct].price,
-                                withOutAddedByUser);
-                            productSizeWhichUserChoose.add(productSizeUserChoose);
-
-                            List<ComboProduct> comboProducts=[];
-                            //to check if user click on combo or not and if clicked add the combo chosen by user
-
-                            if(checkerForComboProductOpens!=-1){
-
-                                List<Item> itemUsersChoose=[];
-                                for(int i =0;i< widget.product.comboProducts[checkerForComboProductOpens].items.length;i++){
-                                  List<OptionProduct> optionProductListClickedByUser = [];
-                                 for(int j = 0;j<widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct.length;j++){
-
-                                       if(comboItemsClicked[i][j]){
-                                         OptionProduct optionProductClickedByUser = new OptionProduct(
-                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productComboOptionId,
-                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productName,
-                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productId,
-                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productSize,
-                                             widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].sizeId);
-                                         optionProductListClickedByUser.add(optionProductClickedByUser);
-
-                                       }
-                                 }
-                                 if(optionProductListClickedByUser.length==0 &&widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct.length>0 ){
-                                   OptionProduct optionProductClickedByUser = new OptionProduct(
-                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productComboOptionId,
-                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productName,
-                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productId,
-                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productSize,
-                                       widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].sizeId);
-                                   optionProductListClickedByUser.add(optionProductClickedByUser);
-                                 }
-
-                                  Item itemChosenByUser= new Item(
-                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].productCombo,
-                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].productName,
-                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].productId,
-                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].productSize,
-                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].sizeId,
-                                      widget.product.comboProducts[checkerForComboProductOpens].items[i].options,
-                                      optionProductListClickedByUser);
-                                 itemUsersChoose.add(itemChosenByUser);
+                              //List to get all user`s extra to add it to the product details
+                              List<Extra> extraAddedByUser=[];
+                              for(int i=0;i<extraBoolList.length;i++){
+                                if(extraBoolList[i]){
+                                  extraAddedByUser.add(widget.product.extras[i]);
                                 }
+                              }
 
-                                ComboProduct comboProductByUser = new ComboProduct(
-                                    widget.product.comboProducts[checkerForComboProductOpens].comboSize,
-                                    widget.product.comboProducts[checkerForComboProductOpens].sizeName,
-                                    widget.product.comboProducts[checkerForComboProductOpens].price,
-                                    itemUsersChoose);
+                              //List to get all user`s without to add it to the product details
+                              List<WithOut> withOutAddedByUser=[];
+                              for(int i=0;i<withOutBoolList.length;i++){
+                                if(withOutBoolList[i]){
+                                  withOutAddedByUser.add(widget.product.productSizes[chosenSizesProduct].withOuts[i]);
+                                }
+                              }
 
-                                comboProducts.add(comboProductByUser);
-                            }
+                              //productSize where user clicked without items to be added in the order
+                              List<ProductSize>productSizeWhichUserChoose=[];
+                              ProductSize productSizeUserChoose = new ProductSize(
+                                  widget.product.productSizes[chosenSizesProduct].sizeId,
+                                  widget.product.productSizes[chosenSizesProduct].sizeName,
+                                  widget.product.productSizes[chosenSizesProduct].price,
+                                  withOutAddedByUser);
+                              productSizeWhichUserChoose.add(productSizeUserChoose);
 
-                            /*
-                                  for(int i=0;i<comboProducts.length;i++){
-                                    print(comboProducts[i].sizeName+" ");
-                                    for(int j=0;j<comboProducts[i].items.length;j++){
-                                      print(comboProducts[i].items[j].productName+" ");
+                              List<ComboProduct> comboProducts=[];
+                              //to check if user click on combo or not and if clicked add the combo chosen by user
+
+                              if(checkerForComboProductOpens!=-1){
+
+                                  List<Item> itemUsersChoose=[];
+                                  for(int i =0;i< widget.product.comboProducts[checkerForComboProductOpens].items.length;i++){
+                                    List<OptionProduct> optionProductListClickedByUser = [];
+                                   for(int j = 0;j<widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct.length;j++){
+
+                                         if(comboItemsClicked[i][j]){
+                                           OptionProduct optionProductClickedByUser = new OptionProduct(
+                                               widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productComboOptionId,
+                                               widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productName,
+                                               widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productId,
+                                               widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].productSize,
+                                               widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[j].sizeId);
+                                           optionProductListClickedByUser.add(optionProductClickedByUser);
+
+                                         }
+                                   }
+                                   if(optionProductListClickedByUser.length==0 &&widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct.length>0 ){
+                                     OptionProduct optionProductClickedByUser = new OptionProduct(
+                                         widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productComboOptionId,
+                                         widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productName,
+                                         widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productId,
+                                         widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].productSize,
+                                         widget.product.comboProducts[checkerForComboProductOpens].items[i].optionsProduct[0].sizeId);
+                                     optionProductListClickedByUser.add(optionProductClickedByUser);
+                                   }
+
+                                    Item itemChosenByUser= new Item(
+                                        widget.product.comboProducts[checkerForComboProductOpens].items[i].productCombo,
+                                        widget.product.comboProducts[checkerForComboProductOpens].items[i].productName,
+                                        widget.product.comboProducts[checkerForComboProductOpens].items[i].productId,
+                                        widget.product.comboProducts[checkerForComboProductOpens].items[i].productSize,
+                                        widget.product.comboProducts[checkerForComboProductOpens].items[i].sizeId,
+                                        widget.product.comboProducts[checkerForComboProductOpens].items[i].options,
+                                        optionProductListClickedByUser);
+                                   itemUsersChoose.add(itemChosenByUser);
+                                  }
+
+                                  ComboProduct comboProductByUser = new ComboProduct(
+                                      widget.product.comboProducts[checkerForComboProductOpens].comboSize,
+                                      widget.product.comboProducts[checkerForComboProductOpens].sizeName,
+                                      widget.product.comboProducts[checkerForComboProductOpens].price,
+                                      itemUsersChoose);
+
+                                  comboProducts.add(comboProductByUser);
+                              }
+
+                              /*
+                                    for(int i=0;i<comboProducts.length;i++){
+                                      print(comboProducts[i].sizeName+" ");
+                                      for(int j=0;j<comboProducts[i].items.length;j++){
+                                        print(comboProducts[i].items[j].productName+" ");
+                                        for(int k=0;k<comboProducts[i].items[j].optionsProduct.length;k++){
+                                          print(comboProducts[i].items[j].optionsProduct[k].productName+" ");
+                                        }
+                                      }
+                                    }
+                               */
+
+                              List<ComboItemsClickedByUser> comboItemsClickedByUser=[];
+                              for(int i =0;i<comboProducts.length;i++){
+                                  for(int j=0;j<comboProducts[i].items.length;j++){
+                                    if(comboProducts[i].items[j].optionsProduct.length==0){
+                                      ComboItemsClickedByUser comboItemsClicked=new ComboItemsClickedByUser(
+                                          comboProducts[i].items[j].productCombo,
+                                          comboProducts[i].items[j].productName,
+                                          comboProducts[i].items[j].productId,
+                                          comboProducts[i].items[j].productSize,
+                                          comboProducts[i].items[j].sizeId);
+                                      comboItemsClickedByUser.add(comboItemsClicked);
+                                    }else{
                                       for(int k=0;k<comboProducts[i].items[j].optionsProduct.length;k++){
-                                        print(comboProducts[i].items[j].optionsProduct[k].productName+" ");
+                                        ComboItemsClickedByUser comboItemsClicked= new ComboItemsClickedByUser(
+                                            comboProducts[i].items[j].optionsProduct[k].productComboOptionId,
+                                            comboProducts[i].items[j].optionsProduct[k].productName,
+                                            comboProducts[i].items[j].optionsProduct[k].productId,
+                                            comboProducts[i].items[j].optionsProduct[k].productSize,
+                                            comboProducts[i].items[j].optionsProduct[k].sizeId)  ;
+                                        comboItemsClickedByUser.add(comboItemsClicked);
                                       }
                                     }
                                   }
-                             */
-
-                            List<ComboItemsClickedByUser> comboItemsClickedByUser=[];
-                            for(int i =0;i<comboProducts.length;i++){
-                                for(int j=0;j<comboProducts[i].items.length;j++){
-                                  if(comboProducts[i].items[j].optionsProduct.length==0){
-                                    ComboItemsClickedByUser comboItemsClicked=new ComboItemsClickedByUser(
-                                        comboProducts[i].items[j].productCombo,
-                                        comboProducts[i].items[j].productName,
-                                        comboProducts[i].items[j].productId,
-                                        comboProducts[i].items[j].productSize,
-                                        comboProducts[i].items[j].sizeId);
-                                    comboItemsClickedByUser.add(comboItemsClicked);
-                                  }else{
-                                    for(int k=0;k<comboProducts[i].items[j].optionsProduct.length;k++){
-                                      ComboItemsClickedByUser comboItemsClicked= new ComboItemsClickedByUser(
-                                          comboProducts[i].items[j].optionsProduct[k].productComboOptionId,
-                                          comboProducts[i].items[j].optionsProduct[k].productName,
-                                          comboProducts[i].items[j].optionsProduct[k].productId,
-                                          comboProducts[i].items[j].optionsProduct[k].productSize,
-                                          comboProducts[i].items[j].optionsProduct[k].sizeId)  ;
-                                      comboItemsClickedByUser.add(comboItemsClicked);
-                                    }
-                                  }
-                                }
-                            }
+                              }
 
 
 
-                            for(int i=0;i<comboItemsClickedByUser.length;i++){
-                              print(
-                                  comboItemsClickedByUser[i].productName+
-                                  " "+
-                                  comboItemsClickedByUser[i].productSize+" "+
-                                  comboItemsClickedByUser[i].sizeId.toString()+" ");}
+                              for(int i=0;i<comboItemsClickedByUser.length;i++){
+                                print(
+                                    comboItemsClickedByUser[i].productName+
+                                    " "+
+                                    comboItemsClickedByUser[i].productSize+" "+
+                                    comboItemsClickedByUser[i].sizeId.toString()+" ");}
 
 
 
-                            //add product to cart
-                            //product to add to cart product to be update with all user choices to add it to the cart
-                            Product productToAddToCart = new Product(
-                                widget.product.status,
-                                widget.product.productId,
-                                widget.product.productDescription,
-                                widget.product.productImage,
-                                widget.product.productTitle,
-                                widget.product.taxes,
-                                widget.product.productPrice,
-                                extraAddedByUser,
-                                comboProducts.length>0? true:false,
-                                comboProducts,
-                                widget.product.discount,
-                                productSizeWhichUserChoose,
-                                widget.product.totalProductPrice,
-                                1,
-                                widget.product.relationId,
-                                comboItemsClickedByUser);
+                              //add product to cart
+                              //product to add to cart product to be update with all user choices to add it to the cart
+                              Product productToAddToCart = new Product(
+                                  widget.product.status,
+                                  widget.product.productId,
+                                  widget.product.productDescription,
+                                  widget.product.productImage,
+                                  widget.product.productTitle,
+                                  widget.product.taxes,
+                                  widget.product.productPrice,
+                                  extraAddedByUser,
+                                  comboProducts.length>0? true:false,
+                                  comboProducts,
+                                  widget.product.discount,
+                                  productSizeWhichUserChoose,
+                                  widget.product.totalProductPrice,
+                                  1,
+                                  widget.product.relationId,
+                                  comboItemsClickedByUser);
 
 
-                            provider.Provider.of<CartProvider>(
-                                context,
-                                listen: false)
-                                .addCart(productToAddToCart);
+                              provider.Provider.of<CartProvider>(
+                                  context,
+                                  listen: false)
+                                  .addCart(productToAddToCart);
 
-                            Global.toastMessage("Added to Cart");
+                              Global.toastMessage("Added to Cart");
 
-                             },
-                              child: Container(
-                                width: 150,
-                                child: Center(child: Text("Add To Cart",style: TextStyle(color: Colors.white),)),
-                              )
-                              ),
-                        ),
-                        SizedBox(width: 10,),
-                        GestureDetector(
-
-                          onTap:(){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
-                          },
-                          child: Padding(
-
-                          padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
-                          child: Text(
-                            'CART', style: GoogleFonts.bebasNeue(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w100
+                               },
+                                child: Container(
+                                  width: 150,
+                                  child: Center(child: Text("Add To Cart",style: TextStyle(color: Colors.white),)),
+                                )
+                                ),
                           ),
-                          )  ,),
-                        )
+                        ),
+
                       ],
                     ),
                   ),
