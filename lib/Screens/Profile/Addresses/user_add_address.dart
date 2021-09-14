@@ -129,8 +129,8 @@ class _UserAddressState extends State<UserAddress> {
                                               builder: (context) =>
                                                   UserSavedAddress(1))),
                                       style: ElevatedButton.styleFrom(
-                                        primary: Colors.red,
-                                        onPrimary: Colors.white,
+                                        primary: Colors.white,
+                                        onPrimary: Colors.black,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(0.0),
                                         ),
