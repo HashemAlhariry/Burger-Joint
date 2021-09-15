@@ -32,6 +32,8 @@ class Order {
   // always false no edit
   late bool edit;
 
+
+  late int addressId;
   Order(
       this.branchId,
       this.total,
@@ -43,7 +45,8 @@ class Order {
       this.transactionReference,
       this.offerId,
       this.comment,
-      this.edit);
+      this.edit,
+      this.addressId);
 
 
 

@@ -23,7 +23,8 @@ dependencies:
   fluttertoast: ^8.0.8
   geolocator: ^7.4.0
   geocoding: ^2.0.1
-
+  map: ^1.0.0
+  cached_network_image: ^3.1.0
 
 dev_dependencies:
   flutter_test:

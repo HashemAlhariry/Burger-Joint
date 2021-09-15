@@ -2,6 +2,7 @@ import 'package:burgerjoint/Controllers/address_controller.dart';
 import 'package:burgerjoint/Models/address.dart';
 import 'package:burgerjoint/Screens/Profile/Addresses/user_saved_address.dart';
 import 'package:burgerjoint/Utils/global.dart';
+import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -47,6 +48,7 @@ class _UserAddressState extends State<UserAddress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         backgroundColor: Colors.grey.shade100,
         body: SafeArea(
           child: Container(
@@ -429,37 +431,49 @@ class _UserAddressState extends State<UserAddress> {
               });
 
               String userAddress = buildingNumber + ", " + streetName + ", " +
-                  regionName + ", " + city + ", " + country;
+                    regionName + ", " + city + ", " + country;
 
-              Address address = new Address(
-                  titleName,
-                  Global.branch.branchId,
-                  country,
-                  city,
-                  0,
-                  regionName,
-                  userAddress,
-                  buildingNumber,
-                  apartmentNumber,
-                  floorNumber,
-                  "",
-                  0);
 
-              AddressController.addAddress(address,
-                  Global.testUrl + "addresses",
-                  Global.userToken).then((value) {
-                //send user to check out
-                // with cart details
-                if (value['address'] != "") {
-                  Navigator.push(context, MaterialPageRoute(
-                      builder: (context) =>
-                          CheckOut(value['id'], value['zone_id'],
-                              value['address'])));
-                }
-                else {
 
-                }
-              });
+              if( userLocation.latitude!=0){
+
+                Address address = new Address(
+                    titleName,
+                    Global.branch.branchId,
+                    country,
+                    city,
+                    0,
+                    regionName,
+                    userAddress,
+                    buildingNumber,
+                    apartmentNumber,
+                    floorNumber,
+                    "",
+                    0,
+                    userLocation.latitude,
+                    userLocation.longitude);
+
+                AddressController.addAddress(address,
+                    Global.testUrl + "addresses",
+                    Global.userToken).then((value) {
+                  //send user to check out
+                  // with cart details
+                  if (value['address'] != "") {
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) =>
+                            CheckOut(value['id'], value['zone_id'],
+                                value['address'])));
+                  }
+                  else {
+
+                  }
+                });
+
+
+              }else{
+                Global.toastMessage("Please enable location");
+              }
+
             }
           }
         },

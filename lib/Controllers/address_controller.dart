@@ -8,7 +8,8 @@ class AddressController{
   static Future<Map<String,dynamic>> addAddress(Address address,String url,String token) async {
     try {
       Uri uri = Uri.parse(url);
-      final response = await http.post(uri,
+      final response = await http.post(
+          uri,
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -23,9 +24,12 @@ class AddressController{
             "address": address.address,
             "building": address.building,
             "floor": address.floor,
-            "apartment":address.apartment,
+            "apartment":int.parse(address.apartment),
+            "latitude":address.latitude,
+            "longitude":address.longitude
           }));
-      if (response.statusCode == 200) {
+
+      if (response.statusCode == 200){
         if (response.body.isNotEmpty) {
             return json.decode(response.body)['address'];
         } else {
@@ -57,6 +61,7 @@ class AddressController{
           List<Address> addresses=[];
           var userAddresses=json.decode(response.body)['addresses'];
           for(int i=0;i<userAddresses.length;i++){
+
               Address address= new Address(
                   userAddresses[i]['title'],
                   userAddresses[i]['branch_id'],
@@ -69,8 +74,12 @@ class AddressController{
                   userAddresses[i]['apartment'].toString(),
                   userAddresses[i]['floor'],
                   userAddresses[i]['comment']?? "",
-                  userAddresses[i]['id']);
-              addresses.add(address);
+                  userAddresses[i]['id'],
+                  double.parse(userAddresses[i]['latitude']),
+                  double.parse(userAddresses[i]['longitude'])
+                  );
+
+                addresses.add(address);
           }
           
           return addresses;

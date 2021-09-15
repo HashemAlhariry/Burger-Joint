@@ -5,6 +5,8 @@ import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../maps.dart';
+
 class UserSavedAddress extends StatefulWidget {
   int checkToProceedToCheckOut=0;
 
@@ -31,17 +33,28 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10.0,40.0,10,10.0),
-                  child:  ListView.builder(
+                  child: userSavedAddresses.length == 0 ?Column(
+                    children: [
+                      SizedBox(height: 100,),
+                      Center(child: Text('No address added',style:  GoogleFonts.ptSans(
+                          fontSize: 16,
+                          color: Colors.black
+                      ),),)
+                    ],
+                  )    :ListView.builder(
                     shrinkWrap: true,
 
                     itemCount: userSavedAddresses.length,
                     itemBuilder: (context, i) {
                       return GestureDetector(
                         onTap: (){
-                          if(widget.checkToProceedToCheckOut==1){
+
+                         if(widget.checkToProceedToCheckOut==1){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address)));
                           }
 
+
+                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>Maps(0.0,0.0)));
                         },
                         child: Card(
                           child: Container(

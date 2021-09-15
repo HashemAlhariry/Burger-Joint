@@ -205,8 +205,7 @@ class _CheckOutState extends State<CheckOut> {
                         )),
                       ),
                       SizedBox(width: 10,),
-                      Container(
-                        padding: EdgeInsets.all(5),
+                      Expanded(
                         child: Text(widget.addressName,style:  TextStyle(fontSize: 14)),
                       ),
                     ],
@@ -303,12 +302,15 @@ class _CheckOutState extends State<CheckOut> {
                           "",
                           0,
                           comment,
-                          false);
+                          false,widget.addressId);
                       OrderController.storeOrder(Global.testUrl+"orders", order, comment, Global.userToken).then((value){
                         //send message to user
                         //update screen for order created
-
-
+                        if(value['message']!=null){
+                          Global.toastMessage(value['message']);
+                        }else{
+                          Global.toastMessage("Order not created");
+                        }
                       });
 
                     },

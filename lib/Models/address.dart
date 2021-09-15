@@ -14,6 +14,8 @@ class Address{
   late String floor;
   late String comment;
   late int addressId;
+  late double latitude;
+  late double longitude;
   Address.empty();
   Address(
       this.title,
@@ -27,6 +29,8 @@ class Address{
       this.apartment,
       this.floor,
       this.comment,
-      this.addressId);
+      this.addressId,
+      this.latitude,
+      this.longitude);
 
 }

@@ -3,6 +3,7 @@ import 'package:burgerjoint/Providers/user_provider.dart';
 import 'package:burgerjoint/Services/user_authentication.dart';
 import 'package:burgerjoint/Services/validation.dart';
 import 'package:burgerjoint/Widgets/customRadio.dart';
+import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -39,6 +40,7 @@ class _State extends State<SignUp> with Validation {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         body: SafeArea(
           child: Container(
             color: Colors.white,
@@ -166,8 +168,8 @@ class _State extends State<SignUp> with Validation {
                         ],
                       ),
                     ),
-                    Positioned.fill(
-                      child: Align(
+
+                    Align(
                         alignment: Alignment.topLeft,
                         child: IconButton(
                           icon: new Icon(
@@ -177,7 +179,7 @@ class _State extends State<SignUp> with Validation {
                           onPressed: () => Navigator.of(context).pop(),
                         ),
                       ),
-                    ),
+
 
                   ],
                 )),
@@ -224,7 +226,7 @@ class _State extends State<SignUp> with Validation {
               fontWeight: FontWeight.normal,
               color: Colors.black)),
       validator: (String? value) {
-        if (value!.length < 3) {
+        if (value!.length < 2) {
           return AppLocalizations.of(context)?.translate('invalid_name') ?? 'Please Enter Correct Name';
         }
 

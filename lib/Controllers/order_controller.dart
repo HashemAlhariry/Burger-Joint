@@ -21,7 +21,8 @@ class OrderController {
       "transaction_reference": "",
       'comment': comment,
       'edit': false,
-      'offer_id':null
+      'offer_id':null,
+      'address_id':order.addressId
     };
 
     print(orderToJson);
