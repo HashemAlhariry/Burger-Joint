@@ -9,12 +9,16 @@ import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
+
+import 'maps.dart';
 class CheckOut extends StatefulWidget {
 
   int addressId;
   int zoneId;
   String addressName;
-  CheckOut(this.addressId,this.zoneId,this.addressName);
+  double lat;
+  double lon;
+  CheckOut(this.addressId,this.zoneId,this.addressName,this.lat,this.lon);
 
   @override
   _CheckOutState createState() => _CheckOutState();
@@ -46,11 +50,39 @@ class _CheckOutState extends State<CheckOut> {
                   Container(
                     padding: EdgeInsets.fromLTRB(30.0,0,10.0,0),
                     margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+                    child: Text('Delivery To',style:  GoogleFonts.bebasNeue(
+                      fontSize: 25,
+                    ),),
+                  ),
+                  SizedBox(height: 10,),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 40,
+                    endIndent: 40,
+                  ),
+                   SizedBox(height: 10,),
+                  Container(
+                    height: MediaQuery.of(context).size.height*0.25,
+                    width:MediaQuery.of(context).size.width*0.5,
+                    child: Maps(widget.lat,widget.lon),
+                  ),
+                  SizedBox(height: 10,),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 40,
+                    endIndent: 40,
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0,0,0.0,0),
+                    margin: EdgeInsets.only(left: 0, right: 0, top: 10),
                     child: Text('Items',style:  GoogleFonts.bebasNeue(
                       fontSize: 25,
                     ),),
                   ),
-                   SizedBox(height: 10,),
+                  SizedBox(height: 10,),
                    Divider(
                     height: 1,
                     thickness: 1,
@@ -60,7 +92,7 @@ class _CheckOutState extends State<CheckOut> {
                    SizedBox(height: 10,),
                   if(cart.cartItems.length>0)
                     Container(
-                      height:MediaQuery.of(context).size.height*0.3,
+                      height:MediaQuery.of(context).size.height*0.25,
                       width:MediaQuery.of(context).size.width,
                       child: ListView.builder(
                         shrinkWrap: true,
@@ -199,7 +231,7 @@ class _CheckOutState extends State<CheckOut> {
                   Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(0),
                         child: Text('Address : ',style:  GoogleFonts.bebasNeue(
                         fontSize: 16,
                         )),
@@ -210,10 +242,11 @@ class _CheckOutState extends State<CheckOut> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 10,),
                   Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(0),
                         child: Text('Subtotal : ',style:  GoogleFonts.bebasNeue(
                           fontSize: 16,
                         )),
@@ -225,10 +258,11 @@ class _CheckOutState extends State<CheckOut> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 10,),
                   Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(0),
                         child: Text('Delivery Fees :',style:  GoogleFonts.bebasNeue(
                           fontSize: 16,
                         )),
@@ -240,10 +274,11 @@ class _CheckOutState extends State<CheckOut> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 10,),
                   Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(0),
                         child: Text('Total :',style:  GoogleFonts.bebasNeue(
                           fontSize: 16,
                         )),
@@ -255,6 +290,7 @@ class _CheckOutState extends State<CheckOut> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 50,),
                 ],
               ),
 

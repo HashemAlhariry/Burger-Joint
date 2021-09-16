@@ -13,17 +13,21 @@ class Maps extends StatefulWidget {
   Maps(this.latitude, this.longitude);
 
   @override
-  _MapsState createState() => _MapsState();
+  _MapsState createState() => _MapsState(latitude,longitude);
 
 }
 
 class _MapsState extends State<Maps> {
 
-  final controller = MapController(
-    location: LatLng(35.68, 51.41),
+  double latitude; double longitude;
+  _MapsState(this.latitude, this.longitude);
+
+  var controller = MapController(
+    location: LatLng(0.0, 0.0),
   );
 
   bool _darkMode = false;
+
 
   final branchesMarkers = [
     LatLng(35.674, 51.41),
@@ -83,21 +87,8 @@ class _MapsState extends State<Maps> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Map Demo'),
-        actions: [
-          IconButton(
-            tooltip: 'Toggle Dark Mode',
-            onPressed: () {
-              setState(() {
-                _darkMode = !_darkMode;
-              });
-            },
-            icon: Icon(Icons.wb_sunny),
-          ),
-        ],
-      ),
       body: MapLayoutBuilder(
         controller: controller,
         builder: (context, transformer) {
@@ -107,6 +98,7 @@ class _MapsState extends State<Maps> {
           final markerWidgets = markerPositions.map(
                 (pos) => _buildMarkerWidget(pos, Colors.red),
           );
+
 
           final homeLocation =
           transformer.fromLatLngToXYCoords(LatLng(35.68, 51.412));
@@ -175,11 +167,9 @@ class _MapsState extends State<Maps> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _gotoDefault,
-        tooltip: 'My Location',
-        child: Icon(Icons.my_location),
-      ),
+
+
+
     );
   }
 }

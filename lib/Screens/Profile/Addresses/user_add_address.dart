@@ -2,10 +2,10 @@ import 'package:burgerjoint/Controllers/address_controller.dart';
 import 'package:burgerjoint/Models/address.dart';
 import 'package:burgerjoint/Screens/Profile/Addresses/user_saved_address.dart';
 import 'package:burgerjoint/Utils/global.dart';
-import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import '../../checkout_screen.dart';
 
@@ -462,7 +462,7 @@ class _UserAddressState extends State<UserAddress> {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (context) =>
                             CheckOut(value['id'], value['zone_id'],
-                                value['address'])));
+                                value['address'],value['latitude'],value['longitude'])));
                   }
                   else {
 
@@ -488,6 +488,7 @@ class _UserAddressState extends State<UserAddress> {
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
+      Global.toastMessage('Location services are disabled.') ;
       return Future.error('Location services are disabled.');
     }
 
@@ -495,32 +496,37 @@ class _UserAddressState extends State<UserAddress> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        Global.toastMessage('Location permissions are denied') ;
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-
+      Global.toastMessage('Location permissions are permanently denied, we cannot request permissions.') ;
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
+    try{
+      Position position = await Geolocator.getCurrentPosition();
+      userLocation = position;
+      List<Placemark> placeMarks = await placemarkFromCoordinates(
+          userLocation.latitude,userLocation.longitude);
 
-    Position position = await Geolocator.getCurrentPosition();
-    userLocation = position;
-    List<Placemark> placeMarks = await placemarkFromCoordinates(
-        userLocation.latitude,userLocation.longitude);
+      setState(() {
+        countryController.text = placeMarks[0].country ?? "";
+        streetNameController.text = placeMarks[0].street ?? "";
+        cityController.text = placeMarks[0].administrativeArea ?? "";
+        regionController.text = placeMarks[0].subAdministrativeArea ?? "";
+        getLocationPressed = true;
+      });
+    }catch(Exception){
+      Global.toastMessage('Error occured while getting location') ;
+    }
 
-    setState(() {
-      countryController.text = placeMarks[0].country ?? "";
-      streetNameController.text = placeMarks[0].street ?? "";
-      cityController.text = placeMarks[0].administrativeArea ?? "";
-      regionController.text = placeMarks[0].subAdministrativeArea ?? "";
-      getLocationPressed = true;
-    });
   }
 
 
@@ -542,4 +548,6 @@ class _UserAddressState extends State<UserAddress> {
     super.initState();
     determinePosition();
   }
+
+
 }

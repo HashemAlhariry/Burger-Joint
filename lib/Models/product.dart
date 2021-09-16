@@ -47,7 +47,7 @@ class Product {
   static List<int> getIdsOfExtras(List<Extra> extra){
     List<int> ids=[];
     for(int i =0;i<extra.length;i++){
-      ids.add(extra[i].sizeId);
+      ids.add(extra[i].productId);
     }
     return ids;
   }
@@ -75,7 +75,7 @@ class Product {
       'price_after': this.totalProductPrice,
       'price': this.totalProductPrice ,
       'combo_products' : ComboItemsClickedByUser.convertToJson(this.comboItemsClickedByUser),
-    };
+    } ;
   }
 
 

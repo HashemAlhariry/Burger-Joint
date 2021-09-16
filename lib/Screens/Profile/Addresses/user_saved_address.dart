@@ -49,8 +49,9 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
                       return GestureDetector(
                         onTap: (){
 
+
                          if(widget.checkToProceedToCheckOut==1){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address)));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address,userSavedAddresses[i].latitude,userSavedAddresses[i].longitude)));
                           }
 
 
