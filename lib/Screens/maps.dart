@@ -23,7 +23,7 @@ class _MapsState extends State<Maps> {
   _MapsState(this.latitude, this.longitude);
 
   var controller = MapController(
-    location: LatLng(0.0, 0.0),
+    location: LatLng(29.9564497, 31.2511796),
   );
 
   bool _darkMode = false;
