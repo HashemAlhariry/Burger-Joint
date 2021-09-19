@@ -34,6 +34,14 @@ class Order {
 
 
   late int addressId;
+
+
+  late String deliveryFees;
+  late String orderStatus;
+  late String orderCode;
+  late String orderId;
+  late String branchName;
+
   Order(
       this.branchId,
       this.total,
@@ -48,6 +56,15 @@ class Order {
       this.edit,
       this.addressId);
 
-
-
+  Order.getOrder(
+      this.branchName,
+      this.total,
+      this.totalAfter,
+      this.products,
+      this.packages,
+      this.paymentMethod,
+      this.deliveryFees,
+      this.orderStatus,
+      this.orderCode,
+      this.orderId);
 }

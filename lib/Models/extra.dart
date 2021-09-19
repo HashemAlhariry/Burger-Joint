@@ -15,4 +15,9 @@ class Extra{
       this.sizeId,
       this.sizePrice
       );
+
+  Extra.forExtraOrderHistory(
+      this.productId,
+      this.productName,
+      this.sizePrice);
 }

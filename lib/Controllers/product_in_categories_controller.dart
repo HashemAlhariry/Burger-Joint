@@ -8,7 +8,9 @@ import 'dart:convert';
 class ProductInCategoriesController{
 
   static Future<List<Product>> productInCategories(String url) async {
+
     List<Product>productsList=[];
+
     Uri uri = Uri.parse(url);
     try{
       final response = await http.get(uri, headers: {
@@ -95,10 +97,10 @@ class ProductInCategoriesController{
           if(j==0){
             productPrice=products[i]['sizes'][j]['price'];
           }
-          List<WithOut>withOuts=[];
+          List<Without>withOuts=[];
           var withoutProduct=products[i]['sizes'][j]['without'];
           for(int k = 0;k<withoutProduct.length;k++){
-              WithOut withOut = new WithOut(
+              Without withOut = new Without(
                   withoutProduct[k]['id'],
                   withoutProduct[k]['size'],
                   withoutProduct[k]['name'],

@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:core';
+import 'package:burgerjoint/Models/combo_product.dart';
+import 'package:burgerjoint/Models/extra.dart';
 import 'package:burgerjoint/Models/order.dart';
 import 'package:burgerjoint/Models/product.dart';
+import 'package:burgerjoint/Models/size.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:http/http.dart' as http;
 class OrderController {
@@ -48,7 +51,113 @@ class OrderController {
 
   }
 
+  static Future<List<Order>> getOrders(String url,String token) async {
 
+    Uri uri = Uri.parse(url);
+    final response = await http.get(uri,
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        }, );
+
+    print(json.decode(response.body));
+    List<dynamic> data = json.decode(response.body);
+    print(data);
+
+    List<Order>order=[];
+
+    for(int index=0;index<data.length;index++){
+
+      List<Product> productsOrderHistory=[];
+      List<Product> packagesOrderHistory=[];
+
+      for(int i=0;i<data[index]['products'].length;i++){
+
+
+        /***DONE***/
+        //for the EXTRA items in product
+        List<Extra>extras=[];
+        var extraData = data[index]['products'][i]['extras'];
+        for(int j=0;j<extraData.length;j++) {
+          Extra extra = new Extra.forExtraOrderHistory(
+              extraData[j]['product_id'],
+              extraData[j]['product_name'],
+              extraData[j]['price']);
+          extras.add(extra);
+        }
+
+        /***DONE***/
+        //for the WITHOUT items in product
+        List<Without>withOuts=[];
+        var withoutData = data[index]['products'][i]['without'];
+        for(int j=0;j<withoutData.length;j++) {
+          Without without = new Without.forWithoutOrderHistory(
+              withoutData[j]['product_id'],
+              withoutData[j]['product_name']);
+          withOuts.add(without);
+        }
+
+        /*** DONE ***/
+        //for the combo items in product
+        List<ComboProduct> comboProducts = [] ;
+        var comboProductData = data[index]['products'][i]['combo_size'];
+        List<Item>items=[];
+        for(int j=0;j<comboProductData['combo_products'].length;j++) {
+           Item item = new Item.forItemOrderHistory(comboProductData['combo_products'][j]['product_name'], comboProductData['combo_products'][j]['product_size']);
+           items.add(item);
+          }
+        ComboProduct comboProduct = new ComboProduct(
+            comboProductData['size_id'],
+            comboProductData['size_name'],
+            comboProductData['size_price'],
+            items);
+          comboProducts.add(comboProduct);
+        /*** ------------------------------------------------***/
+
+
+
+
+
+
+
+        //productsOrderHistory.add();
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      Order order = new Order.getOrder(
+          data[index]['branch_name'],
+          data[index]['total'],
+          data[index]['total_after'],
+          data[index]['products'] == false? [] : productsOrderHistory,
+          data[index]['packages'] == false? [] : packagesOrderHistory,
+          data[index]['payment_method'],
+          data[index]['delivery_fees'],
+          data[index]['order_status'],
+          data[index]['order_code'],
+          data[index]['order_id']);
+
+    }
+
+    return order;
+
+  }
  
   
 }

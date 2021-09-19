@@ -61,7 +61,7 @@ class _CheckOutState extends State<CheckOut> {
                     indent: 40,
                     endIndent: 40,
                   ),
-                   SizedBox(height: 10,),
+                  SizedBox(height: 10,),
                   Container(
                     height: MediaQuery.of(context).size.height*0.25,
                     width:MediaQuery.of(context).size.width*0.5,
@@ -83,15 +83,15 @@ class _CheckOutState extends State<CheckOut> {
                     ),),
                   ),
                   SizedBox(height: 10,),
-                   Divider(
+                  Divider(
                     height: 1,
                     thickness: 1,
                     indent: 40,
                     endIndent: 40,
                   ),
-                   SizedBox(height: 10,),
+                  SizedBox(height: 10,),
                   if(cart.cartItems.length>0)
-                    Container(
+                  Container(
                       height:MediaQuery.of(context).size.height*0.25,
                       width:MediaQuery.of(context).size.width,
                       child: ListView.builder(

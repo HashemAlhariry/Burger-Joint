@@ -1,4 +1,4 @@
-class ComboProduct{
+class  ComboProduct{
 
   late int comboSize;
   late String sizeName;
@@ -29,6 +29,8 @@ class Item{
       this.sizeId,
       this.options,
       this.optionsProduct);
+
+  Item.forItemOrderHistory(this.productName, this.productSize);
 }
 
 class OptionProduct{

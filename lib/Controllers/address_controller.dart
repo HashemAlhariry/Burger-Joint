@@ -96,4 +96,34 @@ class AddressController{
       return  [];
     }
   }
+
+  static Future<void> deleteAddress(String url,String token) async {
+    try {
+      Uri uri = Uri.parse(url);
+      final response = await http.post(uri,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        },);
+      if (response.statusCode == 200) {
+        if (response.body.isNotEmpty) {
+
+          var message=json.decode(response.body)['message'];
+          print(message);
+
+
+      } else {
+
+        throw Exception('Failed to load data');
+
+      }
+    }
+    }
+    catch (exception) {
+      print(exception);
+
+    }
+
+  }
 }

@@ -46,84 +46,98 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
 
                     itemCount: userSavedAddresses.length,
                     itemBuilder: (context, i) {
-                      return GestureDetector(
-                        onTap: (){
+                      final item = userSavedAddresses[i].addressId.toString();
+                      return Dismissible(
+                        onDismissed: (direction) {
 
+                          AddressController.deleteAddress(Global.testUrl+"address-delete/"+userSavedAddresses[i].addressId.toString(), Global.userToken).then((value){});
+                          setState(() {
+                            userSavedAddresses.removeAt(i);
+                          });
+                         Global.toastMessage("Deleted successfully");
 
-                         if(widget.checkToProceedToCheckOut==1){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address,userSavedAddresses[i].latitude,userSavedAddresses[i].longitude)));
-                          }
-
-
-                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>Maps(0.0,0.0)));
                         },
-                        child: Card(
-                          child: Container(
-                            child: Column(
+                        key: Key(item),
+                        child: GestureDetector(
 
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 5,),
-                                Center(
-                                 child: Text(userSavedAddresses[i].title,style:  GoogleFonts.ptSans(
-                                      fontSize: 18,
-                                      color: Colors.black
-                                  ),),
-                                ),
-                                const Divider(
-                                  height: 20,
-                                  thickness: 2,
-                                  indent: 60,
-                                  endIndent: 60,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Address: "+userSavedAddresses[i].address,style:  GoogleFonts.ptSans(
-                                      fontSize: 14,
-                                      color: Colors.black
-                                  ),),
-                                ),
-                                const Divider(
-                                  height: 20,
-                                  thickness: 2,
-                                  indent: 60,
-                                  endIndent: 60,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Region: "+userSavedAddresses[i].region,style:  GoogleFonts.ptSans(
-                                      fontSize: 13,
-                                      color: Colors.black
-                                  )),
-                                ),
+                          onTap: (){
 
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Expanded(child: Container(),),
-                                      Text(userSavedAddresses[i].country,style:  GoogleFonts.ptSans(
-                                          fontSize: 12,
-                                          color: Colors.black
-                                      )),
-                                      SizedBox(width: 10,),
-                                      Text(userSavedAddresses[i].city,style:  GoogleFonts.ptSans(
-                                          fontSize: 12,
-                                          color: Colors.black
-                                      )),
-                                    ],
+
+                           if(widget.checkToProceedToCheckOut==1){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address,userSavedAddresses[i].latitude,userSavedAddresses[i].longitude)));
+                            }
+
+
+                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>Maps(0.0,0.0)));
+                          },
+                          child: Card(
+                            child: Container(
+                              child: Column(
+
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 5,),
+                                  Center(
+                                   child: Text(userSavedAddresses[i].title,style:  GoogleFonts.ptSans(
+                                        fontSize: 18,
+                                        color: Colors.black
+                                    ),),
                                   ),
-                                ),
+                                  const Divider(
+                                    height: 20,
+                                    thickness: 2,
+                                    indent: 60,
+                                    endIndent: 60,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Address: "+userSavedAddresses[i].address,style:  GoogleFonts.ptSans(
+                                        fontSize: 14,
+                                        color: Colors.black
+                                    ),),
+                                  ),
+                                  const Divider(
+                                    height: 20,
+                                    thickness: 2,
+                                    indent: 60,
+                                    endIndent: 60,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Region: "+userSavedAddresses[i].region,style:  GoogleFonts.ptSans(
+                                        fontSize: 13,
+                                        color: Colors.black
+                                    )),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(child: Container(),),
+                                        Text(userSavedAddresses[i].country,style:  GoogleFonts.ptSans(
+                                            fontSize: 12,
+                                            color: Colors.black
+                                        )),
+                                        SizedBox(width: 10,),
+                                        Text(userSavedAddresses[i].city,style:  GoogleFonts.ptSans(
+                                            fontSize: 12,
+                                            color: Colors.black
+                                        )),
+                                      ],
+                                    ),
+                                  ),
 
 
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          elevation: 8,
+                            elevation: 8,
 
-                          margin: EdgeInsets.all(20),
-                          shape:  OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white, width: 1)
+                            margin: EdgeInsets.all(20),
+                            shape:  OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white, width: 1)
+                            ),
                           ),
                         ),
                       ) ;

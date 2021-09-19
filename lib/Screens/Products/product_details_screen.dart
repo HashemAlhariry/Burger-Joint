@@ -661,7 +661,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               }
 
                               //List to get all user`s without to add it to the product details
-                              List<WithOut> withOutAddedByUser=[];
+                              List<Without> withOutAddedByUser=[];
                               for(int i=0;i<withOutBoolList.length;i++){
                                 if(withOutBoolList[i]){
                                   withOutAddedByUser.add(widget.product.productSizes[chosenSizesProduct].withOuts[i]);

@@ -53,7 +53,7 @@ class Product {
   }
 
   //get ids in list of without
-  static List<int> getIdsOfWithout(List<WithOut> withOut){
+  static List<int> getIdsOfWithout(List<Without> withOut){
     List<int> ids=[];
     for(int i =0;i<withOut.length;i++){
       ids.add(withOut[i].id);
