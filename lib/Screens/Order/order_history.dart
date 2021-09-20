@@ -24,6 +24,18 @@ class _OrderHistoryState extends State<OrderHistory> {
             child:orders.length == 0 ?
           Column(
             children: [
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 10, 0, 0),
+                  child:Text(
+                    'Orders',
+                    style: GoogleFonts.ptSans(
+                        fontSize: 22,
+                        color: Colors.black
+                    ),),
+                ),
+
+              ),
               SizedBox(height: 100,),
               Center(child: Text('No order found',style:  GoogleFonts.ptSans(
                   fontSize: 16,
@@ -32,7 +44,19 @@ class _OrderHistoryState extends State<OrderHistory> {
             ],
           ) : ListView(
             children:[
-              SizedBox(height:50 ,),
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(40.0, 0, 0, 0),
+                  child:Text(
+                    'Orders',
+                    style: GoogleFonts.ptSans(
+                        fontSize: 22,
+                        color: Colors.black
+                    ),),
+                ),
+
+              ),
+              SizedBox(height:30 ,),
               ListView.builder(
                 shrinkWrap: true,
                 primary: false,
@@ -45,6 +69,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10.0,5.0,10.0,5.0),
                             child: Center(child: Text(  orders[index].branchName,style: TextStyle(fontSize: 20),)),
@@ -144,12 +169,20 @@ class _OrderHistoryState extends State<OrderHistory> {
                               },),
 
                           ),
-
                           SizedBox(height: 5,),
                           Padding(
                               padding: const EdgeInsets.fromLTRB(10.0,5.0,10.0,5.0),
                               child: Text("Payment Method: "+orders[index].paymentMethodForHistory,style: TextStyle(fontSize: 12),)),
-                          SizedBox(height: 50,),
+                          SizedBox(height: 10,),
+                          if(orders.length-1!=index)
+                          Divider(
+                            height: 1,
+                            thickness: 1,
+                            indent: 40,
+                            endIndent: 40,
+                          ),
+                          SizedBox(height: 40,),
+
                         ],
                       ),
                     ),
@@ -164,33 +197,15 @@ class _OrderHistoryState extends State<OrderHistory> {
 
 
               Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: IconButton(
-                          icon: new Icon(
-                            Icons.arrow_back_ios_outlined,
-                            color:  Color(0xffED1C24),
-                          ),
-                          onPressed: () => Navigator.of(context).pop(),
-                        ),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      icon: new Icon(
+                        Icons.arrow_back_ios_outlined,
+                        color:  Color(0xffED1C24),
                       ),
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10.0, 10, 0, 0),
-                          child:Text(
-                            'Orders',
-                            style: GoogleFonts.ptSans(
-                                fontSize: 22,
-                                color: Colors.black
-                            ),),
-                        ),
-
-                      ),
-                    ],
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
                   )
 
               ),
