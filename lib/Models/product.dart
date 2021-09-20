@@ -39,6 +39,14 @@ class Product {
       this.relationId,
       this.comboItemsClickedByUser);
 
+
+  Product.historyProduct(this.productTitle,
+      this.extras,
+      this.combo,
+      this.comboProducts,
+     this.totalProductPrice,
+      this.quantity);
+
   static List<dynamic> convertToJson(List<Product> orderProducts) {
     List<Map<String, dynamic>> jsonData = orderProducts.map((word) => word.productToMap()).toList();
     return jsonData;

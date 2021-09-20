@@ -35,8 +35,9 @@ class Order {
 
   late int addressId;
 
-
-  late String deliveryFees;
+  //USED FOR ORDER HISTORY ONLY
+  late int deliveryFees;
+  late String paymentMethodForHistory;
   late String orderStatus;
   late String orderCode;
   late String orderId;
@@ -62,7 +63,7 @@ class Order {
       this.totalAfter,
       this.products,
       this.packages,
-      this.paymentMethod,
+      this.paymentMethodForHistory,
       this.deliveryFees,
       this.orderStatus,
       this.orderCode,
