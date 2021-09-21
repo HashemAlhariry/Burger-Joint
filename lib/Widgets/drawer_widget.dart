@@ -2,7 +2,7 @@ import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
 import 'package:burgerjoint/Screens/Order/order_history.dart';
 import 'package:burgerjoint/Screens/Profile/Addresses/user_saved_address.dart';
-import 'package:burgerjoint/Screens/Profile/proflie.dart';
+import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart' as provider;
@@ -28,7 +28,7 @@ class DrawerWidget extends StatelessWidget {
                 Navigator.pop(context);
               }),
           Container(
-            height: user.userName!="" ? 480 : 320,
+            height: user.userName!="" ? 450 : 310,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -48,7 +48,7 @@ class DrawerWidget extends StatelessWidget {
                         if(user.userName=="" && Global.loggedInUser.name==""){
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (ctx) => Profile(),
+                              builder: (ctx) => Login(),
                             ),
                           );
                         }

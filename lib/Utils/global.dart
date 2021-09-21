@@ -14,7 +14,7 @@ class Global {
 
 
   static String globalUrl = "" ;
-
+  static Color scaffoldBackGroundColor=Colors.grey.shade50;
   // testing local url
   static String testUrl  =  "https://bj.marshelles.com/public/";
   static String mainColor = "ED1C24";
@@ -61,7 +61,20 @@ class Global {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.grey.withOpacity(0.5),
+      textColor: Colors.white,
+      fontSize: 14.0,
+    );
+  }
+
+  //global toast_message send message in an argument
+  static void toastMessageCenter(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.grey.withOpacity(0.5),
       textColor: Colors.white,
       fontSize: 14.0,
     );

@@ -18,7 +18,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black45,
+        backgroundColor: Global.scaffoldBackGroundColor,
         body: SafeArea(
           child: Container(
             color: Colors.white,
@@ -29,9 +29,21 @@ class _ForgetPasswordState extends State<ForgetPassword> {
               child: Stack(
                 children: [
                   Padding(
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(10.0),
                       child: ListView(
                         children: <Widget>[
+                          Center(
+                            child: Text(
+                              "Burger Joint",
+                              style: TextStyle(
+                                fontSize: 32,
+                                color: Global.colorFromHex('ED1C24'),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+
+
                           SizedBox(
                             height: 100,
                           ),
@@ -60,18 +72,17 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           ),
                         ],
                       )),
-                  Positioned.fill(
-                    child: Align(
+                Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
                         icon: new Icon(
                           Icons.arrow_back_ios_outlined,
-                          color: Colors.black,
+                          color: Colors.red,
                         ),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
                     ),
-                  ),
+
                 ],
               ),
             ),

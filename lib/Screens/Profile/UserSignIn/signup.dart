@@ -40,7 +40,7 @@ class _State extends State<SignUp> with Validation {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+        backgroundColor: Global.scaffoldBackGroundColor,
         body: SafeArea(
           child: Container(
             color: Colors.white,
@@ -69,19 +69,7 @@ class _State extends State<SignUp> with Validation {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(15.0, 5, 0, 0),
-                            child: Center(
-                              child: Text(
-                                "All Time Burger",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Global.colorFromHex('ED1C24'),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
+
                           SizedBox(
                             height: 30,
                           ),

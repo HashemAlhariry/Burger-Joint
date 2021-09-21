@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
     user = provider.Provider.of<UserProvider>(context, listen: true).user;
 
     return Scaffold(
+      backgroundColor: Global.scaffoldBackGroundColor,
       key:  _key,
       appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,),
       drawer: DrawerWidget(),

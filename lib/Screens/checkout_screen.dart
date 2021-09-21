@@ -40,6 +40,7 @@ class _CheckOutState extends State<CheckOut> {
 
     String comment="";
     return Scaffold(
+      backgroundColor: Global.scaffoldBackGroundColor,
       body: SafeArea(
         child: Stack(
           children: [

@@ -2,20 +2,18 @@ import 'package:burgerjoint/Models/cart.dart';
 import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Providers/cart_provider.dart';
 import 'package:burgerjoint/Providers/user_provider.dart';
-import 'package:burgerjoint/Screens/Profile/Addresses/user_add_address.dart';
+import 'package:burgerjoint/Screens/Profile/Addresses/user_address.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
-
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
 
-class CartScreen extends StatefulWidget {
 
+class CartScreen extends StatefulWidget {
   @override
   _CartScreenState createState() => _CartScreenState();
-
 }
 
 class _CartScreenState extends State<CartScreen> {
@@ -33,14 +31,15 @@ class _CartScreenState extends State<CartScreen> {
     user =  provider.Provider.of<UserProvider>(context, listen: true).user;
 
     return Scaffold(
+
       drawer: DrawerWidget(),
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor:Global.scaffoldBackGroundColor,
       body: SafeArea(
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(5.0),
               child: ListView(
                 children: <Widget>[
 
@@ -53,7 +52,8 @@ class _CartScreenState extends State<CartScreen> {
                           child: Text(
                             "SHOPPING CART",
                             style:GoogleFonts.ptSans(
-                              fontSize: 18,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold
                             ),
                           ),
                         ),
@@ -355,7 +355,7 @@ class _CartScreenState extends State<CartScreen> {
                     children: <Widget>[
                       Padding(
                             padding: const EdgeInsets.fromLTRB(10.0,0,10.0,0),
-                            child: Text("TOTAL  "+    provider.Provider.of<CartProvider>(context, listen: true).totalPrice.toString()+" EGP",style:  GoogleFonts.bebasNeue(
+                            child: Text("TOTAL:  "+    provider.Provider.of<CartProvider>(context, listen: true).totalPrice.toString()+" EGP",style:  GoogleFonts.bebasNeue(
                               fontSize: 25,
                             ),),
                           ),
@@ -386,7 +386,7 @@ class _CartScreenState extends State<CartScreen> {
 
                     ],
                   ),
-                  color: Colors.white,)
+                  color: Colors.grey.shade50,)
                 ],
               )
 

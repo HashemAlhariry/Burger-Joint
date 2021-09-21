@@ -16,6 +16,7 @@ class _OrderHistoryState extends State<OrderHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Global.scaffoldBackGroundColor,
         body: SafeArea(
           child: Stack(
             children: [
@@ -24,18 +25,7 @@ class _OrderHistoryState extends State<OrderHistory> {
             child:orders.length == 0 ?
           Column(
             children: [
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 10, 0, 0),
-                  child:Text(
-                    'Orders',
-                    style: GoogleFonts.ptSans(
-                        fontSize: 22,
-                        color: Colors.black
-                    ),),
-                ),
 
-              ),
               SizedBox(height: 100,),
               Center(child: Text('No order found',style:  GoogleFonts.ptSans(
                   fontSize: 16,
@@ -44,19 +34,8 @@ class _OrderHistoryState extends State<OrderHistory> {
             ],
           ) : ListView(
             children:[
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(40.0, 0, 0, 0),
-                  child:Text(
-                    'Orders',
-                    style: GoogleFonts.ptSans(
-                        fontSize: 22,
-                        color: Colors.black
-                    ),),
-                ),
 
-              ),
-              SizedBox(height:30 ,),
+              SizedBox(height:40 ,),
               ListView.builder(
                 shrinkWrap: true,
                 primary: false,
@@ -169,11 +148,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                               },),
 
                           ),
-                          SizedBox(height: 5,),
-                          Padding(
-                              padding: const EdgeInsets.fromLTRB(10.0,5.0,10.0,5.0),
-                              child: Text("Payment Method: "+orders[index].paymentMethodForHistory,style: TextStyle(fontSize: 12),)),
-                          SizedBox(height: 10,),
+
+                          SizedBox(height: 20,),
                           if(orders.length-1!=index)
                           Divider(
                             height: 1,
@@ -181,7 +157,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                             indent: 40,
                             endIndent: 40,
                           ),
-                          SizedBox(height: 40,),
+                          SizedBox(height: 20,),
 
                         ],
                       ),
@@ -197,17 +173,40 @@ class _OrderHistoryState extends State<OrderHistory> {
 
 
               Container(
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: IconButton(
-                      icon: new Icon(
-                        Icons.arrow_back_ios_outlined,
-                        color:  Color(0xffED1C24),
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  )
+                color: Colors.grey.shade50,
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: IconButton(
+                            icon: new Icon(
+                              Icons.arrow_back_ios_outlined,
+                              color:  Color(0xffED1C24),
+                            ),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                        )
 
+                    ),
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0.0, 10, 0, 0),
+                        child:Text(
+                          'Your Last Orders',
+                          style: GoogleFonts.ptSans(
+                              fontSize: 22,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold
+                          ),),
+                      ),
+
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

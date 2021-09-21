@@ -1,5 +1,6 @@
 import 'package:burgerjoint/Controllers/address_controller.dart';
 import 'package:burgerjoint/Models/address.dart';
+import 'package:burgerjoint/Screens/Profile/Addresses/user_add_address.dart';
 import 'package:burgerjoint/Screens/checkout_screen.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,16 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red,
+        child:Icon(Icons.add,color: Colors.white,),
+        onPressed: (){
+          //send user to add new address
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAddAddress()));
+        },
+      ),
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor:Global.scaffoldBackGroundColor,
       body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -163,10 +172,11 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(10.0, 10, 0, 0),
                             child:Text(
-                              'Saved Address',
+                              'SAVED ADDRESS',
                               style: GoogleFonts.ptSans(
-                                  fontSize: 20,
-                                  color: Colors.black
+                                  fontSize: 22,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold
                               ),),
                           ),
 

@@ -5,16 +5,17 @@ import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import '../../checkout_screen.dart';
 
 
-class UserAddAddress extends StatefulWidget {
+class UserAddress extends StatefulWidget {
   @override
-  _UserAddAddressState createState() => _UserAddAddressState();
+  _UserAddressState createState() => _UserAddressState();
 }
 
-class _UserAddAddressState extends State<UserAddAddress> {
+class _UserAddressState extends State<UserAddress> {
 
   String country = '';
   String city = '';
@@ -55,7 +56,6 @@ class _UserAddAddressState extends State<UserAddAddress> {
                 padding: EdgeInsets.all(10.0),
                 child: Stack(
                   children: [
-
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Column(
@@ -64,7 +64,7 @@ class _UserAddAddressState extends State<UserAddAddress> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(45.0, 0, 0, 0),
                             child: Text(
-                              'ADD ADDRESS',
+                              'ADDRESS',
                               style: GoogleFonts.ptSans(
                                   fontSize: 22,
                                   color: Colors.black,
@@ -122,6 +122,37 @@ class _UserAddAddressState extends State<UserAddAddress> {
                                         height: 30
                                     ),
 
+                                    ElevatedButton(
+
+                                      child: Text(
+                                        'Saved Addresses',
+                                        style: TextStyle(fontSize: 12),),
+                                      onPressed: () =>  Navigator.push(context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UserSavedAddress(1))),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        onPrimary: Colors.black,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(0.0),
+                                        ),
+                                      ),
+                                    )
+
+                                    /*
+                                        RaisedButton(
+                                    onPressed: (){
+
+                                    },
+                                      color: Colors.red,
+                                      child:Text(
+                                      'Choose from saved addresses',
+                                      style: GoogleFonts.ptSans(
+                                          fontSize: 20,
+                                          color: Colors.white
+                                      ),),)
+                                     */
 
                                   ],
                                 ),
@@ -153,6 +184,7 @@ class _UserAddAddressState extends State<UserAddAddress> {
                         ],
                       ),
                     ),
+
                     Align(
                       alignment: Alignment.topLeft,
                       child: IconButton(
@@ -400,7 +432,7 @@ class _UserAddAddressState extends State<UserAddAddress> {
               });
 
               String userAddress = buildingNumber + ", " + streetName + ", " +
-                  regionName + ", " + city + ", " + country;
+                    regionName + ", " + city + ", " + country;
 
 
 
@@ -428,9 +460,10 @@ class _UserAddAddressState extends State<UserAddAddress> {
                   //send user to check out
                   // with cart details
                   if (value['address'] != "") {
-                      Global.toastMessageCenter("ADDRESS ADDED");
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context) =>
+                            CheckOut(value['id'], value['zone_id'],
+                                value['address'],value['latitude'],value['longitude'])));
                   }
                   else {
 

@@ -37,6 +37,36 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 20,),
+            Row(
+              children: [
+                Expanded(
+                  child: Divider(
+                    thickness: 22,
+                    color: Color(0xffED1C24),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 0, 10, 0),
+                  child: Center(
+                    child: Text(
+                      "All Time Burger",
+                      style: GoogleFonts.bebasNeue(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 33,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Divider(
+                    thickness: 22,
+                    color: Color(0xffED1C24),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20,),
             GridView.count(
               shrinkWrap: true,
               childAspectRatio: 0.8,
@@ -52,7 +82,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     padding: const EdgeInsets.all(10.0),
                     child: Card(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0),),
-                      elevation: 5,
+                      elevation: 15,
                       child: Stack(
                         children: [
                           Center(
