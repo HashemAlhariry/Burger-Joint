@@ -9,18 +9,20 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../maps.dart';
 
 class UserSavedAddress extends StatefulWidget {
-  int checkToProceedToCheckOut=0;
 
+  int checkToProceedToCheckOut=0;
   UserSavedAddress(this.checkToProceedToCheckOut);
 
   @override
   _UserSavedAddressState createState() => _UserSavedAddressState();
+
 }
 
 
 class _UserSavedAddressState extends State<UserSavedAddress> {
 
 
+  bool checkDataFromDataBase =false;
   List<Address> userSavedAddresses=[];
   @override
   Widget build(BuildContext context) {
@@ -42,30 +44,30 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10.0,40.0,10,10.0),
-                  child: userSavedAddresses.length == 0 ?Column(
+                  child: userSavedAddresses.length == 0 ?
+                  Column(
                     children: [
-                      SizedBox(height: 100,),
-                      Center(child: Text('No address added',style:  GoogleFonts.ptSans(
+                      checkDataFromDataBase == true ?
+                      SizedBox(height: 200,):SizedBox(height: 200,),
+                      checkDataFromDataBase == true ?
+                      Center(child: Text( 'No address added',style:  GoogleFonts.ptSans(
                           fontSize: 16,
                           color: Colors.black
-                      ),),)
-                    ],
-                  )    :ListView.builder(
-                    shrinkWrap: true,
+                      ),),) : Center(child:   CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.black)),)
 
+                    ],
+                  )    :
+                  ListView.builder(
+
+                    shrinkWrap: true,
                     itemCount: userSavedAddresses.length,
                     itemBuilder: (context, i) {
                       final item = userSavedAddresses[i].addressId.toString();
                       return Dismissible(
-                        onDismissed: (direction) {
+                          confirmDismiss: (direction) async {
 
-                          AddressController.deleteAddress(Global.testUrl+"address-delete/"+userSavedAddresses[i].addressId.toString(), Global.userToken).then((value){});
-                          setState(() {
-                            userSavedAddresses.removeAt(i);
-                          });
-                         Global.toastMessage("Deleted successfully");
-
-                        },
+                            return _showMyDialog(i) ;
+                          },
                         key: Key(item),
                         child: GestureDetector(
 
@@ -73,7 +75,7 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
 
 
                            if(widget.checkToProceedToCheckOut==1){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address,userSavedAddresses[i].latitude,userSavedAddresses[i].longitude)));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckOut(userSavedAddresses[i].addressId,userSavedAddresses[i].zoneId,userSavedAddresses[i].address,userSavedAddresses[i].latitude,userSavedAddresses[i].longitude,userSavedAddresses[i].zonePrice)));
                             }
 
 
@@ -82,7 +84,6 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
                           child: Card(
                             child: Container(
                               child: Column(
-
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(height: 5,),
@@ -172,7 +173,8 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(10.0, 10, 0, 0),
                             child:Text(
-                              'SAVED ADDRESS',
+
+                              widget.checkToProceedToCheckOut==1 ? 'CHOOSE ADDRESS' : 'ADD ADDRESS',
                               style: GoogleFonts.ptSans(
                                   fontSize: 22,
                                   color: Colors.black,
@@ -191,6 +193,52 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
       ),
     );}
 
+
+  Future<bool> _showMyDialog(int index) async {
+    bool checker =false;
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Address'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Are you sure to delete?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                AddressController.deleteAddress(Global.testUrl+"address-delete/"+userSavedAddresses[index].addressId.toString(), Global.userToken).then((value){
+                  setState(() {
+                    userSavedAddresses.removeAt(index);
+                    checker=true;
+                  });
+                });
+                Navigator.of(context).pop();
+                Global.toastMessage("Deleted successfully");
+
+              },
+            ),
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+
+              },
+            ),
+          ],
+        );
+      },
+    );
+    return checker;
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -202,6 +250,9 @@ class _UserSavedAddressState extends State<UserSavedAddress> {
               userSavedAddresses=value;
             });
             }
+            setState(() {
+              checkDataFromDataBase=true;
+            });
     });
 
 

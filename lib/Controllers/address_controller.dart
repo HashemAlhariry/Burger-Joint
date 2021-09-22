@@ -76,7 +76,8 @@ class AddressController{
                   userAddresses[i]['comment']?? "",
                   userAddresses[i]['id'],
                   double.parse(userAddresses[i]['latitude']),
-                  double.parse(userAddresses[i]['longitude'])
+                  double.parse(userAddresses[i]['longitude']),
+                  userAddresses[i]['zone']['price']
                   );
 
                 addresses.add(address);

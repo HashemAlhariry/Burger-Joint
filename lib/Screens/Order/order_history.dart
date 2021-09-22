@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OrderHistory extends StatefulWidget {
+
   @override
   _OrderHistoryState createState() => _OrderHistoryState();
+
 }
 
 class _OrderHistoryState extends State<OrderHistory> {
-  
+
+
   List<Order> orders = [];
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,17 +27,14 @@ class _OrderHistoryState extends State<OrderHistory> {
             child:orders.length == 0 ?
           Column(
             children: [
-
               SizedBox(height: 100,),
-              Center(child: Text('No order found',style:  GoogleFonts.ptSans(
+              Center( child: Text('No order found',style:  GoogleFonts.ptSans(
                   fontSize: 16,
-                  color: Colors.black
-              ),),)
+                  color: Colors.black),),)
             ],
           ) : ListView(
             children:[
-
-              SizedBox(height:40 ,),
+              SizedBox(height:40,),
               ListView.builder(
                 shrinkWrap: true,
                 primary: false,
@@ -49,22 +48,41 @@ class _OrderHistoryState extends State<OrderHistory> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
 
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10.0,5.0,10.0,5.0),
-                            child: Center(child: Text(  orders[index].branchName,style: TextStyle(fontSize: 20),)),
+
+                          SizedBox(height: 20,),
+                          Row(
+                            children: [
+                              Padding(
+                                padding:EdgeInsets.all(5),
+                                child: Text("Payment Method:" ,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)),
+
+                              Padding(
+                                  padding:EdgeInsets.all(5),
+                                  child: Text(orders[index].paymentMethodForHistory,style: TextStyle(fontSize: 12),)),
+                            ],
                           ),
                           SizedBox(height: 5,),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10.0,5.0,10.0,5.0),
-                            child: Text("Payment Method: "+orders[index].paymentMethodForHistory,style: TextStyle(fontSize: 12),)),
+                          Row(
+                            children: [
+                              Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text("Delivery Fees: " ,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)),
+                              Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text(orders[index].deliveryFees.toString(),style: TextStyle(fontSize: 12),)),
+                            ],
+                          ),
                           SizedBox(height: 5,),
-                          Padding(
-                              padding: const EdgeInsets.fromLTRB(10.0,5.0,10.0,5.0),
-                              child: Text("Delivery Fees: "+orders[index].deliveryFees.toString(),style: TextStyle(fontSize: 12),)),
-                          SizedBox(height: 5,),
-                          Padding(
-                              padding: const EdgeInsets.fromLTRB(10.0,5.0,10.0,5.0),
-                              child: Text("Total: " +orders[index].totalAfter.toString(),style: TextStyle(fontSize: 15),)),
+                          Row(
+                            children: [
+                              Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text("Total: " ,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)),
+                              Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text( (orders[index].totalAfter+orders[index].deliveryFees).toString(),style: TextStyle(fontSize: 15),)),
+                            ],
+                          ),
                           Card(
                             child: ListView.builder(
                               physics: NeverScrollableScrollPhysics(),
@@ -73,7 +91,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                               itemCount:orders[index].products.length,
                               itemBuilder: (context,i){
                                 return  Container(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(5.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,12 +115,16 @@ class _OrderHistoryState extends State<OrderHistory> {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: <Widget>[
+                                                Text("x"+orders[index].products[i].quantity.toString()+"  " ,style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w300)),
                                                 Text(
-                                                  (  orders[index].products[i].totalProductPrice ).toString() ,
+                                                    orders[index].products[i].totalProductPrice.toString() ,
                                                   style: TextStyle(
                                                       fontSize: 16,
                                                       color: Colors.black,
-                                                      fontWeight: FontWeight.w400),
+                                                      fontWeight: FontWeight.bold),
                                                 ),
                                                 SizedBox(width: 5,),
                                                 Text(
@@ -132,10 +154,26 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 10,
                                                   ),),),
-                                                Container(child: Text(  orders[index].products[i].extras[j].productName,style:GoogleFonts.ptSans(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 8,
-                                                ),),),
+                                                Row(
+                                                  children: [
+                                                    Container(child: Text(  orders[index].products[i].extras[j].productName,style:GoogleFonts.ptSans(
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 8,
+                                                    ),),),
+                                                    Container(child: Text(  "  "+ orders[index].products[i].extras[j].sizePrice.toString() ,style:GoogleFonts.ptSans(
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 10,
+                                                    ),),),
+                                                    Container(child: Text(   " EGP",style:GoogleFonts.ptSans(
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 10,
+                                                    ),),),
+                                                  ],
+                                                ),
+
+
+
+
                                               ],
                                             ),
                                           ),),
@@ -148,8 +186,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                               },),
 
                           ),
-
-                          SizedBox(height: 20,),
+                          SizedBox(height: 30,),
                           if(orders.length-1!=index)
                           Divider(
                             height: 1,

@@ -3,6 +3,7 @@ import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Providers/cart_provider.dart';
 import 'package:burgerjoint/Providers/user_provider.dart';
 import 'package:burgerjoint/Screens/Profile/Addresses/user_address.dart';
+import 'package:burgerjoint/Screens/Profile/Addresses/user_saved_address.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
@@ -21,6 +22,7 @@ class _CartScreenState extends State<CartScreen> {
   // cart provider
   late Cart cart;
 
+
   // user provide
   late User user;
 
@@ -31,7 +33,6 @@ class _CartScreenState extends State<CartScreen> {
     user =  provider.Provider.of<UserProvider>(context, listen: true).user;
 
     return Scaffold(
-
       drawer: DrawerWidget(),
       resizeToAvoidBottomInset: false,
       backgroundColor:Global.scaffoldBackGroundColor,
@@ -254,6 +255,7 @@ class _CartScreenState extends State<CartScreen> {
                                                       padding: const EdgeInsets.only(
                                                           bottom: 2, right: 12, left: 12),
                                                       child: Text(
+                                                        'x ' +
                                                         cart.cartItems[i].quantity.toString(),
                                                         style:
                                                         TextStyle(
@@ -367,10 +369,15 @@ class _CartScreenState extends State<CartScreen> {
                             onPressed:cart.cartItems.length>0 ? (){
                              //send user to address screen
                               if(user.userName != "" ){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UserAddress()));
+                                
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UserSavedAddress(1)));
+
+
                               }else{
+
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                                 Global.toastMessage('Please login first');
+
                               }
 
 

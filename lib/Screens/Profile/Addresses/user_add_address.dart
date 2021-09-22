@@ -420,7 +420,7 @@ class _UserAddAddressState extends State<UserAddAddress> {
                     "",
                     0,
                     userLocation.latitude,
-                    userLocation.longitude);
+                    userLocation.longitude,0);
 
                 AddressController.addAddress(address,
                     Global.testUrl + "addresses",

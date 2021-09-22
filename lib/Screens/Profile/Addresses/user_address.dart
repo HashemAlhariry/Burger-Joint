@@ -5,9 +5,9 @@ import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import '../../checkout_screen.dart';
+
 
 
 class UserAddress extends StatefulWidget {
@@ -452,7 +452,7 @@ class _UserAddressState extends State<UserAddress> {
                     "",
                     0,
                     userLocation.latitude,
-                    userLocation.longitude);
+                    userLocation.longitude,0);
 
                 AddressController.addAddress(address,
                     Global.testUrl + "addresses",
@@ -463,7 +463,7 @@ class _UserAddressState extends State<UserAddress> {
                     Navigator.push(context, MaterialPageRoute(
                         builder: (context) =>
                             CheckOut(value['id'], value['zone_id'],
-                                value['address'],value['latitude'],value['longitude'])));
+                                value['address'],value['latitude'],value['longitude'],value['zone']['price'])));
                   }
                   else {
 

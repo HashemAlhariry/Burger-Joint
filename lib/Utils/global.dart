@@ -56,6 +56,7 @@ class Global {
 
   //global toast_message send message in an argument
   static void toastMessage(String message) {
+
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
@@ -68,7 +69,9 @@ class Global {
   }
 
   //global toast_message send message in an argument
+
   static void toastMessageCenter(String message) {
+
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
@@ -78,8 +81,11 @@ class Global {
       textColor: Colors.white,
       fontSize: 14.0,
     );
+
   }
 
   //GLOBAL USER LOGGED IN
   late User user;
+
+
 }

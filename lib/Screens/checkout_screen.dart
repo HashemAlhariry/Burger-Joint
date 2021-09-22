@@ -1,16 +1,17 @@
 import 'package:burgerjoint/Controllers/order_controller.dart';
-import 'package:burgerjoint/Models/address.dart';
 import 'package:burgerjoint/Models/cart.dart';
 import 'package:burgerjoint/Models/order.dart';
 import 'package:burgerjoint/Models/user.dart';
 import 'package:burgerjoint/Providers/cart_provider.dart';
 import 'package:burgerjoint/Providers/user_provider.dart';
+import 'package:burgerjoint/Screens/Order/order_history.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
-
 import 'maps.dart';
+
+// ignore: must_be_immutable
 class CheckOut extends StatefulWidget {
 
   int addressId;
@@ -18,10 +19,12 @@ class CheckOut extends StatefulWidget {
   String addressName;
   double lat;
   double lon;
-  CheckOut(this.addressId,this.zoneId,this.addressName,this.lat,this.lon);
-
+  int zonePrice;
+  CheckOut(this.addressId,this.zoneId,this.addressName,this.lat,this.lon,this.zonePrice);
   @override
   _CheckOutState createState() => _CheckOutState();
+
+
 }
 
 class _CheckOutState extends State<CheckOut> {
@@ -203,6 +206,7 @@ class _CheckOutState extends State<CheckOut> {
                                       padding: const EdgeInsets.only(
                                           bottom: 2, right: 12, left: 12),
                                       child: Text(
+                                        'x '+
                                         cart.cartItems[i].quantity.toString(),
                                         style:
                                         TextStyle(
@@ -271,7 +275,7 @@ class _CheckOutState extends State<CheckOut> {
                       SizedBox(width: 5,),
                       Container(
                         padding: EdgeInsets.all(5),
-                        child: Text("0",style: TextStyle(fontSize: 14)),
+                        child: Text(widget.zonePrice.toString(),style: TextStyle(fontSize: 14)),
                       ),
                     ],
                   ),
@@ -287,7 +291,7 @@ class _CheckOutState extends State<CheckOut> {
                       SizedBox(width: 5,),
                       Container(
                         padding: EdgeInsets.all(5),
-                        child: Text(provider.Provider.of<CartProvider>(context, listen: true).totalPrice.toString(),style: TextStyle(fontSize: 14)),
+                        child: Text((provider.Provider.of<CartProvider>(context, listen: true).totalPrice+widget.zonePrice).toString(),style: TextStyle(fontSize: 14)),
                       ),
                     ],
                   ),
@@ -340,12 +344,24 @@ class _CheckOutState extends State<CheckOut> {
                           0,
                           comment,
                           false,widget.addressId);
+
                       OrderController.storeOrder(Global.testUrl+"orders", order, comment, Global.userToken).then((value){
                         //send message to user
                         //update screen for order created
+
                         if(value['message']!=null){
+
                           Global.toastMessage(value['message']);
+                          provider.Provider.of<CartProvider>(context, listen: false).deleteCart();
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) =>
+                                   OrderHistory()));
+
                         }else{
+
                           Global.toastMessage("Order not created");
                         }
                       });

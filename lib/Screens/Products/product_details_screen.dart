@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
 
+
 class ProductDetailsScreen extends StatefulWidget {
   final Product product;
   const ProductDetailsScreen({Key? key, required this.product})
@@ -275,11 +276,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           onTap: () {
                             setState(() {
                               if (checkerForComboProductOpens == i) {
+                                Global.toastMessageCenter('Combo Removed');
+
                                 checkerForComboProductOpens = -1;
                                 comboItemsClicked = [];
                                 totalPriceProduct -= comboPrice;
                                 comboPrice = 0;
                               } else {
+                                Global.toastMessageCenter('Combo Added');
                                 totalPriceProduct -= comboPrice;
                                 comboPrice = 0;
                                 comboPrice =
@@ -1169,4 +1173,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       ),
     );
   }
+
+
 }
+

@@ -16,6 +16,7 @@ class Address{
   late int addressId;
   late double latitude;
   late double longitude;
+  late int zonePrice;
   Address.empty();
   Address(
       this.title,
@@ -31,6 +32,7 @@ class Address{
       this.comment,
       this.addressId,
       this.latitude,
-      this.longitude);
+      this.longitude,
+      this.zonePrice);
 
 }

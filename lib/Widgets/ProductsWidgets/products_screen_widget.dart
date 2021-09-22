@@ -6,7 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 class ProductsWidget extends StatefulWidget {
 
   final List<Product> product;
+
   final String categoryName;
+
   ProductsWidget(this.product,this.categoryName);
 
   @override
@@ -17,7 +19,6 @@ class _ProductsWidgetState extends State<ProductsWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return ListView(
       children: [
         SizedBox(
@@ -75,6 +76,8 @@ class _ProductsWidgetState extends State<ProductsWidget> {
             ),
           ],
         ),
+
+
         ...List.generate(
             widget.product.length,
             (index) => ProductCardWidget(
