@@ -19,6 +19,7 @@ class DrawerWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           IconButton(
+
               icon: const Icon(
                 Icons.clear,
                 color: Colors.white,
@@ -28,6 +29,7 @@ class DrawerWidget extends StatelessWidget {
                 Navigator.pop(context);
               }),
           Container(
+
             height: user.userName!="" ? 450 : 310,
             width: MediaQuery.of(context).size.width * 0.8,
             decoration: BoxDecoration(

@@ -34,7 +34,7 @@ class _CheckOutState extends State<CheckOut> {
 
   // user provide
   late User user;
-
+  final myController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -71,6 +71,14 @@ class _CheckOutState extends State<CheckOut> {
                     width:MediaQuery.of(context).size.width*0.5,
                     child: Maps(widget.lat,widget.lon),
                   ),
+                  SizedBox(height: 10,),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 40,
+                    endIndent: 40,
+                  ),
+
                   SizedBox(height: 10,),
                   Divider(
                     height: 1,
@@ -226,6 +234,20 @@ class _CheckOutState extends State<CheckOut> {
                       ),
                     ),
                   SizedBox(height: 10,),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0,0,0.0,0),
+                    margin: EdgeInsets.only(left: 0, right: 0, top: 10),
+                    child: Text('COMMENT',style:  GoogleFonts.bebasNeue(
+                      fontSize: 25,
+                    ),),
+                  ),
+                  TextField(
+                    controller: myController,
+                    keyboardType: TextInputType.multiline,
+                    minLines: 1,//Normal textInputField will be displayed
+                    maxLines: 5,// when user presses enter it will adapt to it
+                  ),
+                  SizedBox(height: 10,),
                   Divider(
                     height: 1,
                     thickness: 1,
@@ -331,7 +353,7 @@ class _CheckOutState extends State<CheckOut> {
                     fontFamily: 'JOSEF'),
                        ),
                     onPressed: () async {
-
+                      comment=myController.text;
                       Order  order = new Order(
                           Global.branch.branchId,
                           provider.Provider.of<CartProvider>(context, listen: false).totalPrice,

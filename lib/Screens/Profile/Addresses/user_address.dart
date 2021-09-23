@@ -460,6 +460,7 @@ class _UserAddressState extends State<UserAddress> {
                   //send user to check out
                   // with cart details
                   if (value['address'] != "") {
+
                     Navigator.push(context, MaterialPageRoute(
                         builder: (context) =>
                             CheckOut(value['id'], value['zone_id'],
