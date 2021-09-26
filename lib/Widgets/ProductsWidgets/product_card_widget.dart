@@ -1,5 +1,6 @@
 import 'package:burgerjoint/Models/product.dart';
 import 'package:burgerjoint/Screens/Products/product_details_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -43,9 +44,10 @@ class ProductCardWidget extends StatelessWidget {
                       tag: product.productId,
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width * .35,
-                        child: Image.network(
-                          product.productImage,
-                          fit: BoxFit.cover,
+                        child: CachedNetworkImage(
+                          imageUrl:  product.productImage,
+                          placeholder: (context, url) => Center(child: new CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.red))),
+                          errorWidget: (context, url, error) => new Icon(Icons.error),
                         ),
                       ),
                     ),

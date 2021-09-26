@@ -47,9 +47,18 @@ class _OrderHistoryState extends State<OrderHistory> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-
                           SizedBox(height: 20,),
+                          Row(
+                            children: [
+                              Padding(
+                                  padding:EdgeInsets.all(5),
+                                  child: Text("Order Id:" ,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)),
+                              Padding(
+                                  padding:EdgeInsets.all(5),
+                                  child: Text(orders[index].orderId ,style: TextStyle(fontSize: 12),)),
+                            ],
+                          ),
+                          SizedBox(height: 5,),
                           Row(
                             children: [
                               Padding(
@@ -70,6 +79,16 @@ class _OrderHistoryState extends State<OrderHistory> {
                               Padding(
                                   padding: const EdgeInsets.all(5),
                                   child: Text(orders[index].deliveryFees.toString(),style: TextStyle(fontSize: 12),)),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  " EGP" ,
+                                  style: TextStyle(
+                                      fontSize: 12  ,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 5,),
@@ -81,6 +100,39 @@ class _OrderHistoryState extends State<OrderHistory> {
                               Padding(
                                   padding: const EdgeInsets.all(5),
                                   child: Text( (orders[index].totalAfter+orders[index].deliveryFees).toString(),style: TextStyle(fontSize: 15),)),
+
+
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  " EGP" ,
+                                  style: TextStyle(
+                                      fontSize: 12  ,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+
+                            ],
+                          ),
+
+                          Row(
+                            children: [
+                              Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Text("Order Status:" ,style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)),
+                              Expanded(child: Container()),
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  orders[index].orderStatus ,
+                                  style: TextStyle(
+                                      fontSize: 12  ,
+                                      color:  Colors.green ,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+
                             ],
                           ),
                           Card(
@@ -109,6 +161,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                 fontWeight: FontWeight.w400),
                                           ),
                                         ),
+
                                           Expanded(child: Container()),
                                           Container(
                                             child: Row(
@@ -140,6 +193,53 @@ class _OrderHistoryState extends State<OrderHistory> {
                                             ),
                                           ),],
                                       ),
+                                      SizedBox(height: 5,),
+                                      if(  orders[index].products[i].comboProducts.length>0)
+                                      Row(
+
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(8.0,0,0,0),
+                                            child: Text("COMBO: ",style: TextStyle(
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold)),
+                                          ),
+                                          SizedBox(width: 5,),
+                                          Text(
+                                            orders[index].products[i].comboProducts[0].sizeName.toString() ,
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                          Expanded(child: Container()),
+
+                                          Text("x"+orders[index].products[i].quantity.toString()+"  " ,style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w300)),
+
+                                          Text(
+                                            orders[index].products[i].comboProducts[0].price.toString() ,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          SizedBox(width: 5,),
+                                          Text(
+                                            " EGP" ,
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+
+                                        ],
+                                      ),
+                                      SizedBox(height: 5,),
                                       if( orders[index].products[i].extras.length>0)
                                       ...List.generate(
                                           orders[index].products[i].extras.length,
@@ -170,10 +270,6 @@ class _OrderHistoryState extends State<OrderHistory> {
                                                     ),),),
                                                   ],
                                                 ),
-
-
-
-
                                               ],
                                             ),
                                           ),),
@@ -204,11 +300,6 @@ class _OrderHistoryState extends State<OrderHistory> {
               )
             ]
           ),),
-
-
-
-
-
               Container(
                 color: Colors.grey.shade50,
                 width: MediaQuery.of(context).size.width,

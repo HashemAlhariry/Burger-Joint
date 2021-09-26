@@ -7,6 +7,7 @@ import 'package:burgerjoint/Providers/cart_provider.dart';
 import 'package:burgerjoint/Screens/Cart/cart_screen.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -103,12 +104,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 Hero(
                   tag: widget.product.productId,
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * .3,
-                    // width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height*0.3,
+                    //width: MediaQuery.of(context).size.width,
                     child: Center(
-                      child: Image.network(
-                        widget.product.productImage,
-                        fit: BoxFit.cover,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.product.productImage,
+                        placeholder: (context, url) => Center(child: new CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.red))),
+                        errorWidget: (context, url, error) => new Icon(Icons.error),
                       ),
                     ),
                   ),

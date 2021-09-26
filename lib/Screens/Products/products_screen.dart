@@ -21,14 +21,23 @@ class _ProductsScreenState extends State<ProductsScreen> {
   final GlobalKey<ScaffoldState> _key =  GlobalKey<ScaffoldState>();
   List <Product> product = [];
   bool productValueUpdated=false;
+  String itemsProducts='';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:Global.scaffoldBackGroundColor,
       key:  _key,
-      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: Global.branch.name,),
+      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: Global.branch.name,searchedItems:(value){
+        setState(() {
+          itemsProducts=value;
+        });
+      } ),
       drawer: DrawerWidget(),
-      body:   ProductsWidget(product,widget.categoryName),
+      body: ProductsWidget(
+          product,
+          widget.categoryName,
+          itemsProducts
+      ),
     );
   }
 

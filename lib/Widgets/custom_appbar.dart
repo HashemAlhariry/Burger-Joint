@@ -10,12 +10,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor;
   final ValueChanged<bool> onChanged;
   final String branchName;
+  final ValueChanged<String> searchedItems;
+
   const CustomAppBar(
       {Key? key,
       required this.title,
       required this.backgroundColor,
       required this.onChanged,
-      required this.branchName
+      required this.branchName,
+      required this.searchedItems
       })
       : super(key: key);
 
@@ -92,6 +95,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     width: MediaQuery.of(context).size.width * .5,
                     height: 30,
                     child: TextFormField(
+                      onChanged: (text){
+                         //get text and update items in homepage Category
+                        if(text.length==0){
+
+                          searchedItems('');
+
+                        }else{
+                          searchedItems(text);
+                        }
+
+
+                      },
                       decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4.0),
@@ -109,7 +124,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           fillColor: Colors.white,
                           labelText: "Searching...",
                           labelStyle:
-                              TextStyle(color: Colors.grey, fontSize: 12),
+                              TextStyle(color: Colors.grey, fontSize: 14),
                           prefixIcon: Icon(
                             Icons.search,
                             color: Colors.grey,
@@ -117,6 +132,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           )),
                     ),
                   ),
+                  Expanded(child: Container()),
                   IconButton(
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));

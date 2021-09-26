@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   //BranchID to get data in branch id
   late int branchId;
 
+  String itemsHomePage='';
 
   late User user;
   @override
@@ -43,9 +44,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Global.scaffoldBackGroundColor,
       key:  _key,
-      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,),
+      appBar: CustomAppBar(title: "DELIVERING TO", backgroundColor: Global.colorFromHex(Global.mainColor) , onChanged: (value){if(value){_key.currentState!.openDrawer();}},branchName: branchName,searchedItems:(value){
+        setState(() {
+          itemsHomePage=value;
+          print(itemsHomePage);
+        });
+      }),
       drawer: DrawerWidget(),
-      body:  getBranchIdBool ? HomePageWidget(branchId) : SingleChildScrollView(
+      body:  getBranchIdBool ?
+      HomePageWidget(branchId,itemsHomePage) :
+      SingleChildScrollView(
         child: Column(
           children: [
              Padding(
@@ -68,6 +76,8 @@ class _HomePageState extends State<HomePage> {
         ),),
     );
   }
+
+
 
   @override
   void initState() {

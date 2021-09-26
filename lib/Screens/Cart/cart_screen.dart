@@ -7,6 +7,7 @@ import 'package:burgerjoint/Screens/Profile/Addresses/user_saved_address.dart';
 import 'package:burgerjoint/Screens/Profile/UserSignIn/login.dart';
 import 'package:burgerjoint/Utils/global.dart';
 import 'package:burgerjoint/Widgets/drawer_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as provider;
@@ -109,12 +110,13 @@ class _CartScreenState extends State<CartScreen> {
                                 Container(
                                   height:80,
                                   width:80,
-                                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                  padding: EdgeInsets.symmetric(horizontal: 4.0),
                                   child: SizedBox(
                                     width: MediaQuery.of(context).size.width,
-                                    child: Image.network(
-                                      cart.cartItems[i].productImage,
-                                      fit: BoxFit.fitWidth,
+                                    child: CachedNetworkImage(
+                                      imageUrl:   cart.cartItems[i].productImage,
+                                      placeholder: (context, url) => Center(child: new CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.red))),
+                                      errorWidget: (context, url, error) => new Icon(Icons.error),
                                     ),
                                   ),
                                 ),

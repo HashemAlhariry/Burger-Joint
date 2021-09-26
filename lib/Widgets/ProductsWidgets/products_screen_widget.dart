@@ -5,20 +5,24 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ProductsWidget extends StatefulWidget {
 
-  final List<Product> product;
+  final List<Product> products;
 
   final String categoryName;
 
-  ProductsWidget(this.product,this.categoryName);
+  String itemsProducts;
+
+  ProductsWidget(this.products,this.categoryName,this.itemsProducts);
 
   @override
   _ProductsWidgetState createState() => _ProductsWidgetState();
+
 }
 
 class _ProductsWidgetState extends State<ProductsWidget> {
-
+  List<Product> tempProducts=[];
   @override
   Widget build(BuildContext context) {
+    updateItems(widget.itemsProducts);
     return ListView(
       children: [
         SizedBox(
@@ -79,11 +83,27 @@ class _ProductsWidgetState extends State<ProductsWidget> {
 
 
         ...List.generate(
-            widget.product.length,
+            tempProducts.length,
             (index) => ProductCardWidget(
-                 product:widget.product[index]
+                 product:tempProducts[index]
                 )),
       ],
     );
+  }
+  void updateItems(String itemsToSearch){
+    setState(() {
+      tempProducts=[];
+    });
+
+    for(int i=0;i<widget.products.length;i++){
+      if(widget.products[i].productTitle.toUpperCase().contains(itemsToSearch.toUpperCase())){
+        tempProducts.add(widget.products[i]);
+      }
+    }
+
+  }
+  @override
+  void initState() {
+    tempProducts=widget.products;
   }
 }
